@@ -68,6 +68,15 @@ theme: icarus
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy: 
-  type: git
-  repo: https://github.com/zhouyb-cn/zhouyb-cn.github.io.git
-  branch: master
+  # type: git
+  # repo: https://github.com/zhouyb-cn/zhouyb-cn.github.io.git
+  # branch: master
+  type: rsync
+  host: 139.162.100.12
+  user: yanbo
+  root: /var/www/blog
+  port: 22
+  delete: true
+  verbose: true
+  ignore_errors: false
+
