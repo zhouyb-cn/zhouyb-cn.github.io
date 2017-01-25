@@ -12,7 +12,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://zhouyanbo.com
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -47,6 +47,18 @@ highlight:
 default_category: uncategorized
 category_map:
 tag_map:
+
+math:
+  engine: 'katex' # or 'katex'
+  mathjax:
+    src: custom_mathjax_source
+    config:
+      # MathJax config
+  katex:
+    css: https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css
+    js: https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js # not used
+    config:
+      # KaTeX config
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
