@@ -3,15 +3,33 @@
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     
-    <title>Tags | 美好的一天</title>
+    <title>数据库保存emoji表情 | 美好的一天</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Tags">
-<meta property="og:url" content="http://zhouyanbo.com/tags/index.html">
+    <meta name="description" content="问题mysql保存emoji表情的时候，插入到数据库为问号或者无法插入
+原因是由于mysql的utf-8编码最多三个字节，而emoji表情是四个字节，导致插入错误
+解决方案修改数据库设置字符集
+1ALTER DATABASE database_name CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+修改数据表字符集
+1ALTER TAB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库保存emoji表情">
+<meta property="og:url" content="http://zhouyanbo.com/2017/03/06/save-emoji/index.html">
 <meta property="og:site_name" content="美好的一天">
-<meta property="og:updated_time" content="2017-01-25T07:44:11.000Z">
+<meta property="og:description" content="问题mysql保存emoji表情的时候，插入到数据库为问号或者无法插入
+原因是由于mysql的utf-8编码最多三个字节，而emoji表情是四个字节，导致插入错误
+解决方案修改数据库设置字符集
+1ALTER DATABASE database_name CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+修改数据表字符集
+1ALTER TAB">
+<meta property="og:updated_time" content="2017-03-06T05:59:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tags">
+<meta name="twitter:title" content="数据库保存emoji表情">
+<meta name="twitter:description" content="问题mysql保存emoji表情的时候，插入到数据库为问号或者无法插入
+原因是由于mysql的utf-8编码最多三个字节，而emoji表情是四个字节，导致插入错误
+解决方案修改数据库设置字符集
+1ALTER DATABASE database_name CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+修改数据表字符集
+1ALTER TAB">
     
 
     
@@ -178,16 +196,153 @@
 </aside>
 
             
-            <section id="main"><section class="layout-wrap">
-    <div class="layout-title">
-        <span>Tags</span>
-    </div>
-    <div class="layout-wrap-inner tag-cloud">
+            <section id="main"><article id="post-save-emoji" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-            <a href="/tags/laravel-emoji/" style="font-size: 14px;">laravel emoji</a> <a href="/tags/specification/" style="font-size: 14px;">specification</a>
         
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            数据库保存emoji表情
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/03/06/save-emoji/">
+            <time datetime="2017-03-06T03:56:01.000Z" itemprop="datePublished">2017-03-06</time>
+        </a>
     </div>
-</section></section>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/laravel-emoji/">laravel emoji</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>mysql保存emoji表情的时候，插入到数据库为问号或者无法插入</p>
+<h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>是由于mysql的utf-8编码最多三个字节，而emoji表情是四个字节，导致插入错误</p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p><strong>修改数据库设置字符集</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ALTER DATABASE database_name CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;</div></pre></td></tr></table></figure>
+<p><strong>修改数据表字符集</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ALTER TABLE table_name CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;</div></pre></td></tr></table></figure>
+<p><strong>修改字段名字符集</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ALTER TABLE table_name CHANGE column_name VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;</div></pre></td></tr></table></figure>
+<p><strong>数据库连接方式参数设置</strong><br>在laravel框架中修改database.php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&apos;charset&apos;   =&gt; &apos;utf8mb4&apos;,</div><div class="line">&apos;collation&apos; =&gt; &apos;utf8mb4_unicode_ci&apos;,</div></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="http://zhouyanbo.com/2017/03/06/save-emoji/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://zhouyanbo.com/2017/03/06/save-emoji/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/01/23/Specification/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Coding-Specification</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
             
                 <aside id="sidebar">
    
@@ -237,9 +392,9 @@
     <script>
     var disqus_config = function () {
         
-            this.page.url = 'http://zhouyanbo.com/tags/index.html';
+            this.page.url = 'http://zhouyanbo.com/2017/03/06/save-emoji/';
         
-        this.page.identifier = 'undefined';
+        this.page.identifier = 'save-emoji';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
