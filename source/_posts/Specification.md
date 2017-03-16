@@ -47,14 +47,14 @@ tags: specification
 	* 在程序中进行结构控制代码编写，如if、for、while、switch等结构，大括号传统的有两种书写习惯，分别如下： 
 	* { 直接跟在控制语句之后，不换行，如：
 	
-	```
+	``` php
 	for($i = 0; $i < $count; $i++) {
     	echo 'test';
 	}
     ```
 	* { 在控制语句下一行，如：
 	
-	```
+	``` php
 	for($i = 0; $i < $count; $i++) {
 	{
     	echo 'test';
