@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zhouyanbo.com/"/>
-  <updated>2017-08-04T07:46:42.000Z</updated>
+  <updated>2017-08-04T08:31:44.000Z</updated>
   <id>http://zhouyanbo.com/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo 问题记录</title>
+    <link href="http://zhouyanbo.com/2017/08/04/hexo-issues/"/>
+    <id>http://zhouyanbo.com/2017/08/04/hexo-issues/</id>
+    <published>2017-08-04T08:18:55.000Z</published>
+    <updated>2017-08-04T08:31:44.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Q-hexo-deploy会发布整个项目到git-master分支"><a href="#Q-hexo-deploy会发布整个项目到git-master分支" class="headerlink" title="Q: hexo deploy会发布整个项目到git master分支"></a>Q: hexo deploy会发布整个项目到git master分支</h3><p>A: 删除项目根目录下的 .git 文件夹</p>
+<h3 id="Q-删除-git文件夹后再hexo-deploy报错-fatal-Not-a-git-repository-or-any-of-the-parent-directories-git"><a href="#Q-删除-git文件夹后再hexo-deploy报错-fatal-Not-a-git-repository-or-any-of-the-parent-directories-git" class="headerlink" title="Q: 删除.git文件夹后再hexo deploy报错 fatal: Not a git repository (or any of the parent directories): .git"></a>Q: 删除.git文件夹后再hexo deploy报错 fatal: Not a git repository (or any of the parent directories): .git</h3><p>A: 删除项目根目录下的 .deploy 文件夹</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Q-hexo-deploy会发布整个项目到git-master分支&quot;&gt;&lt;a href=&quot;#Q-hexo-deploy会发布整个项目到git-master分支&quot; class=&quot;headerlink&quot; title=&quot;Q: hexo deploy会发布整个项目到git 
+    
+    </summary>
+    
+    
+      <category term="hexo issues" scheme="http://zhouyanbo.com/tags/hexo-issues/"/>
+    
+  </entry>
   
   <entry>
     <title>CURL File</title>

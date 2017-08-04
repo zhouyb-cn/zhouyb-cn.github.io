@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://zhouyanbo.com/2017/08/04/hexo-issues/</loc>
+    
+    <lastmod>2017-08-04T08:31:44.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://zhouyanbo.com/2017/01/18/Math-Part1/</loc>
     
     <lastmod>2017-08-04T07:46:42.000Z</lastmod>
@@ -16,14 +23,14 @@
   </url>
   
   <url>
-    <loc>http://zhouyanbo.com/2017/03/06/save-emoji/</loc>
+    <loc>http://zhouyanbo.com/2017/03/16/curl-file/</loc>
     
     <lastmod>2017-08-04T07:46:42.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://zhouyanbo.com/2017/03/16/curl-file/</loc>
+    <loc>http://zhouyanbo.com/2017/03/06/save-emoji/</loc>
     
     <lastmod>2017-08-04T07:46:42.000Z</lastmod>
     
@@ -37,14 +44,14 @@
   </url>
   
   <url>
-    <loc>http://zhouyanbo.com/categories/index.html</loc>
+    <loc>http://zhouyanbo.com/tags/index.html</loc>
     
     <lastmod>2017-08-04T07:46:42.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://zhouyanbo.com/tags/index.html</loc>
+    <loc>http://zhouyanbo.com/categories/index.html</loc>
     
     <lastmod>2017-08-04T07:46:42.000Z</lastmod>
     
