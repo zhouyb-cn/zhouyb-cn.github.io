@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zhouyanbo.com/"/>
-  <updated>2017-08-04T08:31:44.000Z</updated>
+  <updated>2017-08-11T03:03:08.000Z</updated>
   <id>http://zhouyanbo.com/</id>
   
   <author>
@@ -14,6 +14,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>install centos 7 failed</title>
+    <link href="http://zhouyanbo.com/2017/08/11/install-centos-7/"/>
+    <id>http://zhouyanbo.com/2017/08/11/install-centos-7/</id>
+    <published>2017-08-11T02:49:37.000Z</published>
+    <updated>2017-08-11T03:03:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>最近公司新购几台服务器，需要先装好系统再拿到机房，前面两台430服务器安装系统都很顺利，在安装第三台730XD的时候报错failed to start switch root</p>
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>经过检查，是由于找不到U盘加载不到镜像导致这个错误，730服务器上三个USB插孔（前面一个后面两个），不知道前后有什么区别</p>
+<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><ul>
+<li>在启动界面，按e进入编辑模式，</li>
+<li>修改启动参数 vmlinuz initrd=initrd.img linux dd quiet</li>
+<li>重启会列出所有磁盘，包括U盘盘符，一般U盘会是/dev/sdb<em>，或者/dev/sda</em>，但是我发现这次U盘是/dev/sdc4</li>
+<li>接着重启，重新进入编辑模式，修改启动参数 vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sdc4 quiet 根据实际情况修改盘符</li>
+<li>ctrl + x 执行就能顺利看到安装界面</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h3&gt;&lt;p&gt;最近公司新购几台服务器，需要先装好系统再拿到机房，前面两台430服务器安装系统都很顺利，在安装第三台730XD的时候报错failed to 
+    
+    </summary>
+    
+    
+      <category term="centos-7 error install" scheme="http://zhouyanbo.com/tags/centos-7-error-install/"/>
+    
+  </entry>
   
   <entry>
     <title>Hexo 问题记录</title>

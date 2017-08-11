@@ -3,15 +3,20 @@
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     
-    <title>Tag: specification | 美好的一天</title>
+    <title>install centos 7 failed | 美好的一天</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="美好的一天">
-<meta property="og:url" content="http://zhouyanbo.com/tags/specification/index.html">
+    <meta name="description" content="起因最近公司新购几台服务器，需要先装好系统再拿到机房，前面两台430服务器安装系统都很顺利，在安装第三台730XD的时候报错failed to start switch root 解决经过检查，是由于找不到U盘加载不到镜像导致这个错误，730服务器上三个USB插孔（前面一个后面两个），不知道前后有什么区别 方案 在启动界面，按e进入编辑模式， 修改启动参数 vmlinuz initrd=initr">
+<meta name="keywords" content="centos-7 error install">
+<meta property="og:type" content="article">
+<meta property="og:title" content="install centos 7 failed">
+<meta property="og:url" content="http://zhouyanbo.com/2017/08/11/install-centos-7/index.html">
 <meta property="og:site_name" content="美好的一天">
+<meta property="og:description" content="起因最近公司新购几台服务器，需要先装好系统再拿到机房，前面两台430服务器安装系统都很顺利，在安装第三台730XD的时候报错failed to start switch root 解决经过检查，是由于找不到U盘加载不到镜像导致这个错误，730服务器上三个USB插孔（前面一个后面两个），不知道前后有什么区别 方案 在启动界面，按e进入编辑模式， 修改启动参数 vmlinuz initrd=initr">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-08-11T03:03:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="美好的一天">
+<meta name="twitter:title" content="install centos 7 failed">
+<meta name="twitter:description" content="起因最近公司新购几台服务器，需要先装好系统再拿到机房，前面两台430服务器安装系统都很顺利，在安装第三台730XD的时候报错failed to start switch root 解决经过检查，是由于找不到U盘加载不到镜像导致这个错误，730服务器上三个USB插孔（前面一个后面两个），不知道前后有什么区别 方案 在启动界面，按e进入编辑模式， 修改启动参数 vmlinuz initrd=initr">
     
 
     
@@ -178,45 +183,151 @@
 </aside>
 
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fa fa-tag"></i></span>
-        <h1 class="title">#specification</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+            <section id="main"><article id="post-install-centos-7" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/01/23/Specification/">Coding-Specification</a>
+        <h1 class="article-title" itemprop="name">
+            install centos 7 failed
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2017/01/23/Specification/">
-            <time datetime="2017-01-23T01:39:06.000Z" itemprop="datePublished">2017-01-23</time>
+        <a href="/2017/08/11/install-centos-7/">
+            <time datetime="2017-08-11T02:49:37.000Z" itemprop="datePublished">2017-08-11</time>
         </a>
     </div>
 
 
-                    
-                    
+                        
+                        
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/specification/">specification</a>
+        <a class="tag-link" href="/tags/centos-7-error-install/">centos-7 error install</a>
     </div>
 
-                </div>
-            </div>
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>最近公司新购几台服务器，需要先装好系统再拿到机房，前面两台430服务器安装系统都很顺利，在安装第三台730XD的时候报错failed to start switch root</p>
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>经过检查，是由于找不到U盘加载不到镜像导致这个错误，730服务器上三个USB插孔（前面一个后面两个），不知道前后有什么区别</p>
+<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><ul>
+<li>在启动界面，按e进入编辑模式，</li>
+<li>修改启动参数 vmlinuz initrd=initrd.img linux dd quiet</li>
+<li>重启会列出所有磁盘，包括U盘盘符，一般U盘会是/dev/sdb<em>，或者/dev/sda</em>，但是我发现这次U盘是/dev/sdc4</li>
+<li>接着重启，重新进入编辑模式，修改启动参数 vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sdc4 quiet 根据实际情况修改盘符</li>
+<li>ctrl + x 执行就能顺利看到安装界面</li>
+</ul>
+
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
 </div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="http://zhouyanbo.com/2017/08/11/install-centos-7/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://zhouyanbo.com/2017/08/11/install-centos-7/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/08/04/hexo-issues/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Hexo 问题记录</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">
@@ -267,11 +378,13 @@
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'http://zhouyanbo.com/2017/08/11/install-centos-7/';
+        
+        this.page.identifier = 'install-centos-7';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'zhouyb90' + '.disqus.com/count.js';
+        s.src = '//' + 'zhouyb90' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
