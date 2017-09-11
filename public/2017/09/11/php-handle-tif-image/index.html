@@ -3,15 +3,20 @@
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     
-    <title>Archive: 2017/3 | 美好的一天</title>
+    <title>处理TIF、EPS图片 | 美好的一天</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="美好的一天">
-<meta property="og:url" content="http://zhouyanbo.com/archives/2017/03/index.html">
+    <meta name="description" content="工作中需要处理图片，格式包括png、jpg、svg、gif、tif、eps，等等。。。 前面几种还知道第一次听说还有tif、eps格式的图片，看来还是见识少啊 在网上找资料发现很少有处理这两种格式的图片的，尤其是eps，最后找到imagemagick，看了介绍之后觉得真是功能强大啊，无所不能 具体安装及使用方法见官网 使用过程中发现用convert命令对tif图片处理时，会在目录下生成不止一个图片">
+<meta name="keywords" content="image tif eps">
+<meta property="og:type" content="article">
+<meta property="og:title" content="处理TIF、EPS图片">
+<meta property="og:url" content="http://zhouyanbo.com/2017/09/11/php-handle-tif-image/index.html">
 <meta property="og:site_name" content="美好的一天">
+<meta property="og:description" content="工作中需要处理图片，格式包括png、jpg、svg、gif、tif、eps，等等。。。 前面几种还知道第一次听说还有tif、eps格式的图片，看来还是见识少啊 在网上找资料发现很少有处理这两种格式的图片的，尤其是eps，最后找到imagemagick，看了介绍之后觉得真是功能强大啊，无所不能 具体安装及使用方法见官网 使用过程中发现用convert命令对tif图片处理时，会在目录下生成不止一个图片">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-09-11T09:06:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="美好的一天">
+<meta name="twitter:title" content="处理TIF、EPS图片">
+<meta name="twitter:description" content="工作中需要处理图片，格式包括png、jpg、svg、gif、tif、eps，等等。。。 前面几种还知道第一次听说还有tif、eps格式的图片，看来还是见识少啊 在网上找资料发现很少有处理这两种格式的图片的，尤其是eps，最后找到imagemagick，看了介绍之后觉得真是功能强大啊，无所不能 具体安装及使用方法见官网 使用过程中发现用convert命令对tif图片处理时，会在目录下生成不止一个图片">
     
 
     
@@ -178,76 +183,149 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fa fa-calendar"></i></span>
-                <h1 class="title">2017</h1>
-            </div>
+            <section id="main"><article id="post-php-handle-tif-image" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/03/16/curl-file/">CURL File</a>
+        <h1 class="article-title" itemprop="name">
+            处理TIF、EPS图片
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2017/03/16/curl-file/">
-            <time datetime="2017-03-16T02:21:06.000Z" itemprop="datePublished">2017-03-16</time>
+        <a href="/2017/09/11/php-handle-tif-image/">
+            <time datetime="2017-09-11T08:41:07.000Z" itemprop="datePublished">2017-09-11</time>
         </a>
     </div>
 
 
-                    
-                    
+                        
+                        
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/curl-laravel-post/">curl laravel post</a>
+        <a class="tag-link" href="/tags/image-tif-eps/">image tif eps</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/03/06/save-emoji/">数据库保存emoji表情</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>工作中需要处理图片，格式包括png、jpg、svg、gif、tif、eps，等等。。。 前面几种还知道<br>第一次听说还有tif、eps格式的图片，看来还是见识少啊</p>
+<p>在网上找资料发现很少有处理这两种格式的图片的，尤其是eps，最后找到<a href="https://www.imagemagick.org" target="_blank" rel="external">imagemagick</a>，看了介绍之后觉得真是功能强大啊，无所不能</p>
+<p>具体安装及使用方法见<a href="https://www.imagemagick.org/script/download.php" target="_blank" rel="external">官网</a></p>
+<p>使用过程中发现用convert命令对tif图片处理时，会在目录下生成不止一个图片</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">convert -resize 200 image.tif target_path</div></pre></td></tr></table></figure>
+<p>查资料发现tif是有图层的，一个tif图片可能会有多个layer，如果只要想生成一个图片的话，修改命令如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">convert -resize 200 image.tif[0] target_path</div></pre></td></tr></table></figure>
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/03/06/save-emoji/">
-            <time datetime="2017-03-06T03:56:01.000Z" itemprop="datePublished">2017-03-06</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/laravel-emoji/">laravel emoji</a>
-    </div>
-
-                </div>
-            </div>
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
 </div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="http://zhouyanbo.com/2017/09/11/php-handle-tif-image/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://zhouyanbo.com/2017/09/11/php-handle-tif-image/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/09/11/mysql-timestamp-auto-update/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">记录一次找bug经历（一）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">
@@ -298,11 +376,13 @@
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'http://zhouyanbo.com/2017/09/11/php-handle-tif-image/';
+        
+        this.page.identifier = 'php-handle-tif-image';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'zhouyb90' + '.disqus.com/count.js';
+        s.src = '//' + 'zhouyb90' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();

@@ -3,15 +3,20 @@
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     
-    <title>Archive: 2017/3 | 美好的一天</title>
+    <title>记录一次找bug经历（一） | 美好的一天</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="美好的一天">
-<meta property="og:url" content="http://zhouyanbo.com/archives/2017/03/index.html">
+    <meta name="description" content="起因A：发现一个bugB：什么bugA：我们项目中（测试环境）有个接口时间会自动跟着更新时间变动，但是在本地测试是好的B：详细描述下呢A：有个发布动态的功能，其中有发布时、更新时间、新闻时间三个字段，当在后台通过审核后，新闻时间会跟着更新时间一起变B：有没有检查代码有什么不同呢A：检查过了，本地跟线上的代码版本一致B：有没有考虑过哪里出了问题A：看一下线上的数据表吧，感觉数据表有问题B：当时更新数">
+<meta name="keywords" content="mysql auto update timestamp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录一次找bug经历（一）">
+<meta property="og:url" content="http://zhouyanbo.com/2017/09/11/mysql-timestamp-auto-update/index.html">
 <meta property="og:site_name" content="美好的一天">
+<meta property="og:description" content="起因A：发现一个bugB：什么bugA：我们项目中（测试环境）有个接口时间会自动跟着更新时间变动，但是在本地测试是好的B：详细描述下呢A：有个发布动态的功能，其中有发布时、更新时间、新闻时间三个字段，当在后台通过审核后，新闻时间会跟着更新时间一起变B：有没有检查代码有什么不同呢A：检查过了，本地跟线上的代码版本一致B：有没有考虑过哪里出了问题A：看一下线上的数据表吧，感觉数据表有问题B：当时更新数">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-09-11T08:37:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="美好的一天">
+<meta name="twitter:title" content="记录一次找bug经历（一）">
+<meta name="twitter:description" content="起因A：发现一个bugB：什么bugA：我们项目中（测试环境）有个接口时间会自动跟着更新时间变动，但是在本地测试是好的B：详细描述下呢A：有个发布动态的功能，其中有发布时、更新时间、新闻时间三个字段，当在后台通过审核后，新闻时间会跟着更新时间一起变B：有没有检查代码有什么不同呢A：检查过了，本地跟线上的代码版本一致B：有没有考虑过哪里出了问题A：看一下线上的数据表吧，感觉数据表有问题B：当时更新数">
     
 
     
@@ -178,76 +183,164 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fa fa-calendar"></i></span>
-                <h1 class="title">2017</h1>
-            </div>
+            <section id="main"><article id="post-mysql-timestamp-auto-update" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/03/16/curl-file/">CURL File</a>
+        <h1 class="article-title" itemprop="name">
+            记录一次找bug经历（一）
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2017/03/16/curl-file/">
-            <time datetime="2017-03-16T02:21:06.000Z" itemprop="datePublished">2017-03-16</time>
+        <a href="/2017/09/11/mysql-timestamp-auto-update/">
+            <time datetime="2017-09-11T08:07:35.000Z" itemprop="datePublished">2017-09-11</time>
         </a>
     </div>
 
 
-                    
-                    
+                        
+                        
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/curl-laravel-post/">curl laravel post</a>
+        <a class="tag-link" href="/tags/mysql-auto-update-timestamp/">mysql auto update timestamp</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/03/06/save-emoji/">数据库保存emoji表情</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>A：发现一个bug<br>B：什么bug<br>A：我们项目中（测试环境）有个接口时间会自动跟着更新时间变动，但是在本地测试是好的<br>B：详细描述下呢<br>A：有个发布动态的功能，其中有发布时、更新时间、新闻时间三个字段，当在后台通过审核后，新闻时间会跟着更新时间一起变<br>B：有没有检查代码有什么不同呢<br>A：检查过了，本地跟线上的代码版本一致<br>B：有没有考虑过哪里出了问题<br>A：看一下线上的数据表吧，感觉数据表有问题<br>B：当时更新数据表是跟本地同步的啊，不能出问题啊，等我有时间看下吧</p>
+<h3 id="解决过程"><a href="#解决过程" class="headerlink" title="解决过程"></a>解决过程</h3><p>由于当时忙，想了下，没想到啥原因，简单看了下代码，确实没问题，暂时放一放了，晚上找到运维看了下线上数据库</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">时间字段 timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON <span class="keyword">UPDATE</span> <span class="keyword">CURRENT_TIMESTAMP</span></div></pre></td></tr></table></figure>
+<p>what？？？ 不知道怎么这个字段加了在更新的时候修改为当前时间，今后要注意这种小细节，好在这次找bug的时间没有很长</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>当把数据表字段设置成 dafault CURRENT_TIMESTAMP 会在数据插入的时候，自动设置成当前时间</p>
+<h5 id="数据表中时间字段更新的方法"><a href="#数据表中时间字段更新的方法" class="headerlink" title="数据表中时间字段更新的方法"></a>数据表中时间字段更新的方法</h5><ol>
+<li><p>在代码中更新字段</p>
+</li>
+<li><p>设置字段的Extra列on update CURRENT_TIMESTAMP</p>
+</li>
+<li><p>设置mysql定时任务</p>
+</li>
+</ol>
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/03/06/save-emoji/">
-            <time datetime="2017-03-06T03:56:01.000Z" itemprop="datePublished">2017-03-06</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/laravel-emoji/">laravel emoji</a>
-    </div>
-
-                </div>
-            </div>
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
 </div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="http://zhouyanbo.com/2017/09/11/mysql-timestamp-auto-update/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://zhouyanbo.com/2017/09/11/mysql-timestamp-auto-update/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/09/11/php-handle-tif-image/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    处理TIF、EPS图片
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2017/08/11/install-centos-7/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">install centos 7 failed</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">
@@ -298,11 +391,13 @@
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'http://zhouyanbo.com/2017/09/11/mysql-timestamp-auto-update/';
+        
+        this.page.identifier = 'mysql-timestamp-auto-update';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'zhouyb90' + '.disqus.com/count.js';
+        s.src = '//' + 'zhouyb90' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zhouyanbo.com/"/>
-  <updated>2017-08-11T03:15:42.000Z</updated>
+  <updated>2017-09-11T09:06:32.000Z</updated>
   <id>http://zhouyanbo.com/</id>
   
   <author>
@@ -14,6 +14,67 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>处理TIF、EPS图片</title>
+    <link href="http://zhouyanbo.com/2017/09/11/php-handle-tif-image/"/>
+    <id>http://zhouyanbo.com/2017/09/11/php-handle-tif-image/</id>
+    <published>2017-09-11T08:41:07.000Z</published>
+    <updated>2017-09-11T09:06:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>工作中需要处理图片，格式包括png、jpg、svg、gif、tif、eps，等等。。。 前面几种还知道<br>第一次听说还有tif、eps格式的图片，看来还是见识少啊</p>
+<p>在网上找资料发现很少有处理这两种格式的图片的，尤其是eps，最后找到<a href="https://www.imagemagick.org" target="_blank" rel="external">imagemagick</a>，看了介绍之后觉得真是功能强大啊，无所不能</p>
+<p>具体安装及使用方法见<a href="https://www.imagemagick.org/script/download.php" target="_blank" rel="external">官网</a></p>
+<p>使用过程中发现用convert命令对tif图片处理时，会在目录下生成不止一个图片</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">convert -resize 200 image.tif target_path</div></pre></td></tr></table></figure>
+<p>查资料发现tif是有图层的，一个tif图片可能会有多个layer，如果只要想生成一个图片的话，修改命令如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">convert -resize 200 image.tif[0] target_path</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;工作中需要处理图片，格式包括png、jpg、svg、gif、tif、eps，等等。。。 前面几种还知道&lt;br&gt;第一次听说还有tif、eps格式的图片，看来还是见识少啊&lt;/p&gt;
+&lt;p&gt;在网上找资料发现很少有处理这两种格式的图片的，尤其是eps，最后找到&lt;a href=&quot;htt
+    
+    </summary>
+    
+    
+      <category term="image tif eps" scheme="http://zhouyanbo.com/tags/image-tif-eps/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>记录一次找bug经历（一）</title>
+    <link href="http://zhouyanbo.com/2017/09/11/mysql-timestamp-auto-update/"/>
+    <id>http://zhouyanbo.com/2017/09/11/mysql-timestamp-auto-update/</id>
+    <published>2017-09-11T08:07:35.000Z</published>
+    <updated>2017-09-11T08:37:57.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>A：发现一个bug<br>B：什么bug<br>A：我们项目中（测试环境）有个接口时间会自动跟着更新时间变动，但是在本地测试是好的<br>B：详细描述下呢<br>A：有个发布动态的功能，其中有发布时、更新时间、新闻时间三个字段，当在后台通过审核后，新闻时间会跟着更新时间一起变<br>B：有没有检查代码有什么不同呢<br>A：检查过了，本地跟线上的代码版本一致<br>B：有没有考虑过哪里出了问题<br>A：看一下线上的数据表吧，感觉数据表有问题<br>B：当时更新数据表是跟本地同步的啊，不能出问题啊，等我有时间看下吧</p>
+<h3 id="解决过程"><a href="#解决过程" class="headerlink" title="解决过程"></a>解决过程</h3><p>由于当时忙，想了下，没想到啥原因，简单看了下代码，确实没问题，暂时放一放了，晚上找到运维看了下线上数据库</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">时间字段 timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON <span class="keyword">UPDATE</span> <span class="keyword">CURRENT_TIMESTAMP</span></div></pre></td></tr></table></figure>
+<p>what？？？ 不知道怎么这个字段加了在更新的时候修改为当前时间，今后要注意这种小细节，好在这次找bug的时间没有很长</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>当把数据表字段设置成 dafault CURRENT_TIMESTAMP 会在数据插入的时候，自动设置成当前时间</p>
+<h5 id="数据表中时间字段更新的方法"><a href="#数据表中时间字段更新的方法" class="headerlink" title="数据表中时间字段更新的方法"></a>数据表中时间字段更新的方法</h5><ol>
+<li><p>在代码中更新字段</p>
+</li>
+<li><p>设置字段的Extra列on update CURRENT_TIMESTAMP</p>
+</li>
+<li><p>设置mysql定时任务</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h3&gt;&lt;p&gt;A：发现一个bug&lt;br&gt;B：什么bug&lt;br&gt;A：我们项目中（测试环境）有个接口时间会自动跟着更新时间变动，但是在本地测试是好的&lt;br&gt;B
+    
+    </summary>
+    
+    
+      <category term="mysql auto update timestamp" scheme="http://zhouyanbo.com/tags/mysql-auto-update-timestamp/"/>
+    
+  </entry>
   
   <entry>
     <title>install centos 7 failed</title>
