@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zhouyanbo.com/"/>
-  <updated>2017-09-11T09:06:32.000Z</updated>
+  <updated>2017-11-10T07:37:19.000Z</updated>
   <id>http://zhouyanbo.com/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Qt creater</title>
+    <link href="http://zhouyanbo.com/2017/11/10/qt-creater-error/"/>
+    <id>http://zhouyanbo.com/2017/11/10/qt-creater-error/</id>
+    <published>2017-11-10T07:15:33.000Z</published>
+    <updated>2017-11-10T07:37:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>Qt Creator 包括项目生成向导、高级的 C++ 代码编辑器、浏览文件及类的工具、集成了 Qt Designer、Qt Assistant、Qt Linguist、图形化的 GDB 调试前端，集成 qmake 构建工具等</p>
+</blockquote>
+<p>最近空闲时间在看python相关的资料，基础部分大致看了下，自己用python写了几个小程序，都是些文件、字符串的操作，接下来想用Python做一些小的桌面程序，就有了下面的一段故事</p>
+<p>查阅一些资料最后决定使用pyqt5来做开发</p>
+<h4 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h4><ol>
+<li>系统 Mac OS X EI</li>
+<li>Qt5.9.2 </li>
+<li>Qt creater4.4.1</li>
+</ol>
+<p>初始想法是做一个计算器桌面程序，软件安装完毕之后，打开Qt creater配置qt version，构建套件就用默认的桌面就行，按照教程创建项目，最后进入主界面，<br>发现项目下只有一个demo.pro文件，打开demo.pro文件所在的文件夹，发现.ui、<br>.cpp、.h文件都没显示出来，也不能正常运行，小白第一次接触不知道啥原因，遂Google，各种方式搜索，大概找了大半天时间的资料，没有发现有相同问题的同学，未果，搁置</p>
+<p>第二天到公司做完工作上的任务继续搜资料，偶然看到一句话</p>
+<p><strong>编译器建议选择mac的clang编译器，使用苹果自带的编译器，程序运行会相对稳定些，避免平台带来的差异。</strong></p>
+<p>于是去偏好设置中改了下编译器，改成了自带的clang编译器（原来用的gcc），保存，神奇了，项目文件都显示出来了，并且也能正常运行了，对于刚接触Qt的我来说还不知道为啥，等有时间深入了解下吧，目前只想用来布局一个界面</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;Qt Creator 包括项目生成向导、高级的 C++ 代码编辑器、浏览文件及类的工具、集成了 Qt Designer、Qt Assistant、Qt Linguist、图形化的 GDB 调试前端，集成 qmake 构建工具等&lt;/p&gt;
+&lt;/bloc
+    
+    </summary>
+    
+    
+      <category term="qt creater" scheme="http://zhouyanbo.com/tags/qt-creater/"/>
+    
+  </entry>
   
   <entry>
     <title>处理TIF、EPS图片</title>
