@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zhouyanbo.com/"/>
-  <updated>2017-11-10T07:37:19.000Z</updated>
+  <updated>2017-12-14T10:07:43.000Z</updated>
   <id>http://zhouyanbo.com/</id>
   
   <author>
@@ -14,6 +14,69 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ngrok服务器搭建</title>
+    <link href="http://zhouyanbo.com/2017/12/14/ngrok-install/"/>
+    <id>http://zhouyanbo.com/2017/12/14/ngrok-install/</id>
+    <published>2017-12-14T09:29:55.000Z</published>
+    <updated>2017-12-14T10:07:43.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>记录ngrok的安装过程</p>
+</blockquote>
+<h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><ol>
+<li>一台linode服务器，系统 Centos 7 amd64</li>
+<li>一个公网域名 zhouyanbo.com</li>
+</ol>
+<h4 id="一、安装软件"><a href="#一、安装软件" class="headerlink" title="一、安装软件"></a>一、安装软件</h4><h5 id="1-安装gcc"><a href="#1-安装gcc" class="headerlink" title="1. 安装gcc"></a>1. 安装gcc</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install gcc</div></pre></td></tr></table></figure>
+<h5 id="2-安装go环境"><a href="#2-安装go环境" class="headerlink" title="2. 安装go环境"></a>2. 安装go环境</h5><p>下载最新的go版本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz</div></pre></td></tr></table></figure></p>
+<p>解压<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -C /usr/<span class="built_in">local</span>/ -zxvf go1.9.2.linux-amd64.tar.gz</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>添加环境变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/profile</div></pre></td></tr></table></figure></p>
+<p>在文件中写入以下两行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export GOROOT=/usr/local/go</div><div class="line">export PATH=$PATH:$GOROOT/bin</div></pre></td></tr></table></figure></p>
+<p>保存退出，执行下面命令使生效<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source /etc/profile</div></pre></td></tr></table></figure></p>
+<p>命令行中输入go version 输出版本号即为安装成功</p>
+<h4 id="二、在服务器上搭建ngrok服务"><a href="#二、在服务器上搭建ngrok服务" class="headerlink" title="二、在服务器上搭建ngrok服务"></a>二、在服务器上搭建ngrok服务</h4><h5 id="1-下载ngrok源码"><a href="#1-下载ngrok源码" class="headerlink" title="1. 下载ngrok源码"></a>1. 下载ngrok源码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/src</div><div class="line">git clone https://github.com/inconshreveable/ngrok.git</div></pre></td></tr></table></figure>
+<h5 id="2-生成证书"><a href="#2-生成证书" class="headerlink" title="2. 生成证书"></a>2. 生成证书</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">cd ngrok</div><div class="line"></div><div class="line">export NGROK_DOMAIN=&quot;zhouyanbo.com&quot;</div><div class="line"></div><div class="line">openssl genrsa -out rootCA.key 2048</div><div class="line">openssl req -x509 -new -nodes -key rootCA.key -subj &quot;/CN=$NGROK_DOMAIN&quot; -days 5000 -out rootCA.pem</div><div class="line">openssl genrsa -out device.key 2048</div><div class="line">openssl req -new -key device.key -subj &quot;/CN=$NGROK_DOMAIN&quot; -out device.csr</div><div class="line">openssl x509 -req -in device.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out device.crt -days 5000</div></pre></td></tr></table></figure>
+<p>替换原有证书</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cp rootCA.pem assets/client/tls/ngrokroot.crt</div><div class="line">cp device.crt assets/server/tls/snakeoil.crt</div><div class="line">cp device.key assets/server/tls/snakeoil.key</div></pre></td></tr></table></figure>
+<h5 id="3-服务端编译生成ngrokd"><a href="#3-服务端编译生成ngrokd" class="headerlink" title="3. 服务端编译生成ngrokd"></a>3. 服务端编译生成ngrokd</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GOOS=linux GOARCH=amd64 make release-server</div></pre></td></tr></table></figure>
+<p>编译成功后在当前目录的bin目录下可找到ngrokd文件</p>
+<h5 id="4-编译生成ngrok客户端"><a href="#4-编译生成ngrok客户端" class="headerlink" title="4. 编译生成ngrok客户端"></a>4. 编译生成ngrok客户端</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GOOS=darwin GOARCH=amd64 make release-client</div></pre></td></tr></table></figure>
+<p>完成后会在 /usr/local/src/ngrok/bin/darwin_amd64/ 下发现 ngrok 文件, 用rsync命令拷贝文件到Mac上</p>
+<h5 id="5-mac上编写ngrok配置文件"><a href="#5-mac上编写ngrok配置文件" class="headerlink" title="5. mac上编写ngrok配置文件"></a>5. mac上编写ngrok配置文件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">server_addr: &quot;zhouyanbo.com:8083&quot;</div><div class="line">trust_host_root_certs: false</div><div class="line">tunnels:</div><div class="line">  http:</div><div class="line">    subdomain: &quot;ngrok&quot;</div><div class="line">    proto:</div><div class="line">      http: &quot;8090&quot;</div><div class="line">      </div><div class="line">  https:</div><div class="line">    subdomain: &quot;ngrok&quot;</div><div class="line">    proto:</div><div class="line">      https: &quot;8091&quot;</div></pre></td></tr></table></figure>
+<h5 id="6-服务端开启服务，客户端连接"><a href="#6-服务端开启服务，客户端连接" class="headerlink" title="6. 服务端开启服务，客户端连接"></a>6. 服务端开启服务，客户端连接</h5><p>服务端<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./bin/ngrokd -tlsKey=&quot;assets/server/tls/snakeoil.key&quot; -tlsCrt=&quot;assets/server/tls/snakeoil.crt&quot; -domain=&quot;$NGROK_DOMAIN&quot;  -httpAddr=&quot;:80&quot; -httpsAddr=&quot;:8082&quot; -tunnelAddr=&quot;:8083&quot;</div></pre></td></tr></table></figure></p>
+<p>客户端<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./ngrok -config ngrok.cfg start http https</div></pre></td></tr></table></figure></p>
+<p>连接成功后会显示如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Tunnel Status                 online</div><div class="line">Version                       1.7/1.7</div><div class="line">Forwarding                    https://ngrok.zhouyanbo.com:8082 -&gt; 127.0.0.1:8091</div><div class="line">Forwarding                    http://ngrok.zhouyanbo.com -&gt; 127.0.0.1:8090</div><div class="line">Web Interface                 127.0.0.1:4040</div><div class="line"># Conn                        0</div><div class="line">Avg Conn Time                 0.00ms</div></pre></td></tr></table></figure>
+<p>接下来在本地搭建项目，开启8090端口，就可以通过ngrok.zhouyanbo.com来访问了，以上步骤参考<a href="https://ubock.com/article/31-2#clist" target="_blank" rel="external">这里</a></p>
+<h4 id="三、问题"><a href="#三、问题" class="headerlink" title="三、问题"></a>三、问题</h4><p>由于zhouyanbo.com放有我的个人bolg网站，使用80端口，搭建ngrok服务是为了微信公众号服务端在本地调试功能，只能使用80端口，两个办法解决</p>
+<ol>
+<li>再买个域名</li>
+<li>调试微信公众号的时候关闭blog站点</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;记录ngrok的安装过程&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;准备&quot;&gt;&lt;a href=&quot;#准备&quot; class=&quot;headerlink&quot; title=&quot;准备&quot;&gt;&lt;/a&gt;准备&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;一台linode服务器，系统 Centos 7 amd64&lt;/li&gt;
+&lt;li&gt;一个公网域名 zhouyanbo.com&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&quot;一、安装软件&quot;&gt;&lt;a href=&quot;#一、安装软件&quot; class=&quot;headerlink&quot; title=&quot;一、安装软件&quot;&gt;&lt;/a&gt;一、安装软件&lt;/h4&gt;&lt;h5 id=&quot;1-安装gcc&quot;&gt;&lt;a href=&quot;#1-安装gcc&quot; class=&quot;headerlink&quot; title=&quot;1. 安装gcc&quot;&gt;&lt;/a&gt;1. 安装gcc&lt;/h5&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;yum install gcc&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h5 id=&quot;2-安装go环境&quot;&gt;&lt;a href=&quot;#2-安装go环境&quot; class=&quot;headerlink&quot; title=&quot;2. 安装go环境&quot;&gt;&lt;/a&gt;2. 安装go环境&lt;/h5&gt;&lt;p&gt;下载最新的go版本&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;wget https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;解压&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;tar -C /usr/&lt;span class=&quot;built_in&quot;&gt;local&lt;/span&gt;/ -zxvf go1.9.2.linux-amd64.tar.gz&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="ngrok centos7 mac" scheme="http://zhouyanbo.com/tags/ngrok-centos7-mac/"/>
+    
+  </entry>
   
   <entry>
     <title>Qt creater</title>
