@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://zhouyanbo.com/2018/01/23/nginx-proxy-pass/</loc>
+    
+    <lastmod>2018-01-23T07:41:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://zhouyanbo.com/2017/12/14/ngrok-install/</loc>
     
     <lastmod>2017-12-14T10:07:43.000Z</lastmod>
@@ -30,13 +37,6 @@
   </url>
   
   <url>
-    <loc>http://zhouyanbo.com/2017/08/04/hexo-issues/</loc>
-    
-    <lastmod>2017-08-11T03:15:42.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://zhouyanbo.com/2017/08/11/install-centos-7/</loc>
     
     <lastmod>2017-08-11T03:15:42.000Z</lastmod>
@@ -44,9 +44,9 @@
   </url>
   
   <url>
-    <loc>http://zhouyanbo.com/2017/01/23/Specification/</loc>
+    <loc>http://zhouyanbo.com/2017/08/04/hexo-issues/</loc>
     
-    <lastmod>2017-08-04T07:46:42.000Z</lastmod>
+    <lastmod>2017-08-11T03:15:42.000Z</lastmod>
     
   </url>
   
@@ -72,6 +72,13 @@
   </url>
   
   <url>
+    <loc>http://zhouyanbo.com/2017/01/23/Specification/</loc>
+    
+    <lastmod>2017-08-04T07:46:42.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://zhouyanbo.com/about/index.html</loc>
     
     <lastmod>2017-08-04T07:46:42.000Z</lastmod>
@@ -79,14 +86,14 @@
   </url>
   
   <url>
-    <loc>http://zhouyanbo.com/categories/index.html</loc>
+    <loc>http://zhouyanbo.com/tags/index.html</loc>
     
     <lastmod>2017-08-04T07:46:42.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://zhouyanbo.com/tags/index.html</loc>
+    <loc>http://zhouyanbo.com/categories/index.html</loc>
     
     <lastmod>2017-08-04T07:46:42.000Z</lastmod>
     

@@ -3,15 +3,20 @@
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     
-    <title>Archive: 2017/12 | 美好的一天</title>
+    <title>nginx 反向代理配置 | 美好的一天</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="美好的一天">
-<meta property="og:url" content="http://zhouyanbo.com/archives/2017/12/index.html">
+    <meta name="description" content="条件两台能互相通讯的服务器，一台内网地址192.168.1.100，另外一台192.168.1.101，192.168.1.100服务器上设置反向代理，当用户访问地址时，转发到192.168.1.101服务器上 服务器配置123456789101112server &amp;#123;    listen 80;    server_name www.zhouyanbo.com;    location">
+<meta name="keywords" content="nginx proxy_pass">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx 反向代理配置">
+<meta property="og:url" content="http://zhouyanbo.com/2018/01/23/nginx-proxy-pass/index.html">
 <meta property="og:site_name" content="美好的一天">
+<meta property="og:description" content="条件两台能互相通讯的服务器，一台内网地址192.168.1.100，另外一台192.168.1.101，192.168.1.100服务器上设置反向代理，当用户访问地址时，转发到192.168.1.101服务器上 服务器配置123456789101112server &amp;#123;    listen 80;    server_name www.zhouyanbo.com;    location">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-01-23T07:41:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="美好的一天">
+<meta name="twitter:title" content="nginx 反向代理配置">
+<meta name="twitter:description" content="条件两台能互相通讯的服务器，一台内网地址192.168.1.100，另外一台192.168.1.101，192.168.1.100服务器上设置反向代理，当用户访问地址时，转发到192.168.1.101服务器上 服务器配置123456789101112server &amp;#123;    listen 80;    server_name www.zhouyanbo.com;    location">
     
 
     
@@ -178,45 +183,145 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fa fa-calendar"></i></span>
-                <h1 class="title">2017</h1>
-            </div>
+            <section id="main"><article id="post-nginx-proxy-pass" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/12/14/ngrok-install/">ngrok服务器搭建</a>
+        <h1 class="article-title" itemprop="name">
+            nginx 反向代理配置
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2017/12/14/ngrok-install/">
-            <time datetime="2017-12-14T09:29:55.000Z" itemprop="datePublished">2017-12-14</time>
+        <a href="/2018/01/23/nginx-proxy-pass/">
+            <time datetime="2018-01-23T07:18:30.000Z" itemprop="datePublished">2018-01-23</time>
         </a>
     </div>
 
 
-                    
-                    
+                        
+                        
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/ngrok-centos7-mac/">ngrok centos7 mac</a>
+        <a class="tag-link" href="/tags/nginx-proxy-pass/">nginx proxy_pass</a>
     </div>
 
-                </div>
-            </div>
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h3><p>两台能互相通讯的服务器，一台内网地址192.168.1.100，另外一台192.168.1.101，192.168.1.100服务器上设置反向代理，当用户访问地址时，转发到192.168.1.101服务器上</p>
+<h3 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line"></div><div class="line">    server_name www.zhouyanbo.com;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">       proxy_set_header X-Real-IP  $remote_addr;</div><div class="line">       proxy_set_header X-Forwarded-For $remote_addr;</div><div class="line">       proxy_set_header Host $host;</div><div class="line">       proxy_pass http://192.168.1.101:8080;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>192.168.1.101服务器上正常配置站点</p>
+
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
 </div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="http://zhouyanbo.com/2018/01/23/nginx-proxy-pass/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://zhouyanbo.com/2018/01/23/nginx-proxy-pass/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/12/14/ngrok-install/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">ngrok服务器搭建</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">
@@ -267,11 +372,13 @@
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'http://zhouyanbo.com/2018/01/23/nginx-proxy-pass/';
+        
+        this.page.identifier = 'nginx-proxy-pass';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'zhouyb90' + '.disqus.com/count.js';
+        s.src = '//' + 'zhouyb90' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
