@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zhouyanbo.com/"/>
-  <updated>2018-01-23T07:41:56.000Z</updated>
+  <updated>2018-01-25T05:55:12.000Z</updated>
   <id>http://zhouyanbo.com/</id>
   
   <author>
@@ -14,6 +14,48 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>php 502</title>
+    <link href="http://zhouyanbo.com/2018/01/25/php-502-bad-gatewway/"/>
+    <id>http://zhouyanbo.com/2018/01/25/php-502-bad-gatewway/</id>
+    <published>2018-01-25T05:33:20.000Z</published>
+    <updated>2018-01-25T05:55:12.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>记录一次bug查找经历</strong></p>
+<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>偶然间打开一个以前的项目，浏览器显示 502 Bad Gateway，最开始以为php-fpm没有启动，后来发现不是这个原因</p>
+<h3 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h3><ol>
+<li>nginx、php-fpm都服务正常</li>
+<li>配置无误，访问root目录下的html文件都能正常访问，php文件都是502，定位到php-fpm出问题</li>
+<li><p>查看nginx错误日志，报错信息(我电脑php-fpm监听的9011端口)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[error] 16914#16914: *1314340 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: ****, server: ****, request: &quot;GET **** HTTP/1.1&quot;, upstream: &quot;fastcgi://127.0.0.1:9011&quot;, host: &quot;zhouyanbo.com&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>检查php-fpm.log文件(一般位置在/var/log/php-fpm/error.log)，没有错误信息，修改/etc/php-fpm.d/www.conf配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">catch_workers_output = yes</div></pre></td></tr></table></figure>
+</li>
+<li><p>重新请求查看php-fpm.log日志，报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[pool www] child 31776 said into stderr: &quot;ERROR: Connection disallowed: IP address &apos;127.0.0.1&apos; has been dropped.&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>最后修改/etc/php-fpm.d/www.conf配置，原来是any改为127.0.0.1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">listen.allowed_clients = 127.0.0.1</div></pre></td></tr></table></figure>
+</li>
+<li><p>重启能正常访问</p>
+</li>
+</ol>
+<h3 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h3><p>按道理说listen.allowed_clients = any也是能正常访问的，any包括了所有，但是莫名其妙会出现502的问题，暂时修改为127.0.0.1能正常访问了，以后有时间再研究下，先做下记录</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;记录一次bug查找经历&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h3&gt;&lt;p&gt;偶然间打开一个以前的项目，浏览器显示 502 Bad Gateway
+    
+    </summary>
+    
+    
+      <category term="php 502" scheme="http://zhouyanbo.com/tags/php-502/"/>
+    
+  </entry>
   
   <entry>
     <title>nginx 反向代理配置</title>

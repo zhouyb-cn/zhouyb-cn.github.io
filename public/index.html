@@ -150,11 +150,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                11
+                12
                 <span>posts</span>
             </div>
             <div class="article-info-block">
-                10
+                11
                 <span>tags</span>
             </div>
         </div>
@@ -179,6 +179,140 @@
 
             
             <section id="main">
+    <article id="post-php-502-bad-gatewway" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/01/25/php-502-bad-gatewway/">php 502</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/01/25/php-502-bad-gatewway/">
+            <time datetime="2018-01-25T05:33:20.000Z" itemprop="datePublished">2018-01-25</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/php-502/">php 502</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><strong>记录一次bug查找经历</strong></p>
+<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>偶然间打开一个以前的项目，浏览器显示 502 Bad Gateway，最开始以为php-fpm没有启动，后来发现不是这个原因</p>
+<h3 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h3><ol>
+<li>nginx、php-fpm都服务正常</li>
+<li>配置无误，访问root目录下的html文件都能正常访问，php文件都是502，定位到php-fpm出问题</li>
+<li><p>查看nginx错误日志，报错信息(我电脑php-fpm监听的9011端口)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[error] 16914#16914: *1314340 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: ****, server: ****, request: &quot;GET **** HTTP/1.1&quot;, upstream: &quot;fastcgi://127.0.0.1:9011&quot;, host: &quot;zhouyanbo.com&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>检查php-fpm.log文件(一般位置在/var/log/php-fpm/error.log)，没有错误信息，修改/etc/php-fpm.d/www.conf配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">catch_workers_output = yes</div></pre></td></tr></table></figure>
+</li>
+<li><p>重新请求查看php-fpm.log日志，报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[pool www] child 31776 said into stderr: &quot;ERROR: Connection disallowed: IP address &apos;127.0.0.1&apos; has been dropped.&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>最后修改/etc/php-fpm.d/www.conf配置，原来是any改为127.0.0.1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">listen.allowed_clients = 127.0.0.1</div></pre></td></tr></table></figure>
+</li>
+<li><p>重启能正常访问</p>
+</li>
+</ol>
+<h3 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h3><p>按道理说listen.allowed_clients = any也是能正常访问的，any包括了所有，但是莫名其妙会出现502的问题，暂时修改为127.0.0.1能正常访问了，以后有时间再研究下，先做下记录</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="http://zhouyanbo.com/2018/01/25/php-502-bad-gatewway/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://zhouyanbo.com/2018/01/25/php-502-bad-gatewway/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-nginx-proxy-pass" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -1273,130 +1407,6 @@
 
 
 
-    <article id="post-Specification" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/01/23/Specification/">Coding-Specification</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/01/23/Specification/">
-            <time datetime="2017-01-23T01:39:06.000Z" itemprop="datePublished">2017-01-23</time>
-        </a>
-    </div>
-
-
-                        
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/specification/">specification</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><h3 id="编写目的"><a href="#编写目的" class="headerlink" title="编写目的"></a>编写目的</h3><blockquote>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为了更好的提高技术部的工作效率，保证开发的有效性和合理性，并可最大程度的提高程序代码的可读性和可重复利用性，指定此规范。开发团队根据自己的实际情况，可以对本规范进行补充或裁减。本规则会不断的进行适当的改进，以适应最新的开发环境。</p>
-</blockquote>
-<ul>
-<li>程序员可以了解任何代码，弄清程序的状况； </li>
-<li>新人可以很快的适应环境； </li>
-<li>防止新接触PHP的人出于节省时间的需要，自创一套风格并养成终生的习惯； </li>
-<li>防止新接触PHP的人一次次的犯同样的错误； </li>
-<li>在一致的环境下，人们可以减少犯错的机会；</li>
-</ul></p>
-            <p class="article-more-link">
-                <a href="/2017/01/23/Specification/#more">Read More</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-    <div class="a2a_kit a2a_default_style">
-    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
-    <span class="a2a_divider"></span>
-    <a class="a2a_button_facebook"></a>
-    <a class="a2a_button_twitter"></a>
-    <a class="a2a_button_google_plus"></a>
-    <a class="a2a_button_pinterest"></a>
-    <a class="a2a_button_tumblr"></a>
-</div>
-<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
-<style>
-    .a2a_menu {
-        border-radius: 4px;
-    }
-    .a2a_menu a {
-        margin: 2px 0;
-        font-size: 14px;
-        line-height: 16px;
-        border-radius: 4px;
-        color: inherit !important;
-        font-family: 'Microsoft Yahei';
-    }
-    #a2apage_dropdown {
-        margin: 10px 0;
-    }
-    .a2a_mini_services {
-        padding: 10px;
-    }
-    a.a2a_i,
-    i.a2a_i {
-        width: 122px;
-        line-height: 16px;
-    }
-    a.a2a_i .a2a_svg,
-    a.a2a_more .a2a_svg {
-        width: 16px;
-        height: 16px;
-        line-height: 16px;
-        vertical-align: top;
-        background-size: 16px;
-    }
-    a.a2a_i {
-        border: none !important;
-    }
-    a.a2a_menu_show_more_less {
-        margin: 0;
-        padding: 10px 0;
-        line-height: 16px;
-    }
-    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
-    .a2a_mini_services{*+height:1%;}
-</style>
-
-</div>
-
-            
-    
-        <a href="http://zhouyanbo.com/2017/01/23/Specification/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://zhouyanbo.com/2017/01/23/Specification/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
     <nav id="page-nav">
         <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
@@ -1410,7 +1420,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1419,7 +1429,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos-7-error-install/">centos-7 error install</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/curl-laravel-post/">curl laravel post</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo-issues/">hexo issues</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/image-tif-eps/">image tif eps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel-emoji/">laravel emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql-auto-update-timestamp/">mysql auto update timestamp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx-proxy-pass/">nginx proxy_pass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok-centos7-mac/">ngrok centos7 mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt-creater/">qt creater</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/specification/">specification</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos-7-error-install/">centos-7 error install</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/curl-laravel-post/">curl laravel post</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo-issues/">hexo issues</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/image-tif-eps/">image tif eps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel-emoji/">laravel emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql-auto-update-timestamp/">mysql auto update timestamp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx-proxy-pass/">nginx proxy_pass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok-centos7-mac/">ngrok centos7 mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-502/">php 502</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt-creater/">qt creater</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/specification/">specification</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1428,7 +1438,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/centos-7-error-install/" style="font-size: 10px;">centos-7 error install</a> <a href="/tags/curl-laravel-post/" style="font-size: 10px;">curl laravel post</a> <a href="/tags/hexo-issues/" style="font-size: 10px;">hexo issues</a> <a href="/tags/image-tif-eps/" style="font-size: 10px;">image tif eps</a> <a href="/tags/laravel-emoji/" style="font-size: 10px;">laravel emoji</a> <a href="/tags/mysql-auto-update-timestamp/" style="font-size: 10px;">mysql auto update timestamp</a> <a href="/tags/nginx-proxy-pass/" style="font-size: 10px;">nginx proxy_pass</a> <a href="/tags/ngrok-centos7-mac/" style="font-size: 10px;">ngrok centos7 mac</a> <a href="/tags/qt-creater/" style="font-size: 10px;">qt creater</a> <a href="/tags/specification/" style="font-size: 10px;">specification</a>
+            <a href="/tags/centos-7-error-install/" style="font-size: 10px;">centos-7 error install</a> <a href="/tags/curl-laravel-post/" style="font-size: 10px;">curl laravel post</a> <a href="/tags/hexo-issues/" style="font-size: 10px;">hexo issues</a> <a href="/tags/image-tif-eps/" style="font-size: 10px;">image tif eps</a> <a href="/tags/laravel-emoji/" style="font-size: 10px;">laravel emoji</a> <a href="/tags/mysql-auto-update-timestamp/" style="font-size: 10px;">mysql auto update timestamp</a> <a href="/tags/nginx-proxy-pass/" style="font-size: 10px;">nginx proxy_pass</a> <a href="/tags/ngrok-centos7-mac/" style="font-size: 10px;">ngrok centos7 mac</a> <a href="/tags/php-502/" style="font-size: 10px;">php 502</a> <a href="/tags/qt-creater/" style="font-size: 10px;">qt creater</a> <a href="/tags/specification/" style="font-size: 10px;">specification</a>
         </div>
     </div>
 

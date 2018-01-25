@@ -3,15 +3,20 @@
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     
-    <title>Archive | 美好的一天</title>
+    <title>php 502 | 美好的一天</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="美好的一天">
-<meta property="og:url" content="http://zhouyanbo.com/archives/index.html">
+    <meta name="description" content="记录一次bug查找经历 起因偶然间打开一个以前的项目，浏览器显示 502 Bad Gateway，最开始以为php-fpm没有启动，后来发现不是这个原因 排查过程 nginx、php-fpm都服务正常 配置无误，访问root目录下的html文件都能正常访问，php文件都是502，定位到php-fpm出问题 查看nginx错误日志，报错信息(我电脑php-fpm监听的9011端口) 1[error]">
+<meta name="keywords" content="php 502">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php 502">
+<meta property="og:url" content="http://zhouyanbo.com/2018/01/25/php-502-bad-gatewway/index.html">
 <meta property="og:site_name" content="美好的一天">
+<meta property="og:description" content="记录一次bug查找经历 起因偶然间打开一个以前的项目，浏览器显示 502 Bad Gateway，最开始以为php-fpm没有启动，后来发现不是这个原因 排查过程 nginx、php-fpm都服务正常 配置无误，访问root目录下的html文件都能正常访问，php文件都是502，定位到php-fpm出问题 查看nginx错误日志，报错信息(我电脑php-fpm监听的9011端口) 1[error]">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-01-25T05:55:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="美好的一天">
+<meta name="twitter:title" content="php 502">
+<meta name="twitter:description" content="记录一次bug查找经历 起因偶然间打开一个以前的项目，浏览器显示 502 Bad Gateway，最开始以为php-fpm没有启动，后来发现不是这个原因 排查过程 nginx、php-fpm都服务正常 配置无误，访问root目录下的html文件都能正常访问，php文件都是502，定位到php-fpm出问题 查看nginx错误日志，报错信息(我电脑php-fpm监听的9011端口) 1[error]">
     
 
     
@@ -178,25 +183,21 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fa fa-calendar"></i></span>
-                <h1 class="title">2018</h1>
-            </div>
+            <section id="main"><article id="post-php-502-bad-gatewway" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/01/25/php-502-bad-gatewway/">php 502</a>
+        <h1 class="article-title" itemprop="name">
+            php 502
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
         <a href="/2018/01/25/php-502-bad-gatewway/">
@@ -205,306 +206,140 @@
     </div>
 
 
-                    
-                    
+                        
+                        
     <div class="article-tag">
         <i class="fa fa-tag"></i>
         <a class="tag-link" href="/tags/php-502/">php 502</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/01/23/nginx-proxy-pass/">nginx 反向代理配置</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/01/23/nginx-proxy-pass/">
-            <time datetime="2018-01-23T07:18:30.000Z" itemprop="datePublished">2018-01-23</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/nginx-proxy-pass/">nginx proxy_pass</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fa fa-calendar"></i></span>
-                <h1 class="title">2017</h1>
-            </div>
+            </header>
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/12/14/ngrok-install/">ngrok服务器搭建</a>
-        </h1>
-    
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><strong>记录一次bug查找经历</strong></p>
+<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>偶然间打开一个以前的项目，浏览器显示 502 Bad Gateway，最开始以为php-fpm没有启动，后来发现不是这个原因</p>
+<h3 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h3><ol>
+<li>nginx、php-fpm都服务正常</li>
+<li>配置无误，访问root目录下的html文件都能正常访问，php文件都是502，定位到php-fpm出问题</li>
+<li><p>查看nginx错误日志，报错信息(我电脑php-fpm监听的9011端口)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[error] 16914#16914: *1314340 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: ****, server: ****, request: &quot;GET **** HTTP/1.1&quot;, upstream: &quot;fastcgi://127.0.0.1:9011&quot;, host: &quot;zhouyanbo.com&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>检查php-fpm.log文件(一般位置在/var/log/php-fpm/error.log)，没有错误信息，修改/etc/php-fpm.d/www.conf配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">catch_workers_output = yes</div></pre></td></tr></table></figure>
+</li>
+<li><p>重新请求查看php-fpm.log日志，报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[pool www] child 31776 said into stderr: &quot;ERROR: Connection disallowed: IP address &apos;127.0.0.1&apos; has been dropped.&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>最后修改/etc/php-fpm.d/www.conf配置，原来是any改为127.0.0.1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">listen.allowed_clients = 127.0.0.1</div></pre></td></tr></table></figure>
+</li>
+<li><p>重启能正常访问</p>
+</li>
+</ol>
+<h3 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h3><p>按道理说listen.allowed_clients = any也是能正常访问的，any包括了所有，但是莫名其妙会出现502的问题，暂时修改为127.0.0.1能正常访问了，以后有时间再研究下，先做下记录</p>
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/12/14/ngrok-install/">
-            <time datetime="2017-12-14T09:29:55.000Z" itemprop="datePublished">2017-12-14</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/ngrok-centos7-mac/">ngrok centos7 mac</a>
-    </div>
-
-                </div>
-            </div>
+        
         </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/11/10/qt-creater-error/">Qt creater</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/11/10/qt-creater-error/">
-            <time datetime="2017-11-10T07:15:33.000Z" itemprop="datePublished">2017-11-10</time>
-        </a>
-    </div>
+        <footer class="article-footer">
+            <div class="share-container">
 
 
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/qt-creater/">qt creater</a>
-    </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/09/11/php-handle-tif-image/">处理TIF、EPS图片</a>
-        </h1>
-    
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/09/11/php-handle-tif-image/">
-            <time datetime="2017-09-11T08:41:07.000Z" itemprop="datePublished">2017-09-11</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/image-tif-eps/">image tif eps</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/09/11/mysql-timestamp-auto-update/">记录一次找bug经历（一）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/09/11/mysql-timestamp-auto-update/">
-            <time datetime="2017-09-11T08:07:35.000Z" itemprop="datePublished">2017-09-11</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/mysql-auto-update-timestamp/">mysql auto update timestamp</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/08/11/install-centos-7/">install centos 7 failed</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/08/11/install-centos-7/">
-            <time datetime="2017-08-11T02:49:37.000Z" itemprop="datePublished">2017-08-11</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/centos-7-error-install/">centos-7 error install</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/08/04/hexo-issues/">Hexo 问题记录</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/08/04/hexo-issues/">
-            <time datetime="2017-08-04T08:18:55.000Z" itemprop="datePublished">2017-08-04</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/hexo-issues/">hexo issues</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/03/16/curl-file/">CURL File</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/03/16/curl-file/">
-            <time datetime="2017-03-16T02:21:06.000Z" itemprop="datePublished">2017-03-16</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/curl-laravel-post/">curl laravel post</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2017/03/06/save-emoji/">数据库保存emoji表情</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/03/06/save-emoji/">
-            <time datetime="2017-03-06T03:56:01.000Z" itemprop="datePublished">2017-03-06</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/laravel-emoji/">laravel emoji</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
 </div>
 
-    <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
+            
+    
+        <a href="http://zhouyanbo.com/2018/01/25/php-502-bad-gatewway/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://zhouyanbo.com/2018/01/25/php-502-bad-gatewway/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/01/23/nginx-proxy-pass/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">nginx 反向代理配置</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">
@@ -555,11 +390,13 @@
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'http://zhouyanbo.com/2018/01/25/php-502-bad-gatewway/';
+        
+        this.page.identifier = 'php-502-bad-gatewway';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'zhouyb90' + '.disqus.com/count.js';
+        s.src = '//' + 'zhouyb90' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
