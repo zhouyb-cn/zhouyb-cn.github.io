@@ -3,15 +3,20 @@
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     
-    <title>Archive: 2018/1 | 美好的一天</title>
+    <title>mysql 分页数据重复 | 美好的一天</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="美好的一天">
-<meta property="og:url" content="http://zhouyanbo.com/archives/2018/01/index.html">
+    <meta name="description" content="BUG mysql分页数据偶尔有重复 解决：在sql语句中使用了order by field，其中filed字段非id，数据有重复导致分页数据偶尔会重复，再增加order by id可以解决，参考stackoverflow以及 stackoverflow">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql 分页数据重复">
+<meta property="og:url" content="http://zhouyanbo.com/2018/02/01/mysql-data-duplicate/index.html">
 <meta property="og:site_name" content="美好的一天">
+<meta property="og:description" content="BUG mysql分页数据偶尔有重复 解决：在sql语句中使用了order by field，其中filed字段非id，数据有重复导致分页数据偶尔会重复，再增加order by id可以解决，参考stackoverflow以及 stackoverflow">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-01T07:29:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="美好的一天">
+<meta name="twitter:title" content="mysql 分页数据重复">
+<meta name="twitter:description" content="BUG mysql分页数据偶尔有重复 解决：在sql语句中使用了order by field，其中filed字段非id，数据有重复导致分页数据偶尔会重复，再增加order by id可以解决，参考stackoverflow以及 stackoverflow">
     
 
     
@@ -178,76 +183,153 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fa fa-calendar"></i></span>
-                <h1 class="title">2018</h1>
-            </div>
+            <section id="main"><article id="post-mysql-data-duplicate" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/01/25/php-502-bad-gatewway/">php 502</a>
+        <h1 class="article-title" itemprop="name">
+            mysql 分页数据重复
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/01/25/php-502-bad-gatewway/">
-            <time datetime="2018-01-25T05:33:20.000Z" itemprop="datePublished">2018-01-25</time>
+        <a href="/2018/02/01/mysql-data-duplicate/">
+            <time datetime="2018-02-01T07:17:34.000Z" itemprop="datePublished">2018-02-01</time>
         </a>
     </div>
 
 
-                    
-                    
+                        
+                        
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/php-502/">php 502</a>
+        <a class="tag-link" href="/tags/mysql/">mysql</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/01/23/nginx-proxy-pass/">nginx 反向代理配置</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><strong>BUG mysql分页数据偶尔有重复</strong></p>
+<p>解决：在sql语句中使用了order by field，其中filed字段非id，数据有重复导致分页数据偶尔会重复，再增加order by id可以解决，参考<a href="https://stackoverflow.com/questions/43798247/laravel-pagination-showing-duplicate-and-replacing-random-row" target="_blank" rel="external">stackoverflow</a><br>以及 <a href="https://stackoverflow.com/questions/6662837/how-mysql-order-the-rows-with-same-values" target="_blank" rel="external">stackoverflow</a></p>
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/01/23/nginx-proxy-pass/">
-            <time datetime="2018-01-23T07:18:30.000Z" itemprop="datePublished">2018-01-23</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/nginx-proxy-pass/">nginx proxy_pass</a>
-    </div>
-
-                </div>
-            </div>
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
 </div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="http://zhouyanbo.com/2018/02/01/mysql-data-duplicate/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://zhouyanbo.com/2018/02/01/mysql-data-duplicate/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/02/01/upgrade-php-to-7/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    升级站点php版本到7.2.1
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/01/25/php-502-bad-gatewway/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">php 502</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">
@@ -298,11 +380,13 @@
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'http://zhouyanbo.com/2018/02/01/mysql-data-duplicate/';
+        
+        this.page.identifier = 'mysql-data-duplicate';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'zhouyb90' + '.disqus.com/count.js';
+        s.src = '//' + 'zhouyb90' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();

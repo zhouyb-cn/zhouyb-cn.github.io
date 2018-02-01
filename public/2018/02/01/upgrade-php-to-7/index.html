@@ -3,15 +3,20 @@
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     
-    <title>Archive: 2018/1 | 美好的一天</title>
+    <title>升级站点php版本到7.2.1 | 美好的一天</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="美好的一天">
-<meta property="og:url" content="http://zhouyanbo.com/archives/2018/01/index.html">
+    <meta name="description" content="php7已经问世两年多了，都说性能提升了不少，可开发一直在使用php5.6，最近考虑把自己站点的php版本升级一下，目前站点的php版本是5.6.31 12345~$ php -vPHP 5.6.31 (cli) (built: Sep 14 2017 18:12:46)Copyright (c) 1997-2016 The PHP GroupZend Engine v2.6.0, Copyrig">
+<meta name="keywords" content="php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="升级站点php版本到7.2.1">
+<meta property="og:url" content="http://zhouyanbo.com/2018/02/01/upgrade-php-to-7/index.html">
 <meta property="og:site_name" content="美好的一天">
+<meta property="og:description" content="php7已经问世两年多了，都说性能提升了不少，可开发一直在使用php5.6，最近考虑把自己站点的php版本升级一下，目前站点的php版本是5.6.31 12345~$ php -vPHP 5.6.31 (cli) (built: Sep 14 2017 18:12:46)Copyright (c) 1997-2016 The PHP GroupZend Engine v2.6.0, Copyrig">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-01T08:11:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="美好的一天">
+<meta name="twitter:title" content="升级站点php版本到7.2.1">
+<meta name="twitter:description" content="php7已经问世两年多了，都说性能提升了不少，可开发一直在使用php5.6，最近考虑把自己站点的php版本升级一下，目前站点的php版本是5.6.31 12345~$ php -vPHP 5.6.31 (cli) (built: Sep 14 2017 18:12:46)Copyright (c) 1997-2016 The PHP GroupZend Engine v2.6.0, Copyrig">
     
 
     
@@ -178,76 +183,161 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fa fa-calendar"></i></span>
-                <h1 class="title">2018</h1>
-            </div>
+            <section id="main"><article id="post-upgrade-php-to-7" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/01/25/php-502-bad-gatewway/">php 502</a>
+        <h1 class="article-title" itemprop="name">
+            升级站点php版本到7.2.1
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/01/25/php-502-bad-gatewway/">
-            <time datetime="2018-01-25T05:33:20.000Z" itemprop="datePublished">2018-01-25</time>
+        <a href="/2018/02/01/upgrade-php-to-7/">
+            <time datetime="2018-02-01T07:30:49.000Z" itemprop="datePublished">2018-02-01</time>
         </a>
     </div>
 
 
-                    
-                    
+                        
+                        
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/php-502/">php 502</a>
+        <a class="tag-link" href="/tags/php/">php</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/01/23/nginx-proxy-pass/">nginx 反向代理配置</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>php7已经问世两年多了，都说性能提升了不少，可开发一直在使用php5.6，最近考虑把自己站点的php版本升级一下，目前站点的php版本是5.6.31</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">~$ php -v</div><div class="line">PHP 5.6.31 (cli) (built: Sep 14 2017 18:12:46)</div><div class="line">Copyright (c) 1997-2016 The PHP Group</div><div class="line">Zend Engine v2.6.0, Copyright (c) 1998-2016 Zend Technologies</div><div class="line">    with Zend OPcache v7.0.6-dev, Copyright (c) 1999-2016, by Zend Technologies</div></pre></td></tr></table></figure>
+<p><a href="http://php.net/downloads.php" target="_blank" rel="external">php download</a>目前官网的稳定版本是7.2.1，下面记录下升级过程</p>
+<a id="more"></a>
+<p>目前版本5.6.31是通过yum安装的，php7我想通过源码安装</p>
+<ol>
+<li>首先先在本地下载源码包，通过rsync命令上传到服务器某个目录</li>
+<li><p>按照官方文档的安装步骤<a href="http://php.net/manual/zh/install.unix.nginx.php" target="_blank" rel="external">php install</a>解压</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar zxf php-x.x.x</div></pre></td></tr></table></figure>
+</li>
+<li><p>配置并构建，参考了<a href="http://blog.51cto.com/jinchuang/1897385" target="_blank" rel="external">这里</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">cd ../php-x.x.x</div><div class="line">./configure \</div><div class="line">--prefix=/usr/local/php7 \</div><div class="line">--with-fpm-user=nginx \</div><div class="line">--with-fpm-group=nginx \</div><div class="line">--with-bz2 \</div><div class="line">--with-curl \</div><div class="line">--with-gd \</div><div class="line">--with-mcrypt \</div><div class="line">--with-openssl \</div><div class="line">--with-mhash \</div><div class="line">--with-jpeg-dir \</div><div class="line">--with-png-dir \</div><div class="line">--with-freetype-dir \</div><div class="line">--with-iconv-dir=/usr/local/libiconv \</div><div class="line">--with-gettext \</div><div class="line">--with-libxml-dir \</div><div class="line">--with-zlib \</div><div class="line">--with-xmlrpc \</div><div class="line">--with-pcre-regex \</div><div class="line">--with-pear \</div><div class="line">--with-pdo-mysql=mysqlnd \</div><div class="line">--with-mysql=mysqlnd \</div><div class="line">--with-mysqli=mysqlnd \</div><div class="line">--with-libdir=lib64 \</div><div class="line">--enable-dom \</div><div class="line">--enable-xml \</div><div class="line">--enable-fpm \</div><div class="line">--enable-bcmath \</div><div class="line">--enable-ftp \</div><div class="line">--enable-sockets \</div><div class="line">--disable-ipv6 \</div><div class="line">--enable-mbregex \</div><div class="line">--enable-mbstring \</div><div class="line">--enable-calendar \</div><div class="line">--enable-gd-native-ttf \</div><div class="line">--enable-static \</div><div class="line">--enable-fpm \</div><div class="line">--enable-bcmath \</div><div class="line">--enable-libxml \</div><div class="line">--enable-inline-optimization \</div><div class="line">--enable-mbregex \</div><div class="line">--enable-opcache \</div><div class="line">--enable-pcntl \</div><div class="line">--enable-shmop \</div><div class="line">--enable-soap \</div><div class="line">--enable-sockets \</div><div class="line">--enable-sysvsem \</div><div class="line">--enable-zip \</div><div class="line"></div><div class="line">make &amp; make install</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">cp php.ini-development /usr/local/php7/php.ini</div><div class="line">cp /usr/local/php7/etc/php-fpm.conf.default /usr/local/php7/etc/php-fpm.conf</div><div class="line">cp /usr/local/php7/etc/php-fpm.d/www.conf.default /usr/local/php7/etc/php-fpm.d/www.conf</div><div class="line">// 方法1</div><div class="line">cp -R sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm</div><div class="line">// 如果没有权限启动</div><div class="line">cd /etc/init.d/php-fpm</div><div class="line">chmod 755 php-fpm</div><div class="line">//启动停止</div><div class="line">/etc/init.d/php-fpm start|stop</div><div class="line">// 方法2</div><div class="line">cp php-7.2.1/sapi/fpm/php-fpm /usr/local/bin/</div><div class="line">//启动停止</div><div class="line">php-fpm | pkill php-fpm</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">~$ php -v</div><div class="line">PHP 7.2.1 (fpm-fcgi) (built: Jan 30 2018 17:06:46)</div><div class="line">Copyright (c) 1997-2017 The PHP Group</div><div class="line">Zend Engine v3.2.0, Copyright (c) 1998-2017 Zend Technologies</div></pre></td></tr></table></figure></li>
+</ol>
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/01/23/nginx-proxy-pass/">
-            <time datetime="2018-01-23T07:18:30.000Z" itemprop="datePublished">2018-01-23</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/nginx-proxy-pass/">nginx proxy_pass</a>
-    </div>
-
-                </div>
-            </div>
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
 </div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="http://zhouyanbo.com/2018/02/01/upgrade-php-to-7/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://zhouyanbo.com/2018/02/01/upgrade-php-to-7/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/02/01/mysql-data-duplicate/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">mysql 分页数据重复</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">
@@ -298,11 +388,13 @@
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'http://zhouyanbo.com/2018/02/01/upgrade-php-to-7/';
+        
+        this.page.identifier = 'upgrade-php-to-7';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'zhouyb90' + '.disqus.com/count.js';
+        s.src = '//' + 'zhouyb90' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();

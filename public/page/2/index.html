@@ -150,11 +150,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                12
+                14
                 <span>posts</span>
             </div>
             <div class="article-info-block">
-                11
+                13
                 <span>tags</span>
             </div>
         </div>
@@ -179,6 +179,250 @@
 
             
             <section id="main">
+    <article id="post-curl-file" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/03/16/curl-file/">CURL File</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/03/16/curl-file/">
+            <time datetime="2017-03-16T02:21:06.000Z" itemprop="datePublished">2017-03-16</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/curl-laravel-post/">curl laravel post</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><ul>
+<li>laravel 框架</li>
+<li>上传图片需要通过API接口传到图片服务器上 </li>
+</ul>
+<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><p>采用curl的方式，在PHP版本大于5.5.0需要用到CURLFile类</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">curlPost</span><span class="params">($url, $postData, $post = <span class="number">1</span>)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    $curl = curl_init();</div><div class="line">    curl_setopt($curl, CURLOPT_POST, $post);</div><div class="line"></div><div class="line">    curl_setopt($curl, CURLOPT_URL, $url);</div><div class="line">    curl_setopt($curl, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);</div><div class="line">    curl_setopt($curl, CURLOPT_HEADER, <span class="number">0</span>);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ($postData) &#123;</div><div class="line">        curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    $data = curl_exec($curl);</div><div class="line">    $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);</div><div class="line">    curl_close($curl);</div><div class="line">    <span class="keyword">if</span> ($httpcode == <span class="number">200</span>) &#123;</div><div class="line">        <span class="keyword">return</span> $data;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> $httpcode;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在调用方法的时候第二个参数是个数组，API接口参数file<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">array</span>(</div><div class="line">	<span class="string">'file'</span> =&gt; <span class="keyword">new</span> \CURLFile($path)</div><div class="line">)</div></pre></td></tr></table></figure></p>
+<p>若同时上传多个文件，如下<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">array</span>(</div><div class="line">	<span class="string">'file[0]'</span> =&gt; <span class="keyword">new</span> \CURLFile($path1),</div><div class="line">	<span class="string">'file[1]'</span> =&gt; <span class="keyword">new</span> \CURLFile($path2)</div><div class="line">));</div></pre></td></tr></table></figure></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="http://zhouyanbo.com/2017/03/16/curl-file/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://zhouyanbo.com/2017/03/16/curl-file/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-save-emoji" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/03/06/save-emoji/">数据库保存emoji表情</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/03/06/save-emoji/">
+            <time datetime="2017-03-06T03:56:01.000Z" itemprop="datePublished">2017-03-06</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/laravel-emoji/">laravel emoji</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>mysql保存emoji表情的时候，插入到数据库为问号或者无法插入</p>
+<h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>是由于mysql的utf-8编码最多三个字节，而emoji表情是四个字节，导致插入错误</p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p><strong>修改数据库设置字符集</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">DATABASE</span> database_name <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> = utf8mb4 <span class="keyword">COLLATE</span> = utf8mb4_unicode_ci;</div></pre></td></tr></table></figure>
+<p><strong>修改数据表字符集</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name <span class="keyword">CONVERT</span> <span class="keyword">TO</span> <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_unicode_ci;</div></pre></td></tr></table></figure>
+<p><strong>修改字段名字符集</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name <span class="keyword">CHANGE</span> column_name <span class="built_in">VARCHAR</span>(<span class="number">255</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_unicode_ci;</div></pre></td></tr></table></figure>
+<p><strong>数据库连接方式参数设置</strong><br>在laravel框架中修改database.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">'charset'</span>   =&gt; <span class="string">'utf8mb4'</span>,</div><div class="line"><span class="string">'collation'</span> =&gt; <span class="string">'utf8mb4_unicode_ci'</span>,</div></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="http://zhouyanbo.com/2017/03/06/save-emoji/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://zhouyanbo.com/2017/03/06/save-emoji/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Specification" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -435,7 +679,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -444,7 +688,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos-7-error-install/">centos-7 error install</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/curl-laravel-post/">curl laravel post</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo-issues/">hexo issues</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/image-tif-eps/">image tif eps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel-emoji/">laravel emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql-auto-update-timestamp/">mysql auto update timestamp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx-proxy-pass/">nginx proxy_pass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok-centos7-mac/">ngrok centos7 mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-502/">php 502</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt-creater/">qt creater</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/specification/">specification</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos-7-error-install/">centos-7 error install</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/curl-laravel-post/">curl laravel post</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo-issues/">hexo issues</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/image-tif-eps/">image tif eps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel-emoji/">laravel emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql-auto-update-timestamp/">mysql auto update timestamp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx-proxy-pass/">nginx proxy_pass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok-centos7-mac/">ngrok centos7 mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-502/">php 502</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt-creater/">qt creater</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/specification/">specification</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -453,7 +697,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/centos-7-error-install/" style="font-size: 10px;">centos-7 error install</a> <a href="/tags/curl-laravel-post/" style="font-size: 10px;">curl laravel post</a> <a href="/tags/hexo-issues/" style="font-size: 10px;">hexo issues</a> <a href="/tags/image-tif-eps/" style="font-size: 10px;">image tif eps</a> <a href="/tags/laravel-emoji/" style="font-size: 10px;">laravel emoji</a> <a href="/tags/mysql-auto-update-timestamp/" style="font-size: 10px;">mysql auto update timestamp</a> <a href="/tags/nginx-proxy-pass/" style="font-size: 10px;">nginx proxy_pass</a> <a href="/tags/ngrok-centos7-mac/" style="font-size: 10px;">ngrok centos7 mac</a> <a href="/tags/php-502/" style="font-size: 10px;">php 502</a> <a href="/tags/qt-creater/" style="font-size: 10px;">qt creater</a> <a href="/tags/specification/" style="font-size: 10px;">specification</a>
+            <a href="/tags/centos-7-error-install/" style="font-size: 10px;">centos-7 error install</a> <a href="/tags/curl-laravel-post/" style="font-size: 10px;">curl laravel post</a> <a href="/tags/hexo-issues/" style="font-size: 10px;">hexo issues</a> <a href="/tags/image-tif-eps/" style="font-size: 10px;">image tif eps</a> <a href="/tags/laravel-emoji/" style="font-size: 10px;">laravel emoji</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/mysql-auto-update-timestamp/" style="font-size: 10px;">mysql auto update timestamp</a> <a href="/tags/nginx-proxy-pass/" style="font-size: 10px;">nginx proxy_pass</a> <a href="/tags/ngrok-centos7-mac/" style="font-size: 10px;">ngrok centos7 mac</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/php-502/" style="font-size: 10px;">php 502</a> <a href="/tags/qt-creater/" style="font-size: 10px;">qt creater</a> <a href="/tags/specification/" style="font-size: 10px;">specification</a>
         </div>
     </div>
 
