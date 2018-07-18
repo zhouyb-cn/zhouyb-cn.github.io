@@ -4,9 +4,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://zhouyanbo.com/"/>
-  <updated>2018-02-01T08:11:47.000Z</updated>
-  <id>http://zhouyanbo.com/</id>
+  <link href="https://zhouyanbo.com/"/>
+  <updated>2018-07-18T09:10:25.000Z</updated>
+  <id>https://zhouyanbo.com/</id>
   
   <author>
     <name>zhouyb90</name>
@@ -16,11 +16,71 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>使用libreoffice转换文档成pdf</title>
+    <link href="https://zhouyanbo.com/2018/07/18/libreoffice/"/>
+    <id>https://zhouyanbo.com/2018/07/18/libreoffice/</id>
+    <published>2018-07-18T09:03:07.000Z</published>
+    <updated>2018-07-18T09:10:25.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>将doc、docx、xls、xlsx、ppt、pptx格式的转换成pdf文档</p>
+<h3 id="实施"><a href="#实施" class="headerlink" title="实施"></a>实施</h3><p>系统是centos 7，这里使用libreoffice，在转换过程中发现，只要是文件中包含中文字符，转换之后文件中成了乱码，不可读</p>
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>由于centos 7系统中缺少对中文的支持，需要安装中文字库，参考这里<a href="https://blog.csdn.net/wlwlwlwl015/article/details/51482065" target="_blank" rel="external">centos安装中文字库</a>，<br>安装完成后重启libreoffice即可</p>
+<p>附：<a href="https://github.com/lugnsk/pyodconverter" target="_blank" rel="external">转换脚本</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;需求&quot;&gt;&lt;a href=&quot;#需求&quot; class=&quot;headerlink&quot; title=&quot;需求&quot;&gt;&lt;/a&gt;需求&lt;/h3&gt;&lt;p&gt;将doc、docx、xls、xlsx、ppt、pptx格式的转换成pdf文档&lt;/p&gt;
+&lt;h3 id=&quot;实施&quot;&gt;&lt;a href=&quot;#实施&quot; c
+    
+    </summary>
+    
+    
+      <category term="libreoffice pdf centos" scheme="https://zhouyanbo.com/tags/libreoffice-pdf-centos/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基本排序算法</title>
+    <link href="https://zhouyanbo.com/2018/02/26/sorting-algorithm/"/>
+    <id>https://zhouyanbo.com/2018/02/26/sorting-algorithm/</id>
+    <published>2018-02-26T03:30:42.000Z</published>
+    <updated>2018-02-27T06:14:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="一、冒泡排序"><a href="#一、冒泡排序" class="headerlink" title="一、冒泡排序"></a>一、冒泡排序</h3><p>冒泡排序（Bubble Sort），是一种计算机科学领域的较简单的排序算法。<br>它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。<br>这个算法的名字由来是因为越大的元素会经由交换慢慢“浮”到数列的顶端，故名</p>
+<h4 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h4><ol>
+<li>比较相邻的元素。如果第一个比第二个大，就交换他们两个。</li>
+<li>对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。在这一点，最后的元素应该会是最大的数。</li>
+<li>针对所有的元素重复以上的步骤，除了最后一个。</li>
+<li>持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort</span><span class="params">(list)</span>:</span></div><div class="line">    length = len(list)</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(length):</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>, length-i):</div><div class="line">            <span class="keyword">if</span> list[j<span class="number">-1</span>] &gt; list[j]:</div><div class="line">                list[j<span class="number">-1</span>], list[j] = list[j], list[j<span class="number">-1</span>]</div><div class="line">    <span class="keyword">return</span> list</div></pre></td></tr></table></figure>
+<h3 id="二、冒泡排序"><a href="#二、冒泡排序" class="headerlink" title="二、冒泡排序"></a>二、冒泡排序</h3><p>冒泡排序（Bubble Sort），是一种计算机科学领域的较简单的排序算法。<br>它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。<br>这个算法的名字由来是因为越大的元素会经由交换慢慢“浮”到数列的顶端，故名</p>
+<h4 id="算法原理-1"><a href="#算法原理-1" class="headerlink" title="算法原理"></a>算法原理</h4><ol>
+<li>比较相邻的元素。如果第一个比第二个大，就交换他们两个。</li>
+<li>对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。在这一点，最后的元素应该会是最大的数。</li>
+<li>针对所有的元素重复以上的步骤，除了最后一个。</li>
+<li>持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort</span><span class="params">(list)</span>:</span></div><div class="line">    length = len(list)</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(length):</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>, length-i):</div><div class="line">            <span class="keyword">if</span> list[j<span class="number">-1</span>] &gt; list[j]:</div><div class="line">                list[j<span class="number">-1</span>], list[j] = list[j], list[j<span class="number">-1</span>]</div><div class="line">    <span class="keyword">return</span> list</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;一、冒泡排序&quot;&gt;&lt;a href=&quot;#一、冒泡排序&quot; class=&quot;headerlink&quot; title=&quot;一、冒泡排序&quot;&gt;&lt;/a&gt;一、冒泡排序&lt;/h3&gt;&lt;p&gt;冒泡排序（Bubble Sort），是一种计算机科学领域的较简单的排序算法。&lt;br&gt;它重复地走访过要排序的数
+    
+    </summary>
+    
+    
+      <category term="algorithm" scheme="https://zhouyanbo.com/tags/algorithm/"/>
+    
+  </entry>
+  
+  <entry>
     <title>升级站点php版本到7.2.1</title>
-    <link href="http://zhouyanbo.com/2018/02/01/upgrade-php-to-7/"/>
-    <id>http://zhouyanbo.com/2018/02/01/upgrade-php-to-7/</id>
+    <link href="https://zhouyanbo.com/2018/02/01/upgrade-php-to-7/"/>
+    <id>https://zhouyanbo.com/2018/02/01/upgrade-php-to-7/</id>
     <published>2018-02-01T07:30:49.000Z</published>
-    <updated>2018-02-01T08:11:47.000Z</updated>
+    <updated>2018-02-08T09:21:41.000Z</updated>
     
     <content type="html"><![CDATA[<p>php7已经问世两年多了，都说性能提升了不少，可开发一直在使用php5.6，最近考虑把自己站点的php版本升级一下，目前站点的php版本是5.6.31</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">~$ php -v</div><div class="line">PHP 5.6.31 (cli) (built: Sep 14 2017 18:12:46)</div><div class="line">Copyright (c) 1997-2016 The PHP Group</div><div class="line">Zend Engine v2.6.0, Copyright (c) 1998-2016 Zend Technologies</div><div class="line">    with Zend OPcache v7.0.6-dev, Copyright (c) 1999-2016, by Zend Technologies</div></pre></td></tr></table></figure>
@@ -33,7 +93,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar zxf php-x.x.x</div></pre></td></tr></table></figure>
 </li>
 <li><p>配置并构建，参考了<a href="http://blog.51cto.com/jinchuang/1897385" target="_blank" rel="external">这里</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">cd ../php-x.x.x</div><div class="line">./configure \</div><div class="line">--prefix=/usr/local/php7 \</div><div class="line">--with-fpm-user=nginx \</div><div class="line">--with-fpm-group=nginx \</div><div class="line">--with-bz2 \</div><div class="line">--with-curl \</div><div class="line">--with-gd \</div><div class="line">--with-mcrypt \</div><div class="line">--with-openssl \</div><div class="line">--with-mhash \</div><div class="line">--with-jpeg-dir \</div><div class="line">--with-png-dir \</div><div class="line">--with-freetype-dir \</div><div class="line">--with-iconv-dir=/usr/local/libiconv \</div><div class="line">--with-gettext \</div><div class="line">--with-libxml-dir \</div><div class="line">--with-zlib \</div><div class="line">--with-xmlrpc \</div><div class="line">--with-pcre-regex \</div><div class="line">--with-pear \</div><div class="line">--with-pdo-mysql=mysqlnd \</div><div class="line">--with-mysql=mysqlnd \</div><div class="line">--with-mysqli=mysqlnd \</div><div class="line">--with-libdir=lib64 \</div><div class="line">--enable-dom \</div><div class="line">--enable-xml \</div><div class="line">--enable-fpm \</div><div class="line">--enable-bcmath \</div><div class="line">--enable-ftp \</div><div class="line">--enable-sockets \</div><div class="line">--disable-ipv6 \</div><div class="line">--enable-mbregex \</div><div class="line">--enable-mbstring \</div><div class="line">--enable-calendar \</div><div class="line">--enable-gd-native-ttf \</div><div class="line">--enable-static \</div><div class="line">--enable-fpm \</div><div class="line">--enable-bcmath \</div><div class="line">--enable-libxml \</div><div class="line">--enable-inline-optimization \</div><div class="line">--enable-mbregex \</div><div class="line">--enable-opcache \</div><div class="line">--enable-pcntl \</div><div class="line">--enable-shmop \</div><div class="line">--enable-soap \</div><div class="line">--enable-sockets \</div><div class="line">--enable-sysvsem \</div><div class="line">--enable-zip \</div><div class="line"></div><div class="line">make &amp; make install</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">cd ../php-x.x.x</div><div class="line">./configure \</div><div class="line">--prefix=/usr/local/php7 \</div><div class="line">--with-fpm-user=nginx \</div><div class="line">--with-fpm-group=nginx \</div><div class="line">--with-bz2 \</div><div class="line">--with-curl \</div><div class="line">--with-gd \</div><div class="line">--with-openssl \</div><div class="line">--with-mhash \</div><div class="line">--with-jpeg-dir \</div><div class="line">--with-png-dir \</div><div class="line">--with-freetype-dir \</div><div class="line">--with-iconv-dir=/usr/local/libiconv \</div><div class="line">--with-gettext \</div><div class="line">--with-libxml-dir \</div><div class="line">--with-zlib \</div><div class="line">--with-xmlrpc \</div><div class="line">--with-pcre-regex \</div><div class="line">--with-pear \</div><div class="line">--with-pdo-mysql=mysqlnd \</div><div class="line">--with-mysqli=mysqlnd \</div><div class="line">--with-libdir=lib64 \</div><div class="line">--enable-dom \</div><div class="line">--enable-xml \</div><div class="line">--enable-fpm \</div><div class="line">--enable-bcmath \</div><div class="line">--enable-ftp \</div><div class="line">--enable-sockets \</div><div class="line">--disable-ipv6 \</div><div class="line">--enable-mbregex \</div><div class="line">--enable-mbstring \</div><div class="line">--enable-calendar \</div><div class="line">--enable-static \</div><div class="line">--enable-fpm \</div><div class="line">--enable-bcmath \</div><div class="line">--enable-libxml \</div><div class="line">--enable-inline-optimization \</div><div class="line">--enable-mbregex \</div><div class="line">--enable-opcache \</div><div class="line">--enable-pcntl \</div><div class="line">--enable-shmop \</div><div class="line">--enable-soap \</div><div class="line">--enable-sockets \</div><div class="line">--enable-sysvsem \</div><div class="line">--enable-zip \</div><div class="line"></div><div class="line">make &amp; make install</div></pre></td></tr></table></figure>
 </li>
 <li><p>创建配置文件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">cp php.ini-development /usr/local/php7/php.ini</div><div class="line">cp /usr/local/php7/etc/php-fpm.conf.default /usr/local/php7/etc/php-fpm.conf</div><div class="line">cp /usr/local/php7/etc/php-fpm.d/www.conf.default /usr/local/php7/etc/php-fpm.d/www.conf</div><div class="line">// 方法1</div><div class="line">cp -R sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm</div><div class="line">// 如果没有权限启动</div><div class="line">cd /etc/init.d/php-fpm</div><div class="line">chmod 755 php-fpm</div><div class="line">//启动停止</div><div class="line">/etc/init.d/php-fpm start|stop</div><div class="line">// 方法2</div><div class="line">cp php-7.2.1/sapi/fpm/php-fpm /usr/local/bin/</div><div class="line">//启动停止</div><div class="line">php-fpm | pkill php-fpm</div></pre></td></tr></table></figure>
@@ -52,14 +112,14 @@
     </summary>
     
     
-      <category term="php" scheme="http://zhouyanbo.com/tags/php/"/>
+      <category term="php" scheme="https://zhouyanbo.com/tags/php/"/>
     
   </entry>
   
   <entry>
     <title>mysql 分页数据重复</title>
-    <link href="http://zhouyanbo.com/2018/02/01/mysql-data-duplicate/"/>
-    <id>http://zhouyanbo.com/2018/02/01/mysql-data-duplicate/</id>
+    <link href="https://zhouyanbo.com/2018/02/01/mysql-data-duplicate/"/>
+    <id>https://zhouyanbo.com/2018/02/01/mysql-data-duplicate/</id>
     <published>2018-02-01T07:17:34.000Z</published>
     <updated>2018-02-01T07:29:47.000Z</updated>
     
@@ -75,14 +135,14 @@
     </summary>
     
     
-      <category term="mysql" scheme="http://zhouyanbo.com/tags/mysql/"/>
+      <category term="mysql" scheme="https://zhouyanbo.com/tags/mysql/"/>
     
   </entry>
   
   <entry>
     <title>php 502</title>
-    <link href="http://zhouyanbo.com/2018/01/25/php-502-bad-gatewway/"/>
-    <id>http://zhouyanbo.com/2018/01/25/php-502-bad-gatewway/</id>
+    <link href="https://zhouyanbo.com/2018/01/25/php-502-bad-gatewway/"/>
+    <id>https://zhouyanbo.com/2018/01/25/php-502-bad-gatewway/</id>
     <published>2018-01-25T05:33:20.000Z</published>
     <updated>2018-01-25T05:55:12.000Z</updated>
     
@@ -117,14 +177,14 @@
     </summary>
     
     
-      <category term="php 502" scheme="http://zhouyanbo.com/tags/php-502/"/>
+      <category term="php 502" scheme="https://zhouyanbo.com/tags/php-502/"/>
     
   </entry>
   
   <entry>
     <title>nginx 反向代理配置</title>
-    <link href="http://zhouyanbo.com/2018/01/23/nginx-proxy-pass/"/>
-    <id>http://zhouyanbo.com/2018/01/23/nginx-proxy-pass/</id>
+    <link href="https://zhouyanbo.com/2018/01/23/nginx-proxy-pass/"/>
+    <id>https://zhouyanbo.com/2018/01/23/nginx-proxy-pass/</id>
     <published>2018-01-23T07:18:30.000Z</published>
     <updated>2018-01-23T07:41:56.000Z</updated>
     
@@ -140,14 +200,14 @@
     </summary>
     
     
-      <category term="nginx proxy_pass" scheme="http://zhouyanbo.com/tags/nginx-proxy-pass/"/>
+      <category term="nginx proxy_pass" scheme="https://zhouyanbo.com/tags/nginx-proxy-pass/"/>
     
   </entry>
   
   <entry>
     <title>ngrok服务器搭建</title>
-    <link href="http://zhouyanbo.com/2017/12/14/ngrok-install/"/>
-    <id>http://zhouyanbo.com/2017/12/14/ngrok-install/</id>
+    <link href="https://zhouyanbo.com/2017/12/14/ngrok-install/"/>
+    <id>https://zhouyanbo.com/2017/12/14/ngrok-install/</id>
     <published>2017-12-14T09:29:55.000Z</published>
     <updated>2017-12-14T10:07:43.000Z</updated>
     
@@ -203,14 +263,14 @@
     </summary>
     
     
-      <category term="ngrok centos7 mac" scheme="http://zhouyanbo.com/tags/ngrok-centos7-mac/"/>
+      <category term="ngrok centos7 mac" scheme="https://zhouyanbo.com/tags/ngrok-centos7-mac/"/>
     
   </entry>
   
   <entry>
     <title>Qt creater</title>
-    <link href="http://zhouyanbo.com/2017/11/10/qt-creater-error/"/>
-    <id>http://zhouyanbo.com/2017/11/10/qt-creater-error/</id>
+    <link href="https://zhouyanbo.com/2017/11/10/qt-creater-error/"/>
+    <id>https://zhouyanbo.com/2017/11/10/qt-creater-error/</id>
     <published>2017-11-10T07:15:33.000Z</published>
     <updated>2017-11-10T07:37:19.000Z</updated>
     
@@ -239,14 +299,14 @@
     </summary>
     
     
-      <category term="qt creater" scheme="http://zhouyanbo.com/tags/qt-creater/"/>
+      <category term="qt creater" scheme="https://zhouyanbo.com/tags/qt-creater/"/>
     
   </entry>
   
   <entry>
     <title>处理TIF、EPS图片</title>
-    <link href="http://zhouyanbo.com/2017/09/11/php-handle-tif-image/"/>
-    <id>http://zhouyanbo.com/2017/09/11/php-handle-tif-image/</id>
+    <link href="https://zhouyanbo.com/2017/09/11/php-handle-tif-image/"/>
+    <id>https://zhouyanbo.com/2017/09/11/php-handle-tif-image/</id>
     <published>2017-09-11T08:41:07.000Z</published>
     <updated>2017-09-11T09:06:32.000Z</updated>
     
@@ -267,14 +327,14 @@
     </summary>
     
     
-      <category term="image tif eps" scheme="http://zhouyanbo.com/tags/image-tif-eps/"/>
+      <category term="image tif eps" scheme="https://zhouyanbo.com/tags/image-tif-eps/"/>
     
   </entry>
   
   <entry>
     <title>记录一次找bug经历（一）</title>
-    <link href="http://zhouyanbo.com/2017/09/11/mysql-timestamp-auto-update/"/>
-    <id>http://zhouyanbo.com/2017/09/11/mysql-timestamp-auto-update/</id>
+    <link href="https://zhouyanbo.com/2017/09/11/mysql-timestamp-auto-update/"/>
+    <id>https://zhouyanbo.com/2017/09/11/mysql-timestamp-auto-update/</id>
     <published>2017-09-11T08:07:35.000Z</published>
     <updated>2017-09-11T08:37:57.000Z</updated>
     
@@ -300,14 +360,14 @@
     </summary>
     
     
-      <category term="mysql auto update timestamp" scheme="http://zhouyanbo.com/tags/mysql-auto-update-timestamp/"/>
+      <category term="mysql auto update timestamp" scheme="https://zhouyanbo.com/tags/mysql-auto-update-timestamp/"/>
     
   </entry>
   
   <entry>
     <title>install centos 7 failed</title>
-    <link href="http://zhouyanbo.com/2017/08/11/install-centos-7/"/>
-    <id>http://zhouyanbo.com/2017/08/11/install-centos-7/</id>
+    <link href="https://zhouyanbo.com/2017/08/11/install-centos-7/"/>
+    <id>https://zhouyanbo.com/2017/08/11/install-centos-7/</id>
     <published>2017-08-11T02:49:37.000Z</published>
     <updated>2017-08-11T03:15:42.000Z</updated>
     
@@ -329,14 +389,14 @@
     </summary>
     
     
-      <category term="centos-7 error install" scheme="http://zhouyanbo.com/tags/centos-7-error-install/"/>
+      <category term="centos-7 error install" scheme="https://zhouyanbo.com/tags/centos-7-error-install/"/>
     
   </entry>
   
   <entry>
     <title>Hexo 问题记录</title>
-    <link href="http://zhouyanbo.com/2017/08/04/hexo-issues/"/>
-    <id>http://zhouyanbo.com/2017/08/04/hexo-issues/</id>
+    <link href="https://zhouyanbo.com/2017/08/04/hexo-issues/"/>
+    <id>https://zhouyanbo.com/2017/08/04/hexo-issues/</id>
     <published>2017-08-04T08:18:55.000Z</published>
     <updated>2017-08-11T03:15:42.000Z</updated>
     
@@ -351,14 +411,14 @@
     </summary>
     
     
-      <category term="hexo issues" scheme="http://zhouyanbo.com/tags/hexo-issues/"/>
+      <category term="hexo issues" scheme="https://zhouyanbo.com/tags/hexo-issues/"/>
     
   </entry>
   
   <entry>
     <title>CURL File</title>
-    <link href="http://zhouyanbo.com/2017/03/16/curl-file/"/>
-    <id>http://zhouyanbo.com/2017/03/16/curl-file/</id>
+    <link href="https://zhouyanbo.com/2017/03/16/curl-file/"/>
+    <id>https://zhouyanbo.com/2017/03/16/curl-file/</id>
     <published>2017-03-16T02:21:06.000Z</published>
     <updated>2017-08-04T07:46:42.000Z</updated>
     
@@ -383,14 +443,14 @@
     </summary>
     
     
-      <category term="curl laravel post" scheme="http://zhouyanbo.com/tags/curl-laravel-post/"/>
+      <category term="curl laravel post" scheme="https://zhouyanbo.com/tags/curl-laravel-post/"/>
     
   </entry>
   
   <entry>
     <title>数据库保存emoji表情</title>
-    <link href="http://zhouyanbo.com/2017/03/06/save-emoji/"/>
-    <id>http://zhouyanbo.com/2017/03/06/save-emoji/</id>
+    <link href="https://zhouyanbo.com/2017/03/06/save-emoji/"/>
+    <id>https://zhouyanbo.com/2017/03/06/save-emoji/</id>
     <published>2017-03-06T03:56:01.000Z</published>
     <updated>2017-08-04T07:46:42.000Z</updated>
     
@@ -414,14 +474,14 @@
     </summary>
     
     
-      <category term="laravel emoji" scheme="http://zhouyanbo.com/tags/laravel-emoji/"/>
+      <category term="laravel emoji" scheme="https://zhouyanbo.com/tags/laravel-emoji/"/>
     
   </entry>
   
   <entry>
     <title>Coding-Specification</title>
-    <link href="http://zhouyanbo.com/2017/01/23/Specification/"/>
-    <id>http://zhouyanbo.com/2017/01/23/Specification/</id>
+    <link href="https://zhouyanbo.com/2017/01/23/Specification/"/>
+    <id>https://zhouyanbo.com/2017/01/23/Specification/</id>
     <published>2017-01-23T01:39:06.000Z</published>
     <updated>2017-08-04T07:46:42.000Z</updated>
     
@@ -551,14 +611,14 @@
     </summary>
     
     
-      <category term="specification" scheme="http://zhouyanbo.com/tags/specification/"/>
+      <category term="specification" scheme="https://zhouyanbo.com/tags/specification/"/>
     
   </entry>
   
   <entry>
     <title>数学分析一</title>
-    <link href="http://zhouyanbo.com/2017/01/18/Math-Part1/"/>
-    <id>http://zhouyanbo.com/2017/01/18/Math-Part1/</id>
+    <link href="https://zhouyanbo.com/2017/01/18/Math-Part1/"/>
+    <id>https://zhouyanbo.com/2017/01/18/Math-Part1/</id>
     <published>2017-01-18T08:01:31.000Z</published>
     <updated>2017-08-04T07:46:42.000Z</updated>
     

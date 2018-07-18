@@ -35,7 +35,6 @@ cd ../php-x.x.x
 --with-bz2 \
 --with-curl \
 --with-gd \
---with-mcrypt \
 --with-openssl \
 --with-mhash \
 --with-jpeg-dir \
@@ -49,7 +48,6 @@ cd ../php-x.x.x
 --with-pcre-regex \
 --with-pear \
 --with-pdo-mysql=mysqlnd \
---with-mysql=mysqlnd \
 --with-mysqli=mysqlnd \
 --with-libdir=lib64 \
 --enable-dom \
@@ -62,7 +60,6 @@ cd ../php-x.x.x
 --enable-mbregex \
 --enable-mbstring \
 --enable-calendar \
---enable-gd-native-ttf \
 --enable-static \
 --enable-fpm \
 --enable-bcmath \

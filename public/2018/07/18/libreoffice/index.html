@@ -3,15 +3,20 @@
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     
-    <title>Archive: 2018/1 | 美好的一天</title>
+    <title>使用libreoffice转换文档成pdf | 美好的一天</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="美好的一天">
-<meta property="og:url" content="https://zhouyanbo.com/archives/2018/01/index.html">
+    <meta name="description" content="需求将doc、docx、xls、xlsx、ppt、pptx格式的转换成pdf文档 实施系统是centos 7，这里使用libreoffice，在转换过程中发现，只要是文件中包含中文字符，转换之后文件中成了乱码，不可读 解决由于centos 7系统中缺少对中文的支持，需要安装中文字库，参考这里centos安装中文字库，安装完成后重启libreoffice即可 附：转换脚本">
+<meta name="keywords" content="libreoffice pdf centos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用libreoffice转换文档成pdf">
+<meta property="og:url" content="https://zhouyanbo.com/2018/07/18/libreoffice/index.html">
 <meta property="og:site_name" content="美好的一天">
+<meta property="og:description" content="需求将doc、docx、xls、xlsx、ppt、pptx格式的转换成pdf文档 实施系统是centos 7，这里使用libreoffice，在转换过程中发现，只要是文件中包含中文字符，转换之后文件中成了乱码，不可读 解决由于centos 7系统中缺少对中文的支持，需要安装中文字库，参考这里centos安装中文字库，安装完成后重启libreoffice即可 附：转换脚本">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-07-18T09:10:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="美好的一天">
+<meta name="twitter:title" content="使用libreoffice转换文档成pdf">
+<meta name="twitter:description" content="需求将doc、docx、xls、xlsx、ppt、pptx格式的转换成pdf文档 实施系统是centos 7，这里使用libreoffice，在转换过程中发现，只要是文件中包含中文字符，转换之后文件中成了乱码，不可读 解决由于centos 7系统中缺少对中文的支持，需要安装中文字库，参考这里centos安装中文字库，安装完成后重启libreoffice即可 附：转换脚本">
     
 
     
@@ -178,76 +183,146 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fa fa-calendar"></i></span>
-                <h1 class="title">2018</h1>
-            </div>
+            <section id="main"><article id="post-libreoffice" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/01/25/php-502-bad-gatewway/">php 502</a>
+        <h1 class="article-title" itemprop="name">
+            使用libreoffice转换文档成pdf
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/01/25/php-502-bad-gatewway/">
-            <time datetime="2018-01-25T05:33:20.000Z" itemprop="datePublished">2018-01-25</time>
+        <a href="/2018/07/18/libreoffice/">
+            <time datetime="2018-07-18T09:03:07.000Z" itemprop="datePublished">2018-07-18</time>
         </a>
     </div>
 
 
-                    
-                    
+                        
+                        
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/php-502/">php 502</a>
+        <a class="tag-link" href="/tags/libreoffice-pdf-centos/">libreoffice pdf centos</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/01/23/nginx-proxy-pass/">nginx 反向代理配置</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>将doc、docx、xls、xlsx、ppt、pptx格式的转换成pdf文档</p>
+<h3 id="实施"><a href="#实施" class="headerlink" title="实施"></a>实施</h3><p>系统是centos 7，这里使用libreoffice，在转换过程中发现，只要是文件中包含中文字符，转换之后文件中成了乱码，不可读</p>
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>由于centos 7系统中缺少对中文的支持，需要安装中文字库，参考这里<a href="https://blog.csdn.net/wlwlwlwl015/article/details/51482065" target="_blank" rel="external">centos安装中文字库</a>，<br>安装完成后重启libreoffice即可</p>
+<p>附：<a href="https://github.com/lugnsk/pyodconverter" target="_blank" rel="external">转换脚本</a></p>
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/01/23/nginx-proxy-pass/">
-            <time datetime="2018-01-23T07:18:30.000Z" itemprop="datePublished">2018-01-23</time>
-        </a>
-    </div>
-
-
-                    
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/nginx-proxy-pass/">nginx proxy_pass</a>
-    </div>
-
-                </div>
-            </div>
+        
         </div>
-    
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
 </div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://zhouyanbo.com/2018/07/18/libreoffice/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2018/07/18/libreoffice/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/02/26/sorting-algorithm/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">基本排序算法</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
 </section>
             
                 <aside id="sidebar">
@@ -298,11 +373,13 @@
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'https://zhouyanbo.com/2018/07/18/libreoffice/';
+        
+        this.page.identifier = 'libreoffice';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'zhouyb90' + '.disqus.com/count.js';
+        s.src = '//' + 'zhouyb90' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
