@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhouyanbo.com/"/>
-  <updated>2018-07-18T09:10:25.000Z</updated>
+  <updated>2018-12-10T08:33:10.000Z</updated>
   <id>https://zhouyanbo.com/</id>
   
   <author>
@@ -14,6 +14,90 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2018 年终总结</title>
+    <link href="https://zhouyanbo.com/2018/12/10/2018-summary/"/>
+    <id>https://zhouyanbo.com/2018/12/10/2018-summary/</id>
+    <published>2018-12-10T08:28:37.000Z</published>
+    <updated>2018-12-10T08:33:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>2018就要结束了，总会想起2010年上大学的情景，当时年末还在想明年就是2011年，这个念起来好拗口，一眨眼2018年都要结束了，回顾这一年。。。</p>
+<p>先留个位置，好好组织下语言再来补充年终总结</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;2018就要结束了，总会想起2010年上大学的情景，当时年末还在想明年就是2011年，这个念起来好拗口，一眨眼2018年都要结束了，回顾这一年。。。&lt;/p&gt;
+&lt;p&gt;先留个位置，好好组织下语言再来补充年终总结&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="summary" scheme="https://zhouyanbo.com/tags/summary/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>程序员的自动化</title>
+    <link href="https://zhouyanbo.com/2018/11/20/programmer-automation/"/>
+    <id>https://zhouyanbo.com/2018/11/20/programmer-automation/</id>
+    <published>2018-11-20T08:35:11.000Z</published>
+    <updated>2018-12-10T08:36:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>占位</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;占位&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="automation" scheme="https://zhouyanbo.com/tags/automation/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>生命不息，折腾不止</title>
+    <link href="https://zhouyanbo.com/2018/10/10/geek-funny-thing/"/>
+    <id>https://zhouyanbo.com/2018/10/10/geek-funny-thing/</id>
+    <published>2018-10-10T08:37:56.000Z</published>
+    <updated>2018-12-10T08:41:40.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+      <category term="geek" scheme="https://zhouyanbo.com/tags/geek/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>创意</title>
+    <link href="https://zhouyanbo.com/2018/09/10/some-original-ideas/"/>
+    <id>https://zhouyanbo.com/2018/09/10/some-original-ideas/</id>
+    <published>2018-09-10T08:40:07.000Z</published>
+    <updated>2018-12-10T08:42:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>想一些有创意的ideas</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;想一些有创意的ideas&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="original" scheme="https://zhouyanbo.com/tags/original/"/>
+    
+  </entry>
   
   <entry>
     <title>使用libreoffice转换文档成pdf</title>

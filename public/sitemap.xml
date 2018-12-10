@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zhouyanbo.com/2018/09/10/some-original-ideas/</loc>
+    
+    <lastmod>2018-12-10T08:42:54.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://zhouyanbo.com/2018/10/10/geek-funny-thing/</loc>
+    
+    <lastmod>2018-12-10T08:41:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://zhouyanbo.com/2018/11/20/programmer-automation/</loc>
+    
+    <lastmod>2018-12-10T08:36:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://zhouyanbo.com/2018/12/10/2018-summary/</loc>
+    
+    <lastmod>2018-12-10T08:33:10.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://zhouyanbo.com/2018/07/18/libreoffice/</loc>
     
     <lastmod>2018-07-18T09:10:25.000Z</lastmod>
@@ -86,13 +114,6 @@
   </url>
   
   <url>
-    <loc>https://zhouyanbo.com/2017/01/18/Math-Part1/</loc>
-    
-    <lastmod>2017-08-04T07:46:42.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://zhouyanbo.com/2017/03/06/save-emoji/</loc>
     
     <lastmod>2017-08-04T07:46:42.000Z</lastmod>
@@ -100,7 +121,7 @@
   </url>
   
   <url>
-    <loc>https://zhouyanbo.com/2017/01/23/Specification/</loc>
+    <loc>https://zhouyanbo.com/2017/01/18/Math-Part1/</loc>
     
     <lastmod>2017-08-04T07:46:42.000Z</lastmod>
     
@@ -108,6 +129,13 @@
   
   <url>
     <loc>https://zhouyanbo.com/2017/03/16/curl-file/</loc>
+    
+    <lastmod>2017-08-04T07:46:42.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://zhouyanbo.com/2017/01/23/Specification/</loc>
     
     <lastmod>2017-08-04T07:46:42.000Z</lastmod>
     
