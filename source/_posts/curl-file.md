@@ -1,7 +1,7 @@
 ---
 title: CURL File
 date: 2017-03-16 10:21:06
-tags: curl laravel post
+tags: php
 ---
 
 ### 场景

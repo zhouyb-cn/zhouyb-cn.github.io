@@ -1,7 +1,7 @@
 ---
 title: install centos 7 failed
 date: 2017-08-11 10:49:37
-tags: centos-7 error install
+tags: linux
 ---
 
 ### 起因

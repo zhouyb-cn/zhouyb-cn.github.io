@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang=en>
-<head>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     
     <title>处理TIF、EPS图片 | 美好的一天</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="工作中需要处理图片，格式包括png、jpg、svg、gif、tif、eps，等等。。。 前面几种还知道第一次听说还有tif、eps格式的图片，看来还是见识少啊 在网上找资料发现很少有处理这两种格式的图片的，尤其是eps，最后找到imagemagick，看了介绍之后觉得真是功能强大啊，无所不能 具体安装及使用方法见官网 使用过程中发现用convert命令对tif图片处理时，会在目录下生成不止一个图片">
-<meta name="keywords" content="image tif eps">
+<meta name="keywords" content="php">
 <meta property="og:type" content="article">
 <meta property="og:title" content="处理TIF、EPS图片">
 <meta property="og:url" content="https://zhouyanbo.com/2017/09/11/php-handle-tif-image/index.html">
 <meta property="og:site_name" content="美好的一天">
 <meta property="og:description" content="工作中需要处理图片，格式包括png、jpg、svg、gif、tif、eps，等等。。。 前面几种还知道第一次听说还有tif、eps格式的图片，看来还是见识少啊 在网上找资料发现很少有处理这两种格式的图片的，尤其是eps，最后找到imagemagick，看了介绍之后觉得真是功能强大啊，无所不能 具体安装及使用方法见官网 使用过程中发现用convert命令对tif图片处理时，会在目录下生成不止一个图片">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-11T09:06:32.000Z">
+<meta property="og:updated_time" content="2020-09-09T07:26:19.341Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="处理TIF、EPS图片">
 <meta name="twitter:description" content="工作中需要处理图片，格式包括png、jpg、svg、gif、tif、eps，等等。。。 前面几种还知道第一次听说还有tif、eps格式的图片，看来还是见识少啊 在网上找资料发现很少有处理这两种格式的图片的，尤其是eps，最后找到imagemagick，看了介绍之后觉得真是功能强大啊，无所不能 具体安装及使用方法见官网 使用过程中发现用convert命令对tif图片处理时，会在目录下生成不止一个图片">
@@ -41,7 +41,7 @@
 
 
 </head>
-
+</html>
 <body>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
         <header id="header">
@@ -155,11 +155,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                22
+                27
                 <span>posts</span>
             </div>
             <div class="article-info-block">
-                21
+                13
                 <span>tags</span>
             </div>
         </div>
@@ -210,7 +210,7 @@
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/image-tif-eps/">image tif eps</a>
+        <a class="tag-link" href="/tags/php/">php</a>
     </div>
 
                     </div>
@@ -222,12 +222,12 @@
         
             
             <p>工作中需要处理图片，格式包括png、jpg、svg、gif、tif、eps，等等。。。 前面几种还知道<br>第一次听说还有tif、eps格式的图片，看来还是见识少啊</p>
-<p>在网上找资料发现很少有处理这两种格式的图片的，尤其是eps，最后找到<a href="https://www.imagemagick.org" target="_blank" rel="external">imagemagick</a>，看了介绍之后觉得真是功能强大啊，无所不能</p>
-<p>具体安装及使用方法见<a href="https://www.imagemagick.org/script/download.php" target="_blank" rel="external">官网</a></p>
+<p>在网上找资料发现很少有处理这两种格式的图片的，尤其是eps，最后找到<a href="https://www.imagemagick.org" target="_blank" rel="noopener">imagemagick</a>，看了介绍之后觉得真是功能强大啊，无所不能</p>
+<p>具体安装及使用方法见<a href="https://www.imagemagick.org/script/download.php" target="_blank" rel="noopener">官网</a></p>
 <p>使用过程中发现用convert命令对tif图片处理时，会在目录下生成不止一个图片</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">convert -resize 200 image.tif target_path</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">convert -resize 200 image.tif target_path</span><br></pre></td></tr></table></figure>
 <p>查资料发现tif是有图层的，一个tif图片可能会有多个layer，如果只要想生成一个图片的话，修改命令如下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">convert -resize 200 image.tif[0] target_path</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">convert -resize 200 image.tif[0] target_path</span><br></pre></td></tr></table></figure>
 
         
         </div>
@@ -345,7 +345,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -354,7 +354,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/automation/">automation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos-7-error-install/">centos-7 error install</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/curl-laravel-post/">curl laravel post</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dropbox-tool/">dropbox tool</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo-issues/">hexo issues</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/image-tif-eps/">image tif eps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel-emoji/">laravel emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/libreoffice-pdf-centos/">libreoffice pdf centos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql-auto-update-timestamp/">mysql auto update timestamp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx-proxy-pass/">nginx proxy_pass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok-centos7-mac/">ngrok centos7 mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/original/">original</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-502/">php 502</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt-creater/">qt creater</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/specification/">specification</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/storage/">storage</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/summary/">summary</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dropbox/">dropbox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok-linux/">ngrok linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a><span class="tag-list-count">3</span></li></ul>
         </div>
     </div>
 
@@ -363,7 +363,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/automation/" style="font-size: 10px;">automation</a> <a href="/tags/centos-7-error-install/" style="font-size: 10px;">centos-7 error install</a> <a href="/tags/curl-laravel-post/" style="font-size: 10px;">curl laravel post</a> <a href="/tags/dropbox-tool/" style="font-size: 10px;">dropbox tool</a> <a href="/tags/geek/" style="font-size: 10px;">geek</a> <a href="/tags/hexo-issues/" style="font-size: 10px;">hexo issues</a> <a href="/tags/image-tif-eps/" style="font-size: 10px;">image tif eps</a> <a href="/tags/laravel-emoji/" style="font-size: 10px;">laravel emoji</a> <a href="/tags/libreoffice-pdf-centos/" style="font-size: 10px;">libreoffice pdf centos</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/mysql-auto-update-timestamp/" style="font-size: 10px;">mysql auto update timestamp</a> <a href="/tags/nginx-proxy-pass/" style="font-size: 10px;">nginx proxy_pass</a> <a href="/tags/ngrok-centos7-mac/" style="font-size: 10px;">ngrok centos7 mac</a> <a href="/tags/original/" style="font-size: 10px;">original</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/php-502/" style="font-size: 10px;">php 502</a> <a href="/tags/qt-creater/" style="font-size: 10px;">qt creater</a> <a href="/tags/specification/" style="font-size: 10px;">specification</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/summary/" style="font-size: 10px;">summary</a>
+            <a href="/tags/algorithm/" style="font-size: 16.67px;">algorithm</a> <a href="/tags/dropbox/" style="font-size: 10px;">dropbox</a> <a href="/tags/geek/" style="font-size: 13.33px;">geek</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ngrok-linux/" style="font-size: 10px;">ngrok linux</a> <a href="/tags/other/" style="font-size: 13.33px;">other</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/生活/" style="font-size: 16.67px;">生活</a>
         </div>
     </div>
 
@@ -375,9 +375,8 @@
         <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2018 zhouyb90<br>
-            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>
-            <a href="https://www.upyun.com/" target="_blank"><img src="css/images/upyun.png" height="20px" width="100px"></a>
+            &copy; 2020 zhouyb90<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
         </div>
     </div>
 </footer>

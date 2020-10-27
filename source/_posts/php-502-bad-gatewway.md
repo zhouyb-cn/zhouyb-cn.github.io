@@ -1,7 +1,7 @@
 ---
 title: php 502
 date: 2018-01-25 13:33:20
-tags: php 502
+tags: php
 ---
 
 **记录一次bug查找经历**

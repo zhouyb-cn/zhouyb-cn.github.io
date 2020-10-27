@@ -1,7 +1,7 @@
 ---
 title: Coding-Specification
 date: 2017-01-23 09:39:06
-tags: specification
+tags: php
 ---
 ### 编写目的
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为了更好的提高技术部的工作效率，保证开发的有效性和合理性，并可最大程度的提高程序代码的可读性和可重复利用性，指定此规范。开发团队根据自己的实际情况，可以对本规范进行补充或裁减。本规则会不断的进行适当的改进，以适应最新的开发环境。

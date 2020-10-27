@@ -1,7 +1,7 @@
 ---
 title: Qt creater
 date: 2017-11-10 15:15:33
-tags: qt creater
+tags: python
 ---
 
 > Qt Creator 包括项目生成向导、高级的 C++ 代码编辑器、浏览文件及类的工具、集成了 Qt Designer、Qt Assistant、Qt Linguist、图形化的 GDB 调试前端，集成 qmake 构建工具等

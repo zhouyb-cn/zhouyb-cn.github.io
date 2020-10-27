@@ -1,7 +1,7 @@
 ---
 title: nginx 反向代理配置
 date: 2018-01-23 15:18:30
-tags: nginx proxy_pass
+tags: nginx
 ---
 
 ### 条件

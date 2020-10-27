@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang=en>
-<head>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     
     <title>美好的一天</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta property="og:type" content="website">
 <meta property="og:title" content="美好的一天">
 <meta property="og:url" content="https://zhouyanbo.com/page/2/index.html">
@@ -36,7 +36,7 @@
 
 
 </head>
-
+</html>
 <body>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
         <header id="header">
@@ -150,11 +150,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                22
+                27
                 <span>posts</span>
             </div>
             <div class="article-info-block">
-                21
+                13
                 <span>tags</span>
             </div>
         </div>
@@ -179,6 +179,603 @@
 
             
             <section id="main">
+    <article id="post-dropbox-synchronization" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/05/20/dropbox-synchronization/">Dropbox 同步问题</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/05/20/dropbox-synchronization/">
+            <time datetime="2018-05-20T07:26:12.000Z" itemprop="datePublished">2018-05-20</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/dropbox/">dropbox</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>最初的时候下载了 <a href="https://dropbox.com/" target="_blank" rel="noopener">Dropbox</a> 做为我重要资料的网盘备份，可是最大的问题就是Dropbox的联网问题，众所周知此工具是被限制的，只能想一些办法FQ才可以使用，后来无奈从电脑上删除了，最近几天在整理<a href="http://1password.com" target="_blank" rel="noopener">1password</a>备份的时候，觉得icloud有点问题（原先使用icloud做备份），而且今年<a href="https://www.icloud.com" target="_blank" rel="noopener">icloud</a>中国由云上贵州运营了，也曝出了一些不好的新闻，不知真假，虽然我也在用icloud的免费5G的空间，反正也没有放什么隐私的材料照片，也就无所谓了，密码这个东西还是需要注意些，比较了一下Dropbox相对安全一些，决定重新捡起Dropbox。</p>
+<p>此站点我是用的<a href="https://welcome.linode.com" target="_blank" rel="noopener">Linode</a>，每个月$5对我来说足够了（没什么浏览量），我在上面部署了ss服务，本地Mac安装ss客户端，添加服务器，选择自动代理模式，由于服务器在日本，延迟200多ms还算可以，基本的Google查询还是可以接受的。</p>
+<p>下载Dropbox，安装在本地，安装好之后发现即使开启了ss还是一直处在连接中的状态，无法连接到服务器，于是在网上找到了方法，首先找到ss的自动模式的PAC文件 gfwlist.js，打来看到其中有一行</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> proxy = <span class="string">"SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; DIRECT;"</span>;</span><br></pre></td></tr></table></figure>
+<p>根据每个人的不同配置跟我的不一样，仅供参考，接着打开Dropbox的偏好设置，找到网络 –&gt; 代理服务器，点击更改设置，选择手动，代理服务器类型：SOCKET5，服务器端口号写上就可以了，点击更新，过几秒发现Dropbox可以连接了</p>
+<p>1password在偏好设置中选择同步方式为Dropbox，我只是在Mac跟iphone之间同步，iphone上开启代理即可，经试验，同步还是很快的，可以开心的使用了。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://zhouyanbo.com/2018/05/20/dropbox-synchronization/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2018/05/20/dropbox-synchronization/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-image-storage-server" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/04/10/image-storage-server/">image storage server</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/04/10/image-storage-server/">
+            <time datetime="2018-04-10T08:44:10.000Z" itemprop="datePublished">2018-04-10</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/php/">php</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>最近发现个人博客网站很少用到图，存储到一些云服务厂商不知道哪天就给封了，还是放在自己服务器比较安全，决定找时间在现有的<a href="http://img.zhouyanbo.com/" target="_blank" rel="noopener">图片站点</a>加上图片上传功能。</p>
+<h4 id="Todo"><a href="#Todo" class="headerlink" title="Todo"></a>Todo</h4><ul>
+<li>图片上传服务</li>
+<li>考虑服务器安全备份问题</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://zhouyanbo.com/2018/04/10/image-storage-server/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2018/04/10/image-storage-server/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-sorting-algorithm" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/02/26/sorting-algorithm/">基本排序算法</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/02/26/sorting-algorithm/">
+            <time datetime="2018-02-26T03:30:42.000Z" itemprop="datePublished">2018-02-26</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/algorithm/">algorithm</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="一、冒泡排序"><a href="#一、冒泡排序" class="headerlink" title="一、冒泡排序"></a>一、冒泡排序</h3><p>冒泡排序（Bubble Sort），是一种计算机科学领域的较简单的排序算法。<br>它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。<br>这个算法的名字由来是因为越大的元素会经由交换慢慢“浮”到数列的顶端，故名</p>
+<h4 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h4><ol>
+<li>比较相邻的元素。如果第一个比第二个大，就交换他们两个。</li>
+<li>对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。在这一点，最后的元素应该会是最大的数。</li>
+<li>针对所有的元素重复以上的步骤，除了最后一个。</li>
+<li>持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort</span><span class="params">(list)</span>:</span></span><br><span class="line">    length = len(list)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(length):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>, length-i):</span><br><span class="line">            <span class="keyword">if</span> list[j<span class="number">-1</span>] &gt; list[j]:</span><br><span class="line">                list[j<span class="number">-1</span>], list[j] = list[j], list[j<span class="number">-1</span>]</span><br><span class="line">    <span class="keyword">return</span> list</span><br></pre></td></tr></table></figure>
+<h3 id="二、冒泡排序"><a href="#二、冒泡排序" class="headerlink" title="二、冒泡排序"></a>二、冒泡排序</h3><p>冒泡排序（Bubble Sort），是一种计算机科学领域的较简单的排序算法。<br>它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。<br>这个算法的名字由来是因为越大的元素会经由交换慢慢“浮”到数列的顶端，故名</p>
+<h4 id="算法原理-1"><a href="#算法原理-1" class="headerlink" title="算法原理"></a>算法原理</h4><ol>
+<li>比较相邻的元素。如果第一个比第二个大，就交换他们两个。</li>
+<li>对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。在这一点，最后的元素应该会是最大的数。</li>
+<li>针对所有的元素重复以上的步骤，除了最后一个。</li>
+<li>持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort</span><span class="params">(list)</span>:</span></span><br><span class="line">    length = len(list)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(length):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>, length-i):</span><br><span class="line">            <span class="keyword">if</span> list[j<span class="number">-1</span>] &gt; list[j]:</span><br><span class="line">                list[j<span class="number">-1</span>], list[j] = list[j], list[j<span class="number">-1</span>]</span><br><span class="line">    <span class="keyword">return</span> list</span><br></pre></td></tr></table></figure>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://zhouyanbo.com/2018/02/26/sorting-algorithm/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2018/02/26/sorting-algorithm/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-upgrade-php-to-7" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/02/01/upgrade-php-to-7/">升级站点php版本到7.2.1</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/02/01/upgrade-php-to-7/">
+            <time datetime="2018-02-01T07:30:49.000Z" itemprop="datePublished">2018-02-01</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/php/">php</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>php7已经问世两年多了，都说性能提升了不少，可开发一直在使用php5.6，最近考虑把自己站点的php版本升级一下，目前站点的php版本是5.6.31</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">~$ php -v</span><br><span class="line">PHP 5.6.31 (cli) (built: Sep 14 2017 18:12:46)</span><br><span class="line">Copyright (c) 1997-2016 The PHP Group</span><br><span class="line">Zend Engine v2.6.0, Copyright (c) 1998-2016 Zend Technologies</span><br><span class="line">    with Zend OPcache v7.0.6-dev, Copyright (c) 1999-2016, by Zend Technologies</span><br></pre></td></tr></table></figure>
+<p><a href="http://php.net/downloads.php" target="_blank" rel="noopener">php download</a>目前官网的稳定版本是7.2.1，下面记录下升级过程</p></p>
+            <p class="article-more-link">
+                <a href="/2018/02/01/upgrade-php-to-7/#more">Read More</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://zhouyanbo.com/2018/02/01/upgrade-php-to-7/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2018/02/01/upgrade-php-to-7/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-mysql-data-duplicate" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/02/01/mysql-data-duplicate/">mysql 分页数据重复</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/02/01/mysql-data-duplicate/">
+            <time datetime="2018-02-01T07:17:34.000Z" itemprop="datePublished">2018-02-01</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/mysql/">mysql</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><strong>BUG mysql分页数据偶尔有重复</strong></p>
+<p>解决：在sql语句中使用了order by field，其中filed字段非id，数据有重复导致分页数据偶尔会重复，再增加order by id可以解决，参考<a href="https://stackoverflow.com/questions/43798247/laravel-pagination-showing-duplicate-and-replacing-random-row" target="_blank" rel="noopener">stackoverflow</a><br>以及 <a href="https://stackoverflow.com/questions/6662837/how-mysql-order-the-rows-with-same-values" target="_blank" rel="noopener">stackoverflow</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://zhouyanbo.com/2018/02/01/mysql-data-duplicate/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2018/02/01/mysql-data-duplicate/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-php-502-bad-gatewway" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -206,7 +803,7 @@
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/php-502/">php 502</a>
+        <a class="tag-link" href="/tags/php/">php</a>
     </div>
 
                     </div>
@@ -223,16 +820,16 @@
 <li>nginx、php-fpm都服务正常</li>
 <li>配置无误，访问root目录下的html文件都能正常访问，php文件都是502，定位到php-fpm出问题</li>
 <li><p>查看nginx错误日志，报错信息(我电脑php-fpm监听的9011端口)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[error] 16914#16914: *1314340 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: ****, server: ****, request: &quot;GET **** HTTP/1.1&quot;, upstream: &quot;fastcgi://127.0.0.1:9011&quot;, host: &quot;zhouyanbo.com&quot;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[error] 16914#16914: *1314340 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: ****, server: ****, request: &quot;GET **** HTTP/1.1&quot;, upstream: &quot;fastcgi://127.0.0.1:9011&quot;, host: &quot;zhouyanbo.com&quot;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>检查php-fpm.log文件(一般位置在/var/log/php-fpm/error.log)，没有错误信息，修改/etc/php-fpm.d/www.conf配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">catch_workers_output = yes</div></pre></td></tr></table></figure>
+<li><p>检查php-fpm.log文件(一般位置在/var/log/php-fpm/error.log)，没有错误信息，修改/etc/php-fpm.d/<a href="http://www.conf配置" target="_blank" rel="noopener">www.conf配置</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">catch_workers_output = yes</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>重新请求查看php-fpm.log日志，报错</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[pool www] child 31776 said into stderr: &quot;ERROR: Connection disallowed: IP address &apos;127.0.0.1&apos; has been dropped.&quot;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[pool www] child 31776 said into stderr: &quot;ERROR: Connection disallowed: IP address &apos;127.0.0.1&apos; has been dropped.&quot;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>最后修改/etc/php-fpm.d/www.conf配置，原来是any改为127.0.0.1</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">listen.allowed_clients = 127.0.0.1</div></pre></td></tr></table></figure>
+<li><p>最后修改/etc/php-fpm.d/<a href="http://www.conf配置，原来是any改为127.0.0.1" target="_blank" rel="noopener">www.conf配置，原来是any改为127.0.0.1</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">listen.allowed_clients = 127.0.0.1</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>重启能正常访问</p>
 </li>
@@ -340,7 +937,7 @@
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/nginx-proxy-pass/">nginx proxy_pass</a>
+        <a class="tag-link" href="/tags/nginx/">nginx</a>
     </div>
 
                     </div>
@@ -352,7 +949,7 @@
         
             
             <h3 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h3><p>两台能互相通讯的服务器，一台内网地址192.168.1.100，另外一台192.168.1.101，192.168.1.100服务器上设置反向代理，当用户访问地址时，转发到192.168.1.101服务器上</p>
-<h3 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line"></div><div class="line">    server_name www.zhouyanbo.com;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">       proxy_set_header X-Real-IP  $remote_addr;</div><div class="line">       proxy_set_header X-Forwarded-For $remote_addr;</div><div class="line">       proxy_set_header Host $host;</div><div class="line">       proxy_pass http://192.168.1.101:8080;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line"></span><br><span class="line">    server_name www.zhouyanbo.com;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">       proxy_set_header X-Real-IP  $remote_addr;</span><br><span class="line">       proxy_set_header X-Forwarded-For $remote_addr;</span><br><span class="line">       proxy_set_header Host $host;</span><br><span class="line">       proxy_pass http://192.168.1.101:8080;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>192.168.1.101服务器上正常配置站点</p>
 
         
@@ -456,7 +1053,7 @@
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/ngrok-centos7-mac/">ngrok centos7 mac</a>
+        <a class="tag-link" href="/tags/ngrok-linux/">ngrok linux</a>
     </div>
 
                     </div>
@@ -473,9 +1070,9 @@
 <li>一台linode服务器，系统 Centos 7 amd64</li>
 <li>一个公网域名 zhouyanbo.com</li>
 </ol>
-<h4 id="一、安装软件"><a href="#一、安装软件" class="headerlink" title="一、安装软件"></a>一、安装软件</h4><h5 id="1-安装gcc"><a href="#1-安装gcc" class="headerlink" title="1. 安装gcc"></a>1. 安装gcc</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install gcc</div></pre></td></tr></table></figure>
-<h5 id="2-安装go环境"><a href="#2-安装go环境" class="headerlink" title="2. 安装go环境"></a>2. 安装go环境</h5><p>下载最新的go版本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz</div></pre></td></tr></table></figure></p>
-<p>解压<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -C /usr/<span class="built_in">local</span>/ -zxvf go1.9.2.linux-amd64.tar.gz</div></pre></td></tr></table></figure></p></p>
+<h4 id="一、安装软件"><a href="#一、安装软件" class="headerlink" title="一、安装软件"></a>一、安装软件</h4><h5 id="1-安装gcc"><a href="#1-安装gcc" class="headerlink" title="1. 安装gcc"></a>1. 安装gcc</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc</span><br></pre></td></tr></table></figure>
+<h5 id="2-安装go环境"><a href="#2-安装go环境" class="headerlink" title="2. 安装go环境"></a>2. 安装go环境</h5><p>下载最新的go版本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>解压<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -C /usr/<span class="built_in">local</span>/ -zxvf go1.9.2.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure></p></p>
             <p class="article-more-link">
                 <a href="/2017/12/14/ngrok-install/#more">Read More</a>
             </p>
@@ -580,7 +1177,7 @@
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/qt-creater/">qt creater</a>
+        <a class="tag-link" href="/tags/python/">python</a>
     </div>
 
                     </div>
@@ -707,7 +1304,7 @@
                         
     <div class="article-tag">
         <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/image-tif-eps/">image tif eps</a>
+        <a class="tag-link" href="/tags/php/">php</a>
     </div>
 
                     </div>
@@ -719,12 +1316,12 @@
         
             
             <p>工作中需要处理图片，格式包括png、jpg、svg、gif、tif、eps，等等。。。 前面几种还知道<br>第一次听说还有tif、eps格式的图片，看来还是见识少啊</p>
-<p>在网上找资料发现很少有处理这两种格式的图片的，尤其是eps，最后找到<a href="https://www.imagemagick.org" target="_blank" rel="external">imagemagick</a>，看了介绍之后觉得真是功能强大啊，无所不能</p>
-<p>具体安装及使用方法见<a href="https://www.imagemagick.org/script/download.php" target="_blank" rel="external">官网</a></p>
+<p>在网上找资料发现很少有处理这两种格式的图片的，尤其是eps，最后找到<a href="https://www.imagemagick.org" target="_blank" rel="noopener">imagemagick</a>，看了介绍之后觉得真是功能强大啊，无所不能</p>
+<p>具体安装及使用方法见<a href="https://www.imagemagick.org/script/download.php" target="_blank" rel="noopener">官网</a></p>
 <p>使用过程中发现用convert命令对tif图片处理时，会在目录下生成不止一个图片</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">convert -resize 200 image.tif target_path</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">convert -resize 200 image.tif target_path</span><br></pre></td></tr></table></figure>
 <p>查资料发现tif是有图层的，一个tif图片可能会有多个layer，如果只要想生成一个图片的话，修改命令如下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">convert -resize 200 image.tif[0] target_path</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">convert -resize 200 image.tif[0] target_path</span><br></pre></td></tr></table></figure>
 
         
         </div>
@@ -800,613 +1397,6 @@
 
 
 
-    <article id="post-mysql-timestamp-auto-update" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/09/11/mysql-timestamp-auto-update/">记录一次找bug经历（一）</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/09/11/mysql-timestamp-auto-update/">
-            <time datetime="2017-09-11T08:07:35.000Z" itemprop="datePublished">2017-09-11</time>
-        </a>
-    </div>
-
-
-                        
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/mysql-auto-update-timestamp/">mysql auto update timestamp</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>A：发现一个bug<br>B：什么bug<br>A：我们项目中（测试环境）有个接口时间会自动跟着更新时间变动，但是在本地测试是好的<br>B：详细描述下呢<br>A：有个发布动态的功能，其中有发布时、更新时间、新闻时间三个字段，当在后台通过审核后，新闻时间会跟着更新时间一起变<br>B：有没有检查代码有什么不同呢<br>A：检查过了，本地跟线上的代码版本一致<br>B：有没有考虑过哪里出了问题<br>A：看一下线上的数据表吧，感觉数据表有问题<br>B：当时更新数据表是跟本地同步的啊，不能出问题啊，等我有时间看下吧</p>
-<h3 id="解决过程"><a href="#解决过程" class="headerlink" title="解决过程"></a>解决过程</h3><p>由于当时忙，想了下，没想到啥原因，简单看了下代码，确实没问题，暂时放一放了，晚上找到运维看了下线上数据库</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">时间字段 timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON <span class="keyword">UPDATE</span> <span class="keyword">CURRENT_TIMESTAMP</span></div></pre></td></tr></table></figure>
-<p>what？？？ 不知道怎么这个字段加了在更新的时候修改为当前时间，今后要注意这种小细节，好在这次找bug的时间没有很长</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>当把数据表字段设置成 dafault CURRENT_TIMESTAMP 会在数据插入的时候，自动设置成当前时间</p>
-<h5 id="数据表中时间字段更新的方法"><a href="#数据表中时间字段更新的方法" class="headerlink" title="数据表中时间字段更新的方法"></a>数据表中时间字段更新的方法</h5><ol>
-<li><p>在代码中更新字段</p>
-</li>
-<li><p>设置字段的Extra列on update CURRENT_TIMESTAMP</p>
-</li>
-<li><p>设置mysql定时任务</p>
-</li>
-</ol>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-    <div class="a2a_kit a2a_default_style">
-    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
-    <span class="a2a_divider"></span>
-    <a class="a2a_button_facebook"></a>
-    <a class="a2a_button_twitter"></a>
-    <a class="a2a_button_google_plus"></a>
-    <a class="a2a_button_pinterest"></a>
-    <a class="a2a_button_tumblr"></a>
-</div>
-<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
-<style>
-    .a2a_menu {
-        border-radius: 4px;
-    }
-    .a2a_menu a {
-        margin: 2px 0;
-        font-size: 14px;
-        line-height: 16px;
-        border-radius: 4px;
-        color: inherit !important;
-        font-family: 'Microsoft Yahei';
-    }
-    #a2apage_dropdown {
-        margin: 10px 0;
-    }
-    .a2a_mini_services {
-        padding: 10px;
-    }
-    a.a2a_i,
-    i.a2a_i {
-        width: 122px;
-        line-height: 16px;
-    }
-    a.a2a_i .a2a_svg,
-    a.a2a_more .a2a_svg {
-        width: 16px;
-        height: 16px;
-        line-height: 16px;
-        vertical-align: top;
-        background-size: 16px;
-    }
-    a.a2a_i {
-        border: none !important;
-    }
-    a.a2a_menu_show_more_less {
-        margin: 0;
-        padding: 10px 0;
-        line-height: 16px;
-    }
-    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
-    .a2a_mini_services{*+height:1%;}
-</style>
-
-</div>
-
-            
-    
-        <a href="https://zhouyanbo.com/2017/09/11/mysql-timestamp-auto-update/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2017/09/11/mysql-timestamp-auto-update/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-install-centos-7" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/08/11/install-centos-7/">install centos 7 failed</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/08/11/install-centos-7/">
-            <time datetime="2017-08-11T02:49:37.000Z" itemprop="datePublished">2017-08-11</time>
-        </a>
-    </div>
-
-
-                        
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/centos-7-error-install/">centos-7 error install</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>最近公司新购几台服务器，需要先装好系统再拿到机房，前面两台430服务器安装系统都很顺利，在安装第三台730XD的时候报错failed to start switch root</p>
-<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>经过检查，是由于找不到U盘加载不到镜像导致这个错误，730服务器上三个USB插孔（前面一个后面两个），不知道前后有什么区别</p>
-<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><ul>
-<li>在启动界面，按e进入编辑模式，</li>
-<li>修改启动参数 vmlinuz initrd=initrd.img linux dd quiet</li>
-<li>重启会列出所有磁盘，包括U盘盘符，一般U盘会是/dev/sdb<em>，或者/dev/sda</em>，但是我发现这次U盘是/dev/sdc4</li>
-<li>接着重启，重新进入编辑模式，修改启动参数 vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sdc4 quiet 根据实际情况修改盘符</li>
-<li>ctrl + x 执行就能顺利看到安装界面</li>
-</ul>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-    <div class="a2a_kit a2a_default_style">
-    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
-    <span class="a2a_divider"></span>
-    <a class="a2a_button_facebook"></a>
-    <a class="a2a_button_twitter"></a>
-    <a class="a2a_button_google_plus"></a>
-    <a class="a2a_button_pinterest"></a>
-    <a class="a2a_button_tumblr"></a>
-</div>
-<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
-<style>
-    .a2a_menu {
-        border-radius: 4px;
-    }
-    .a2a_menu a {
-        margin: 2px 0;
-        font-size: 14px;
-        line-height: 16px;
-        border-radius: 4px;
-        color: inherit !important;
-        font-family: 'Microsoft Yahei';
-    }
-    #a2apage_dropdown {
-        margin: 10px 0;
-    }
-    .a2a_mini_services {
-        padding: 10px;
-    }
-    a.a2a_i,
-    i.a2a_i {
-        width: 122px;
-        line-height: 16px;
-    }
-    a.a2a_i .a2a_svg,
-    a.a2a_more .a2a_svg {
-        width: 16px;
-        height: 16px;
-        line-height: 16px;
-        vertical-align: top;
-        background-size: 16px;
-    }
-    a.a2a_i {
-        border: none !important;
-    }
-    a.a2a_menu_show_more_less {
-        margin: 0;
-        padding: 10px 0;
-        line-height: 16px;
-    }
-    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
-    .a2a_mini_services{*+height:1%;}
-</style>
-
-</div>
-
-            
-    
-        <a href="https://zhouyanbo.com/2017/08/11/install-centos-7/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2017/08/11/install-centos-7/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-hexo-issues" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/08/04/hexo-issues/">Hexo 问题记录</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/08/04/hexo-issues/">
-            <time datetime="2017-08-04T08:18:55.000Z" itemprop="datePublished">2017-08-04</time>
-        </a>
-    </div>
-
-
-                        
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/hexo-issues/">hexo issues</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <h3 id="Q-hexo-deploy会发布整个项目到git-master分支"><a href="#Q-hexo-deploy会发布整个项目到git-master分支" class="headerlink" title="Q: hexo deploy会发布整个项目到git master分支"></a>Q: hexo deploy会发布整个项目到git master分支</h3><p>A: 删除项目根目录下的 .git 文件夹</p>
-<h3 id="Q-删除-git文件夹后再hexo-deploy报错-fatal-Not-a-git-repository-or-any-of-the-parent-directories-git"><a href="#Q-删除-git文件夹后再hexo-deploy报错-fatal-Not-a-git-repository-or-any-of-the-parent-directories-git" class="headerlink" title="Q: 删除.git文件夹后再hexo deploy报错 fatal: Not a git repository (or any of the parent directories): .git"></a>Q: 删除.git文件夹后再hexo deploy报错 fatal: Not a git repository (or any of the parent directories): .git</h3><p>A: 删除项目根目录下的 .deploy 文件夹</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-    <div class="a2a_kit a2a_default_style">
-    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
-    <span class="a2a_divider"></span>
-    <a class="a2a_button_facebook"></a>
-    <a class="a2a_button_twitter"></a>
-    <a class="a2a_button_google_plus"></a>
-    <a class="a2a_button_pinterest"></a>
-    <a class="a2a_button_tumblr"></a>
-</div>
-<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
-<style>
-    .a2a_menu {
-        border-radius: 4px;
-    }
-    .a2a_menu a {
-        margin: 2px 0;
-        font-size: 14px;
-        line-height: 16px;
-        border-radius: 4px;
-        color: inherit !important;
-        font-family: 'Microsoft Yahei';
-    }
-    #a2apage_dropdown {
-        margin: 10px 0;
-    }
-    .a2a_mini_services {
-        padding: 10px;
-    }
-    a.a2a_i,
-    i.a2a_i {
-        width: 122px;
-        line-height: 16px;
-    }
-    a.a2a_i .a2a_svg,
-    a.a2a_more .a2a_svg {
-        width: 16px;
-        height: 16px;
-        line-height: 16px;
-        vertical-align: top;
-        background-size: 16px;
-    }
-    a.a2a_i {
-        border: none !important;
-    }
-    a.a2a_menu_show_more_less {
-        margin: 0;
-        padding: 10px 0;
-        line-height: 16px;
-    }
-    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
-    .a2a_mini_services{*+height:1%;}
-</style>
-
-</div>
-
-            
-    
-        <a href="https://zhouyanbo.com/2017/08/04/hexo-issues/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2017/08/04/hexo-issues/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-curl-file" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/03/16/curl-file/">CURL File</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/03/16/curl-file/">
-            <time datetime="2017-03-16T02:21:06.000Z" itemprop="datePublished">2017-03-16</time>
-        </a>
-    </div>
-
-
-                        
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/curl-laravel-post/">curl laravel post</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><ul>
-<li>laravel 框架</li>
-<li>上传图片需要通过API接口传到图片服务器上 </li>
-</ul>
-<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><p>采用curl的方式，在PHP版本大于5.5.0需要用到CURLFile类</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">curlPost</span><span class="params">($url, $postData, $post = <span class="number">1</span>)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    $curl = curl_init();</div><div class="line">    curl_setopt($curl, CURLOPT_POST, $post);</div><div class="line"></div><div class="line">    curl_setopt($curl, CURLOPT_URL, $url);</div><div class="line">    curl_setopt($curl, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);</div><div class="line">    curl_setopt($curl, CURLOPT_HEADER, <span class="number">0</span>);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ($postData) &#123;</div><div class="line">        curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    $data = curl_exec($curl);</div><div class="line">    $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);</div><div class="line">    curl_close($curl);</div><div class="line">    <span class="keyword">if</span> ($httpcode == <span class="number">200</span>) &#123;</div><div class="line">        <span class="keyword">return</span> $data;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> $httpcode;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在调用方法的时候第二个参数是个数组，API接口参数file<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">array</span>(</div><div class="line">	<span class="string">'file'</span> =&gt; <span class="keyword">new</span> \CURLFile($path)</div><div class="line">)</div></pre></td></tr></table></figure></p>
-<p>若同时上传多个文件，如下<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">array</span>(</div><div class="line">	<span class="string">'file[0]'</span> =&gt; <span class="keyword">new</span> \CURLFile($path1),</div><div class="line">	<span class="string">'file[1]'</span> =&gt; <span class="keyword">new</span> \CURLFile($path2)</div><div class="line">));</div></pre></td></tr></table></figure></p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-    <div class="a2a_kit a2a_default_style">
-    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
-    <span class="a2a_divider"></span>
-    <a class="a2a_button_facebook"></a>
-    <a class="a2a_button_twitter"></a>
-    <a class="a2a_button_google_plus"></a>
-    <a class="a2a_button_pinterest"></a>
-    <a class="a2a_button_tumblr"></a>
-</div>
-<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
-<style>
-    .a2a_menu {
-        border-radius: 4px;
-    }
-    .a2a_menu a {
-        margin: 2px 0;
-        font-size: 14px;
-        line-height: 16px;
-        border-radius: 4px;
-        color: inherit !important;
-        font-family: 'Microsoft Yahei';
-    }
-    #a2apage_dropdown {
-        margin: 10px 0;
-    }
-    .a2a_mini_services {
-        padding: 10px;
-    }
-    a.a2a_i,
-    i.a2a_i {
-        width: 122px;
-        line-height: 16px;
-    }
-    a.a2a_i .a2a_svg,
-    a.a2a_more .a2a_svg {
-        width: 16px;
-        height: 16px;
-        line-height: 16px;
-        vertical-align: top;
-        background-size: 16px;
-    }
-    a.a2a_i {
-        border: none !important;
-    }
-    a.a2a_menu_show_more_less {
-        margin: 0;
-        padding: 10px 0;
-        line-height: 16px;
-    }
-    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
-    .a2a_mini_services{*+height:1%;}
-</style>
-
-</div>
-
-            
-    
-        <a href="https://zhouyanbo.com/2017/03/16/curl-file/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2017/03/16/curl-file/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-save-emoji" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/03/06/save-emoji/">数据库保存emoji表情</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/03/06/save-emoji/">
-            <time datetime="2017-03-06T03:56:01.000Z" itemprop="datePublished">2017-03-06</time>
-        </a>
-    </div>
-
-
-                        
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/laravel-emoji/">laravel emoji</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>mysql保存emoji表情的时候，插入到数据库为问号或者无法插入</p>
-<h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>是由于mysql的utf-8编码最多三个字节，而emoji表情是四个字节，导致插入错误</p>
-<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p><strong>修改数据库设置字符集</strong></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">DATABASE</span> database_name <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> = utf8mb4 <span class="keyword">COLLATE</span> = utf8mb4_unicode_ci;</div></pre></td></tr></table></figure>
-<p><strong>修改数据表字符集</strong></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name <span class="keyword">CONVERT</span> <span class="keyword">TO</span> <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_unicode_ci;</div></pre></td></tr></table></figure>
-<p><strong>修改字段名字符集</strong></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name <span class="keyword">CHANGE</span> column_name <span class="built_in">VARCHAR</span>(<span class="number">255</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_unicode_ci;</div></pre></td></tr></table></figure>
-<p><strong>数据库连接方式参数设置</strong><br>在laravel框架中修改database.php</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">'charset'</span>   =&gt; <span class="string">'utf8mb4'</span>,</div><div class="line"><span class="string">'collation'</span> =&gt; <span class="string">'utf8mb4_unicode_ci'</span>,</div></pre></td></tr></table></figure>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-    <div class="a2a_kit a2a_default_style">
-    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
-    <span class="a2a_divider"></span>
-    <a class="a2a_button_facebook"></a>
-    <a class="a2a_button_twitter"></a>
-    <a class="a2a_button_google_plus"></a>
-    <a class="a2a_button_pinterest"></a>
-    <a class="a2a_button_tumblr"></a>
-</div>
-<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
-<style>
-    .a2a_menu {
-        border-radius: 4px;
-    }
-    .a2a_menu a {
-        margin: 2px 0;
-        font-size: 14px;
-        line-height: 16px;
-        border-radius: 4px;
-        color: inherit !important;
-        font-family: 'Microsoft Yahei';
-    }
-    #a2apage_dropdown {
-        margin: 10px 0;
-    }
-    .a2a_mini_services {
-        padding: 10px;
-    }
-    a.a2a_i,
-    i.a2a_i {
-        width: 122px;
-        line-height: 16px;
-    }
-    a.a2a_i .a2a_svg,
-    a.a2a_more .a2a_svg {
-        width: 16px;
-        height: 16px;
-        line-height: 16px;
-        vertical-align: top;
-        background-size: 16px;
-    }
-    a.a2a_i {
-        border: none !important;
-    }
-    a.a2a_menu_show_more_less {
-        margin: 0;
-        padding: 10px 0;
-        line-height: 16px;
-    }
-    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
-    .a2a_mini_services{*+height:1%;}
-</style>
-
-</div>
-
-            
-    
-        <a href="https://zhouyanbo.com/2017/03/06/save-emoji/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2017/03/06/save-emoji/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
     <nav id="page-nav">
         <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
@@ -1420,7 +1410,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1429,7 +1419,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/automation/">automation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos-7-error-install/">centos-7 error install</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/curl-laravel-post/">curl laravel post</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dropbox-tool/">dropbox tool</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo-issues/">hexo issues</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/image-tif-eps/">image tif eps</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel-emoji/">laravel emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/libreoffice-pdf-centos/">libreoffice pdf centos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql-auto-update-timestamp/">mysql auto update timestamp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx-proxy-pass/">nginx proxy_pass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok-centos7-mac/">ngrok centos7 mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/original/">original</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-502/">php 502</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qt-creater/">qt creater</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/specification/">specification</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/storage/">storage</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/summary/">summary</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dropbox/">dropbox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok-linux/">ngrok linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a><span class="tag-list-count">3</span></li></ul>
         </div>
     </div>
 
@@ -1438,7 +1428,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/automation/" style="font-size: 10px;">automation</a> <a href="/tags/centos-7-error-install/" style="font-size: 10px;">centos-7 error install</a> <a href="/tags/curl-laravel-post/" style="font-size: 10px;">curl laravel post</a> <a href="/tags/dropbox-tool/" style="font-size: 10px;">dropbox tool</a> <a href="/tags/geek/" style="font-size: 10px;">geek</a> <a href="/tags/hexo-issues/" style="font-size: 10px;">hexo issues</a> <a href="/tags/image-tif-eps/" style="font-size: 10px;">image tif eps</a> <a href="/tags/laravel-emoji/" style="font-size: 10px;">laravel emoji</a> <a href="/tags/libreoffice-pdf-centos/" style="font-size: 10px;">libreoffice pdf centos</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/mysql-auto-update-timestamp/" style="font-size: 10px;">mysql auto update timestamp</a> <a href="/tags/nginx-proxy-pass/" style="font-size: 10px;">nginx proxy_pass</a> <a href="/tags/ngrok-centos7-mac/" style="font-size: 10px;">ngrok centos7 mac</a> <a href="/tags/original/" style="font-size: 10px;">original</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/php-502/" style="font-size: 10px;">php 502</a> <a href="/tags/qt-creater/" style="font-size: 10px;">qt creater</a> <a href="/tags/specification/" style="font-size: 10px;">specification</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/summary/" style="font-size: 10px;">summary</a>
+            <a href="/tags/algorithm/" style="font-size: 16.67px;">algorithm</a> <a href="/tags/dropbox/" style="font-size: 10px;">dropbox</a> <a href="/tags/geek/" style="font-size: 13.33px;">geek</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ngrok-linux/" style="font-size: 10px;">ngrok linux</a> <a href="/tags/other/" style="font-size: 13.33px;">other</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/生活/" style="font-size: 16.67px;">生活</a>
         </div>
     </div>
 
@@ -1450,9 +1440,8 @@
         <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2018 zhouyb90<br>
-            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a><br>
-            <a href="https://www.upyun.com/" target="_blank"><img src="css/images/upyun.png" height="20px" width="100px"></a>
+            &copy; 2020 zhouyb90<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
         </div>
     </div>
 </footer>

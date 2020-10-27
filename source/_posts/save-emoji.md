@@ -1,7 +1,7 @@
 ---
 title: 数据库保存emoji表情
 date: 2017-03-06 11:56:01
-tags: laravel emoji
+tags: php
 ---
 #### 问题
 mysql保存emoji表情的时候，插入到数据库为问号或者无法插入

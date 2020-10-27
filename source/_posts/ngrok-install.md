@@ -1,7 +1,7 @@
 ---
 title: ngrok服务器搭建
 date: 2017-12-14 17:29:55
-tags: ngrok centos7 mac
+tags: ngrok linux
 ---
 
 > 记录ngrok的安装过程

@@ -1,7 +1,7 @@
 ---
 title: 使用libreoffice转换文档成pdf
 date: 2018-07-18 17:03:07
-tags: libreoffice pdf centos
+tags: linux
 ---
 
 ### 需求

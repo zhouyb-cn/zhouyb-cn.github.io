@@ -1,7 +1,7 @@
 ---
 title: Hexo 问题记录
 date: 2017-08-04 16:18:55
-tags: hexo issues
+tags: hexo
 ---
 
 ### Q: hexo deploy会发布整个项目到git master分支

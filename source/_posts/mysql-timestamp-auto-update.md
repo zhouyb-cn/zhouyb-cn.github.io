@@ -1,7 +1,7 @@
 ---
 title: 记录一次找bug经历（一）
 date: 2017-09-11 16:07:35
-tags: mysql auto update timestamp
+tags: mysql
 ---
 
 ### 起因

@@ -1,7 +1,7 @@
 ---
 title: Dropbox 同步问题
 date: 2018-5-20 15:26:12
-tags: dropbox tool
+tags: dropbox
 ---
 
 最初的时候下载了 [Dropbox](https://dropbox.com/) 做为我重要资料的网盘备份，可是最大的问题就是Dropbox的联网问题，众所周知此工具是被限制的，只能想一些办法FQ才可以使用，后来无奈从电脑上删除了，最近几天在整理[1password](http://1password.com)备份的时候，觉得icloud有点问题（原先使用icloud做备份），而且今年[icloud](https://www.icloud.com)中国由云上贵州运营了，也曝出了一些不好的新闻，不知真假，虽然我也在用icloud的免费5G的空间，反正也没有放什么隐私的材料照片，也就无所谓了，密码这个东西还是需要注意些，比较了一下Dropbox相对安全一些，决定重新捡起Dropbox。

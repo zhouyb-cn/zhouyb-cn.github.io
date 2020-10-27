@@ -1,7 +1,7 @@
 ---
 title: 处理TIF、EPS图片
 date: 2017-09-11 16:41:07
-tags: image tif eps
+tags: php
 ---
 
 工作中需要处理图片，格式包括png、jpg、svg、gif、tif、eps，等等。。。 前面几种还知道
