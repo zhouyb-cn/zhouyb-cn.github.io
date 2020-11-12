@@ -17,6 +17,8 @@ type Trie struct {
 }
 ```
 
+<!-- more -->
+
 children 保存的是当前节点的所有子节点
 
 isWord 如果当前节点为单词结束，标记为true

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    <title>cache2go 源码解读 | 美好的一天</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="引用官方的说明    Concurrency-safe golang caching library with expiration capabilities.   是一个并行安全的golang缓存库，带有过期功能  go的开源缓存库，对go新手来说比较简单，看了一遍源码，对其中的源码做下解释记录，方便日后重温 代码中为了并行安全，在读写操作中都加了锁（除去一些不变的值，例如：CacheItem的">
+<meta name="keywords" content="go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cache2go 源码解读">
+<meta property="og:url" content="https://zhouyanbo.com/2020/06/28/cache2go/index.html">
+<meta property="og:site_name" content="美好的一天">
+<meta property="og:description" content="引用官方的说明    Concurrency-safe golang caching library with expiration capabilities.   是一个并行安全的golang缓存库，带有过期功能  go的开源缓存库，对go新手来说比较简单，看了一遍源码，对其中的源码做下解释记录，方便日后重温 代码中为了并行安全，在读写操作中都加了锁（除去一些不变的值，例如：CacheItem的">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-10-28T06:41:54.823Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cache2go 源码解读">
+<meta name="twitter:description" content="引用官方的说明    Concurrency-safe golang caching library with expiration capabilities.   是一个并行安全的golang缓存库，带有过期功能  go的开源缓存库，对go新手来说比较简单，看了一遍源码，对其中的源码做下解释记录，方便日后重温 代码中为了并行安全，在读写操作中都加了锁（除去一些不变的值，例如：CacheItem的">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+    
+    
+    
+    
+
+
+</head>
+</html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">美好的一天</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Yanbo</h2>
+            <h3 id="title">Web Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/zhouyb-cn/">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                31
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                14
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/zhouyb-cn/zhouyb-cn.github.io" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-cache2go" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            cache2go 源码解读
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2020/06/28/cache2go/">
+            <time datetime="2020-06-28T06:31:19.000Z" itemprop="datePublished">2020-06-28</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/go/">go</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>引用官方的说明</p>
+<blockquote>
+<p>  Concurrency-safe golang caching library with expiration capabilities.</p>
+<p>  是一个并行安全的golang缓存库，带有过期功能</p>
+</blockquote>
+<p>go的开源缓存库，对go新手来说比较简单，看了一遍源码，对其中的源码做下解释记录，方便日后重温</p>
+<p>代码中为了并行安全，在读写操作中都加了锁（除去一些不变的值，例如：CacheItem的key、data、createdOn）</p>
+<a id="more"></a>
+<p>项目目录结构：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">├── LICENSE.txt</span><br><span class="line">├── README.md</span><br><span class="line">├── benchmark_test.go</span><br><span class="line">├── cache.go</span><br><span class="line">├── cache_test.go</span><br><span class="line">├── cacheitem.go</span><br><span class="line">├── cachetable.go</span><br><span class="line">├── errors.go</span><br><span class="line">└── examples</span><br><span class="line">    ├── callbacks</span><br><span class="line">    │   └── callbacks.go</span><br><span class="line">    ├── dataloader</span><br><span class="line">    │   └── dataloader.go</span><br><span class="line">    └── mycachedapp</span><br><span class="line">        └── mycachedapp.go</span><br></pre></td></tr></table></figure>
+<p>其中主要就三个文件cache.go、cacheitem.go、cachetable.go，其它是一些测试以及example，下面分别对这三个文件做下解释</p>
+<h4 id="cache-go"><a href="#cache-go" class="headerlink" title="cache.go"></a>cache.go</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> (</span><br><span class="line">    cache = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]*CacheTable)</span><br><span class="line">    mutex sync.RWMutex</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Cache</span><span class="params">(table <span class="keyword">string</span>)</span> *<span class="title">CacheTable</span></span> &#123;</span><br><span class="line">    mutex.RLock()</span><br><span class="line">    t, ok := cache[table]</span><br><span class="line">    mutex.RUnlock()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> !ok &#123;</span><br><span class="line">      mutex.Lock()</span><br><span class="line">      t, ok = cache[table]</span><br><span class="line">      <span class="comment">// Double check whether the table exists or not.</span></span><br><span class="line">      <span class="keyword">if</span> !ok &#123;</span><br><span class="line">        t = &amp;CacheTable&#123;</span><br><span class="line">          name:  table,</span><br><span class="line">          items: <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">interface</span>&#123;&#125;]*CacheItem),</span><br><span class="line">        &#125;</span><br><span class="line">        cache[table] = t</span><br><span class="line">      &#125;</span><br><span class="line">      mutex.Unlock()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> t</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>cache.go文件比较简单，首先是两个全局变量 ，cache和mutex，cache是个map，其中放的是一个一个的CacheTable对象的指针，Cache方法首先检查cache中是否有指定的table，没有的话创建一个，然后放到cache中，并且返回新加的这个CacheTable对象</p>
+<h4 id="cacheitem-go"><a href="#cacheitem-go" class="headerlink" title="cacheitem.go"></a>cacheitem.go</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> CacheItem <span class="keyword">struct</span> &#123;</span><br><span class="line">    sync.RWMutex</span><br><span class="line"></span><br><span class="line">    <span class="comment">// The item's key.</span></span><br><span class="line">    key <span class="keyword">interface</span>&#123;&#125;</span><br><span class="line">    <span class="comment">// The item's data.</span></span><br><span class="line">    data <span class="keyword">interface</span>&#123;&#125;</span><br><span class="line">    <span class="comment">// 过期时间</span></span><br><span class="line">    lifeSpan time.Duration</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建时间</span></span><br><span class="line">    createdOn time.Time</span><br><span class="line">    <span class="comment">// 上一次被访问时间</span></span><br><span class="line">    accessedOn time.Time</span><br><span class="line">    <span class="comment">// 访问次数计数</span></span><br><span class="line">    accessCount <span class="keyword">int64</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// item过期的回调函数，可以有多个</span></span><br><span class="line">    aboutToExpire []<span class="function"><span class="keyword">func</span><span class="params">(key <span class="keyword">interface</span>&#123;&#125;)</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>包含以下方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化CacehItem</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewCacheItem</span><span class="params">(key <span class="keyword">interface</span>&#123;&#125;, lifeSpan time.Duration, data <span class="keyword">interface</span>&#123;&#125;)</span> *<span class="title">CacheItem</span></span> &#123;&#125;</span><br><span class="line"><span class="comment">// keepalive item</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(item *CacheItem)</span> <span class="title">KeepAlive</span><span class="params">()</span></span> &#123;&#125;</span><br><span class="line"><span class="comment">// 返回item的lifeSpan accessedOn createdOn accessCount key data ...这些方法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(item *CacheItem)</span> <span class="title">LifeSpan</span><span class="params">()</span> <span class="title">time</span>.<span class="title">Duration</span></span> &#123;&#125;</span><br><span class="line"><span class="comment">// 设置过期的回调函数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(item *CacheItem)</span> <span class="title">SetAboutToExpireCallback</span><span class="params">(f <span class="keyword">func</span>(<span class="keyword">interface</span>&#123;&#125;)</span>)</span> &#123;&#125;</span><br><span class="line"><span class="comment">// 添加过期回调函数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(item *CacheItem)</span> <span class="title">AddAboutToExpireCallback</span><span class="params">(f <span class="keyword">func</span>(<span class="keyword">interface</span>&#123;&#125;)</span>)</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>cacheitem比较简单，看下注释就可以</p>
+<h4 id="cachetable-go"><a href="#cachetable-go" class="headerlink" title="cachetable.go"></a>cachetable.go</h4><p>CacheTable是管理CacheItem的</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> CacheTable <span class="keyword">struct</span> &#123;</span><br><span class="line">    sync.RWMutex</span><br><span class="line"></span><br><span class="line">    <span class="comment">// The table's name.</span></span><br><span class="line">    name <span class="keyword">string</span></span><br><span class="line">    <span class="comment">// 所有的 cached items 都放在items属性中</span></span><br><span class="line">    items <span class="keyword">map</span>[<span class="keyword">interface</span>&#123;&#125;]*CacheItem</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定时器，到时见就会自动检查（遍历所有的CacheItem）</span></span><br><span class="line">    cleanupTimer *time.Timer</span><br><span class="line">    <span class="comment">// Current timer duration.</span></span><br><span class="line">    cleanupInterval time.Duration</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 日志</span></span><br><span class="line">    logger *log.Logger</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 以下是一些操作的回调函数</span></span><br><span class="line">    <span class="comment">// Callback method triggered when trying to load a non-existing key.</span></span><br><span class="line">    loadData <span class="function"><span class="keyword">func</span><span class="params">(key <span class="keyword">interface</span>&#123;&#125;, args ...<span class="keyword">interface</span>&#123;&#125;)</span> *<span class="title">CacheItem</span></span></span><br><span class="line">    <span class="comment">// Callback method triggered when adding a new item to the cache.</span></span><br><span class="line">    addedItem []<span class="function"><span class="keyword">func</span><span class="params">(item *CacheItem)</span></span></span><br><span class="line">    <span class="comment">// Callback method triggered before deleting an item from the cache.</span></span><br><span class="line">    aboutToDeleteItem []<span class="function"><span class="keyword">func</span><span class="params">(item *CacheItem)</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>包含的一些方法看源码中的注释就可以，比较好理解，重点关注下几个方法</p>
+<p>其中有个Add方法，添加一个item，回调用addInternal似有方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(table *CacheTable)</span> <span class="title">addInternal</span><span class="params">(item *CacheItem)</span></span> &#123;</span><br><span class="line">    <span class="comment">// Careful: do not run this method unless the table-mutex is locked!</span></span><br><span class="line">    <span class="comment">// It will unlock it for the caller before running the callbacks and checks</span></span><br><span class="line">    table.log(<span class="string">"Adding item with key"</span>, item.key, <span class="string">"and lifespan of"</span>, item.lifeSpan, <span class="string">"to table"</span>, table.name)</span><br><span class="line">    table.items[item.key] = item</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Cache values so we don't keep blocking the mutex.</span></span><br><span class="line">    expDur := table.cleanupInterval</span><br><span class="line">    addedItem := table.addedItem</span><br><span class="line">    table.Unlock()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 检查是否设置了添加item的回调，如果有则执行</span></span><br><span class="line">    <span class="keyword">if</span> addedItem != <span class="literal">nil</span> &#123;</span><br><span class="line">      <span class="keyword">for</span> _, callback := <span class="keyword">range</span> addedItem &#123;</span><br><span class="line">        callback(item)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// If we haven't set up any expiration check timer or found a more imminent item.</span></span><br><span class="line">	  <span class="comment">// 如果当前cachetable的cleanupInterval为0或者新加入的item的lifeSpan小于cleanupInterval则触发过期检查函数</span></span><br><span class="line">    <span class="keyword">if</span> item.lifeSpan &gt; <span class="number">0</span> &amp;&amp; (expDur == <span class="number">0</span> || item.lifeSpan &lt; expDur) &#123;</span><br><span class="line">      table.expirationCheck()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在初始化cachetable的时候没有设置定时器，在加入第一个item的时候启用定时器，并且在每加入一个item都会触发过期检查去更新定时器</p>
+<p>过期检查是遍历一遍所有数据，找出最先过期的数据，把这个时间当成定时器下次检查的时间（合理设置定时器）</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(table *CacheTable)</span> <span class="title">expirationCheck</span><span class="params">()</span></span> &#123;</span><br><span class="line">    table.Lock()</span><br><span class="line">    <span class="keyword">if</span> table.cleanupTimer != <span class="literal">nil</span> &#123;</span><br><span class="line">      	table.cleanupTimer.Stop()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> table.cleanupInterval &gt; <span class="number">0</span> &#123;</span><br><span class="line">        table.log(<span class="string">"Expiration check triggered after"</span>, table.cleanupInterval, <span class="string">"for table"</span>, table.name)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      	table.log(<span class="string">"Expiration check installed for table"</span>, table.name)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// To be more accurate with timers, we would need to update 'now' on every</span></span><br><span class="line">    <span class="comment">// loop iteration. Not sure it's really efficient though.</span></span><br><span class="line">    now := time.Now()</span><br><span class="line">    smallestDuration := <span class="number">0</span> * time.Second</span><br><span class="line">  	<span class="comment">// 遍历table中的所有items，找到最先过期的那一个item</span></span><br><span class="line">    <span class="keyword">for</span> key, item := <span class="keyword">range</span> table.items &#123;</span><br><span class="line">        <span class="comment">// Cache values so we don't keep blocking the mutex.</span></span><br><span class="line">        item.RLock()</span><br><span class="line">        lifeSpan := item.lifeSpan</span><br><span class="line">        accessedOn := item.accessedOn</span><br><span class="line">        item.RUnlock()</span><br><span class="line">				</span><br><span class="line">      	<span class="comment">// lifeSpan 永不过期</span></span><br><span class="line">        <span class="keyword">if</span> lifeSpan == <span class="number">0</span> &#123;</span><br><span class="line">          	<span class="keyword">continue</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> now.Sub(accessedOn) &gt;= lifeSpan &#123; <span class="comment">// 已经过期删除</span></span><br><span class="line">            <span class="comment">// Item has excessed its lifespan.</span></span><br><span class="line">            table.deleteInternal(key)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// Find the item chronologically closest to its end-of-lifespan.</span></span><br><span class="line">          	<span class="comment">// smallestDuration == 0 第一个缓存数据添加进来的时候，把第一个缓存数据的lifeSpan时间做为下次检查时间间隔</span></span><br><span class="line">            <span class="keyword">if</span> smallestDuration == <span class="number">0</span> || lifeSpan-now.Sub(accessedOn) &lt; smallestDuration &#123;</span><br><span class="line">              smallestDuration = lifeSpan - now.Sub(accessedOn)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Setup the interval for the next cleanup run.</span></span><br><span class="line">    table.cleanupInterval = smallestDuration</span><br><span class="line">    <span class="keyword">if</span> smallestDuration &gt; <span class="number">0</span> &#123;</span><br><span class="line">      	<span class="comment">// 启动一个goruntine定时器，在smallestDuration之后重新掉用expirationCheck方法检查</span></span><br><span class="line">        table.cleanupTimer = time.AfterFunc(smallestDuration, <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">          	<span class="keyword">go</span> table.expirationCheck()</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    table.Unlock()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Value方法获取CacheTable中指定的key对应的数据，有则返回，没有执行loadData回调</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(table *CacheTable)</span> <span class="title">Value</span><span class="params">(key <span class="keyword">interface</span>&#123;&#125;, args ...<span class="keyword">interface</span>&#123;&#125;)</span> <span class="params">(*CacheItem, error)</span></span> &#123;</span><br><span class="line">    table.RLock()</span><br><span class="line">    r, ok := table.items[key]</span><br><span class="line">    loadData := table.loadData</span><br><span class="line">    table.RUnlock()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ok &#123;</span><br><span class="line">        <span class="comment">// Update access counter and timestamp.</span></span><br><span class="line">        r.KeepAlive()</span><br><span class="line">        <span class="keyword">return</span> r, <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Item doesn't exist in cache. Try and fetch it with a data-loader.</span></span><br><span class="line">    <span class="keyword">if</span> loadData != <span class="literal">nil</span> &#123;</span><br><span class="line">        item := loadData(key, args...)</span><br><span class="line">        <span class="keyword">if</span> item != <span class="literal">nil</span> &#123;</span><br><span class="line">            table.Add(key, item.lifeSpan, item.data)</span><br><span class="line">            <span class="keyword">return</span> item, <span class="literal">nil</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>, ErrKeyNotFoundOrLoadable</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>, ErrKeyNotFound</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在代码的最后有个MostAccessed方法，该方法返回的是最多被访问的前n个缓存数据，首先定义一个CacheItemPair结构体，该结构体存放每个item的key以及访问次数</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> CacheItemPair <span class="keyword">struct</span> &#123;</span><br><span class="line">    Key         <span class="keyword">interface</span>&#123;&#125;</span><br><span class="line">    AccessCount <span class="keyword">int64</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再声明了一个切片类型的CacheItemPairList实现了sort接口的三个方法，可以掉用sort.Sort(p)方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> CacheItemPairList []CacheItemPair</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p CacheItemPairList)</span> <span class="title">Swap</span><span class="params">(i, j <span class="keyword">int</span>)</span></span>      &#123; p[i], p[j] = p[j], p[i] &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p CacheItemPairList)</span> <span class="title">Len</span><span class="params">()</span> <span class="title">int</span></span>           &#123; <span class="keyword">return</span> <span class="built_in">len</span>(p) &#125;</span><br><span class="line"><span class="comment">// 找的是最多被访问的缓存数据，所以 p[i].AccessCount &gt; p[j].AccessCount</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p CacheItemPairList)</span> <span class="title">Less</span><span class="params">(i, j <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123; <span class="keyword">return</span> p[i].AccessCount &gt; p[j].AccessCount &#125;</span><br></pre></td></tr></table></figure>
+<p>排序完成后，遍历排序后的数据返回前n个</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> r []*CacheItem</span><br><span class="line">c := <span class="keyword">int64</span>(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">for</span> _, v := <span class="keyword">range</span> p &#123;</span><br><span class="line">   <span class="keyword">if</span> c &gt;= count &#123;</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   item, ok := table.items[v.Key]</span><br><span class="line">   <span class="keyword">if</span> ok &#123;</span><br><span class="line">      r = <span class="built_in">append</span>(r, item)</span><br><span class="line">   &#125;</span><br><span class="line">   c++</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://zhouyanbo.com/2020/06/28/cache2go/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2020/06/28/cache2go/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2020/07/10/groupcache/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    groupcache 源码系列（一）一致性hash算法
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2020/05/20/start-go/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">2020年中的思考</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dropbox/">dropbox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok-linux/">ngrok linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a><span class="tag-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/algorithm/" style="font-size: 16.67px;">algorithm</a> <a href="/tags/dropbox/" style="font-size: 10px;">dropbox</a> <a href="/tags/geek/" style="font-size: 13.33px;">geek</a> <a href="/tags/go/" style="font-size: 13.33px;">go</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ngrok-linux/" style="font-size: 10px;">ngrok linux</a> <a href="/tags/other/" style="font-size: 13.33px;">other</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/生活/" style="font-size: 16.67px;">生活</a>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 zhouyb90<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'https://zhouyanbo.com/2020/06/28/cache2go/';
+        
+        this.page.identifier = 'cache2go';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'zhouyb90' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

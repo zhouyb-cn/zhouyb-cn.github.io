@@ -150,11 +150,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                27
+                31
                 <span>posts</span>
             </div>
             <div class="article-info-block">
-                13
+                14
                 <span>tags</span>
             </div>
         </div>
@@ -179,6 +179,131 @@
 
             
             <section id="main">
+    <article id="post-leetcode129" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2020/10/29/leetcode129/">129. 求根到叶子节点数字之和</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2020/10/29/leetcode129/">
+            <time datetime="2020-10-29T10:40:46.000Z" itemprop="datePublished">2020-10-29</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/algorithm/">algorithm</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>leetcode每日一题疑惑</p>
+<p>今天的leetcode每日一题<a href="https://leetcode-cn.com/problems/sum-root-to-leaf-numbers/" target="_blank" rel="noopener">129. 求根到叶子节点数字之和</a></p>
+<p>看完题以后想了种解法（比较繁琐，层序遍历，记录到根节点的所有数字，最后再求和），不要在意细节，看完题解发现自己写的太复杂了，此文不讨论算法，记录下其中的一个疑惑，希望有大佬给解答下。</p>
+<p>先上代码</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">sumNumbers</span><span class="params">(root *TreeNode)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">	&#125;</span><br><span class="line">	numbers := [][]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line">	<span class="comment">// 遍历所有到叶子节点的路径，存到numbers中</span></span><br><span class="line">	queue := <span class="built_in">make</span>([]*TreeNode, <span class="number">0</span>)</span><br><span class="line">	queue = <span class="built_in">append</span>(queue, root)</span><br><span class="line">	values := <span class="built_in">make</span>([][]<span class="keyword">int</span>, <span class="number">0</span>)</span><br><span class="line">	values = <span class="built_in">append</span>(values, []<span class="keyword">int</span>&#123;root.Val&#125;)</span><br><span class="line">	<span class="keyword">for</span> <span class="built_in">len</span>(queue) &gt; <span class="number">0</span> &#123;</span><br><span class="line">		q := queue[<span class="number">0</span>]</span><br><span class="line">		v := values[<span class="number">0</span>]</span><br><span class="line">		queue = queue[<span class="number">1</span>:]</span><br><span class="line">		values = values[<span class="number">1</span>:]</span><br><span class="line">		<span class="keyword">if</span> q.Left == <span class="literal">nil</span> &amp;&amp; q.Right == <span class="literal">nil</span> &#123;</span><br><span class="line">			numbers = <span class="built_in">append</span>(numbers, v)</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> q.Left != <span class="literal">nil</span> &#123;</span><br><span class="line">			queue = <span class="built_in">append</span>(queue, q.Left)</span><br><span class="line">			<span class="comment">// tempV := make([]int, len(v))</span></span><br><span class="line">			<span class="comment">// copy(tempV, v)</span></span><br><span class="line">			values = <span class="built_in">append</span>(values, <span class="built_in">append</span>(v, q.Left.Val))</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> q.Right != <span class="literal">nil</span> &#123;</span><br><span class="line">			queue = <span class="built_in">append</span>(queue, q.Right)</span><br><span class="line">			<span class="comment">// tempV := make([]int, len(v))</span></span><br><span class="line">			<span class="comment">// copy(tempV, v)</span></span><br><span class="line">			values = <span class="built_in">append</span>(values, <span class="built_in">append</span>(v, q.Right.Val))</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	ans := <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> _, number := <span class="keyword">range</span> numbers &#123;</span><br><span class="line">		sum := <span class="number">0</span></span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(number); i++ &#123;</span><br><span class="line">			sum = sum*<span class="number">10</span> + number[i]</span><br><span class="line">		&#125;</span><br><span class="line">		ans += sum</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ans</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>给的用例通过了，于是提交，发现卡在这个用例上</p>
+<p><img src="./images/leetcode129.png" alt></p>
+<p>debug以后，发现在进行到其中某一步的时候values中第一个切片最后一个元素本来是9，后来变成5了，不明白咋回事</p>
+<p>原来values [[8,3,9,9]]，append一个切片[8,3,9,5]以后应该是[[8,3,9,9], [8,3,9,5]]，可是变成了[[8,3,9,5], [8,3,9,5]]，导致结果出错，应该是切片的问题，不太明白，谁能解释一下其中的原因，为啥原有的数据会被改变，感谢大佬。</p>
+<p>注释掉的是后来把切片copy了下，问题解决了，知道是切片问题，没想明白为啥。</p>
+<p>提供下出错用例的树形结构供debug</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> TreeNode <span class="keyword">struct</span> &#123;</span><br><span class="line">	Val <span class="keyword">int</span></span><br><span class="line">	Left *TreeNode</span><br><span class="line">	Right *TreeNode</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//      8</span></span><br><span class="line"><span class="comment">//     / \</span></span><br><span class="line"><span class="comment">//    3   5</span></span><br><span class="line"><span class="comment">//     \  </span></span><br><span class="line"><span class="comment">//      9 </span></span><br><span class="line"><span class="comment">// 	   /  \      </span></span><br><span class="line"><span class="comment">//    9    5     </span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	node5 := &amp;TreeNode&#123;Val: <span class="number">5</span>&#125;</span><br><span class="line">	node52 := &amp;TreeNode&#123;Val: <span class="number">5</span>&#125;</span><br><span class="line">	node92 := &amp;TreeNode&#123;Val: <span class="number">9</span>&#125;</span><br><span class="line">	node9 := &amp;TreeNode&#123;Val: <span class="number">9</span>, Left: node92, Right: node52&#125;</span><br><span class="line">	node3 := &amp;TreeNode&#123;Val: <span class="number">3</span>, Left: <span class="literal">nil</span>, Right: node9&#125;</span><br><span class="line">	node8 := &amp;TreeNode&#123;Val: <span class="number">8</span>, Left: node3, Right: node5&#125;</span><br><span class="line">	fmt.Println(sumNumbers(node8))</span><br><span class="line">    <span class="comment">// 输出结果：16875</span></span><br><span class="line">    <span class="comment">// 正确结果：16879</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://zhouyanbo.com/2020/10/29/leetcode129/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2020/10/29/leetcode129/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-one-happy-day" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -334,20 +459,12 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <p>leetcode上的一道设计题，要求实现trie这种数据结构，包含插入、查找、前缀查找的操作<br><a href="https://leetcode-cn.com/problems/implement-trie-prefix-tree/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/implement-trie-prefix-tree/</a></p>
+            <p><p>leetcode上的一道设计题，要求实现trie这种数据结构，包含插入、查找、前缀查找的操作<br><a href="https://leetcode-cn.com/problems/implement-trie-prefix-tree/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/implement-trie-prefix-tree/</a></p>
 <p>首先定义Trie struct</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Trie <span class="keyword">struct</span> &#123;</span><br><span class="line">    children []*Trie</span><br><span class="line">    isWord <span class="keyword">bool</span> <span class="comment">//是否为单词 </span></span><br><span class="line">    part <span class="keyword">byte</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>children 保存的是当前节点的所有子节点</p>
-<p>isWord 如果当前节点为单词结束，标记为true</p>
-<p>part 记录当前节点的字符，为byte类型</p>
-<h4 id="Insert-插入操作"><a href="#Insert-插入操作" class="headerlink" title="Insert 插入操作"></a>Insert 插入操作</h4><p>遍历要插入的单词word，判断每一个字符是否出现在children中，如果出现了，继续往下遍历，没有出现，则新建一个节点，并且放入当前节点的children中</p>
-<p>结束条件则为遍历的层数跟给定的单词长度一致，并且标记当前节点的isWord属性为true，代表这是一个单词</p>
-<h4 id="Search-查询操作"><a href="#Search-查询操作" class="headerlink" title="Search 查询操作"></a>Search 查询操作</h4><p>同样是遍历所有的children，如果包含当前字符，则继续向下遍历，不包含则结束遍历，返回找不到，当遍历到单词长度的深度的时候，需要判断当前节点的isWord属性是否为true，只有为true的时候才是一个单词，否则返回找不到</p>
-<h4 id="StartsWith-判断以给定的prefix开头"><a href="#StartsWith-判断以给定的prefix开头" class="headerlink" title="StartsWith 判断以给定的prefix开头"></a>StartsWith 判断以给定的prefix开头</h4><p>同search操作相同，只是遍历到最后不需要判断当前节点的isWord属性</p>
-<p>完整代码如下：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Trie <span class="keyword">struct</span> &#123;</span><br><span class="line">    children []*Trie</span><br><span class="line">    isWord <span class="keyword">bool</span> <span class="comment">//是否为单词 </span></span><br><span class="line">    part <span class="keyword">byte</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** Initialize your data structure here. */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Constructor</span><span class="params">()</span> <span class="title">Trie</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> Trie&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** Inserts a word into the trie. */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Trie)</span> <span class="title">Insert</span><span class="params">(word <span class="keyword">string</span>)</span></span>  &#123;</span><br><span class="line">    this.insert(word, <span class="number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Trie)</span> <span class="title">insert</span><span class="params">(word <span class="keyword">string</span>, height <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(word) == height &#123;</span><br><span class="line">        this.isWord = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 取一个字母查找</span></span><br><span class="line">    w := word[height]</span><br><span class="line">    child := this.matchChild(w)</span><br><span class="line">    <span class="comment">// 不存在新建一个节点加入</span></span><br><span class="line">    <span class="keyword">if</span> child == <span class="literal">nil</span> &#123;</span><br><span class="line">        child = &amp;Trie&#123;part: w&#125;</span><br><span class="line">        this.children = <span class="built_in">append</span>(this.children, child)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 继续遍历下一级</span></span><br><span class="line">    child.insert(word, height + <span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Trie)</span> <span class="title">matchChild</span><span class="params">(w <span class="keyword">byte</span>)</span> *<span class="title">Trie</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> _, child := <span class="keyword">range</span> this.children &#123;</span><br><span class="line">        <span class="keyword">if</span> child.part == w &#123;</span><br><span class="line">            <span class="keyword">return</span> child</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** Returns if the word is in the trie. */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Trie)</span> <span class="title">Search</span><span class="params">(word <span class="keyword">string</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> this.search(word, <span class="number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Trie)</span> <span class="title">search</span><span class="params">(word <span class="keyword">string</span>, height <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(word) == height &#123;</span><br><span class="line">        <span class="keyword">if</span> this.isWord &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> _, child := <span class="keyword">range</span> this.children &#123;</span><br><span class="line">        <span class="keyword">if</span> child.part == word[height] &#123;</span><br><span class="line">            <span class="keyword">return</span> child.search(word, height + <span class="number">1</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** Returns if there is any word in the trie that starts with the given prefix. */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Trie)</span> <span class="title">StartsWith</span><span class="params">(prefix <span class="keyword">string</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> this.searchStartsWith(prefix, <span class="number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *Trie)</span> <span class="title">searchStartsWith</span><span class="params">(word <span class="keyword">string</span>, height <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(word) == height &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> _, child := <span class="keyword">range</span> this.children &#123;</span><br><span class="line">        <span class="keyword">if</span> child.part == word[height] &#123;</span><br><span class="line">            <span class="keyword">return</span> child.searchStartsWith(word, height + <span class="number">1</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your Trie object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * obj := Constructor();</span></span><br><span class="line"><span class="comment"> * obj.Insert(word);</span></span><br><span class="line"><span class="comment"> * param_2 := obj.Search(word);</span></span><br><span class="line"><span class="comment"> * param_3 := obj.StartsWith(prefix);</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Trie <span class="keyword">struct</span> &#123;</span><br><span class="line">    children []*Trie</span><br><span class="line">    isWord <span class="keyword">bool</span> <span class="comment">//是否为单词 </span></span><br><span class="line">    part <span class="keyword">byte</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+            <p class="article-more-link">
+                <a href="/2020/09/23/trie-prefix-tree/#more">Read More</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -413,6 +530,355 @@
             
     
         <a href="https://zhouyanbo.com/2020/09/23/trie-prefix-tree/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2020/09/23/trie-prefix-tree/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-groupcache" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2020/07/10/groupcache/">groupcache 源码系列（一）一致性hash算法</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2020/07/10/groupcache/">
+            <time datetime="2020-07-10T06:35:01.000Z" itemprop="datePublished">2020-07-10</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/go/">go</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h4 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Hash 在此代码中代表函数类型，返回的是无符号32位整数</span></span><br><span class="line"><span class="keyword">type</span> Hash <span class="function"><span class="keyword">func</span><span class="params">(data []<span class="keyword">byte</span>)</span> <span class="title">uint32</span></span></span><br></pre></td></tr></table></figure></p>
+            <p class="article-more-link">
+                <a href="/2020/07/10/groupcache/#more">Read More</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://zhouyanbo.com/2020/07/10/groupcache/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2020/07/10/groupcache/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-cache2go" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2020/06/28/cache2go/">cache2go 源码解读</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2020/06/28/cache2go/">
+            <time datetime="2020-06-28T06:31:19.000Z" itemprop="datePublished">2020-06-28</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/go/">go</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>引用官方的说明</p>
+<blockquote>
+<p>  Concurrency-safe golang caching library with expiration capabilities.</p>
+<p>  是一个并行安全的golang缓存库，带有过期功能</p>
+</blockquote>
+<p>go的开源缓存库，对go新手来说比较简单，看了一遍源码，对其中的源码做下解释记录，方便日后重温</p>
+<p>代码中为了并行安全，在读写操作中都加了锁（除去一些不变的值，例如：CacheItem的key、data、createdOn）</p></p>
+            <p class="article-more-link">
+                <a href="/2020/06/28/cache2go/#more">Read More</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://zhouyanbo.com/2020/06/28/cache2go/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2020/06/28/cache2go/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-start-go" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2020/05/20/start-go/">2020年中的思考</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2020/05/20/start-go/">
+            <time datetime="2020-05-20T06:32:35.000Z" itemprop="datePublished">2020-05-20</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/生活/">生活</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://zhouyanbo.com/2020/05/20/start-go/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2020/05/20/start-go/">Comments</a>
     
 
         </footer>
@@ -897,495 +1363,8 @@
 
 
 
-    <article id="post-programmer-automation" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/11/20/programmer-automation/">程序员的自动化</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/11/20/programmer-automation/">
-            <time datetime="2018-11-20T08:35:11.000Z" itemprop="datePublished">2018-11-20</time>
-        </a>
-    </div>
-
-
-                        
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/geek/">geek</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>18年是个多病的年，妈妈从年初腿部肿，找了好多医院医生现在吃药也没根治。随着现在电子设备的普及，电脑、手机重度使用者，导致现在眼睛疾病越来越多。先是室友眼睛有问题，寻医问药很多地方，最后拖的时间长了，做了手术恢复中，恢复的挺不错，又是我女朋友突然一天说眼睛不舒服，感觉磨的厉害睁不开眼，赶紧带去医院，最后诊断为干眼症，好在及时发现，医生开了些药需要慢慢调理，是个长期的病，以后用眼都要注意休息了。</p>
-<p>经过这次事情之后，毕竟班还是要上的，医生也不建议丢了工作，平时工作就需要多多注意了，但是毕竟天天面对电脑也很无奈，女朋友在一家知识产权公司做文职工作，在我看来没什么技术含量也没啥提升的空间，尽早离开为好，放在年后考虑了，只是目前有一份每天都要整理邮件的工作，最初几天我去公司帮忙弄了下，去了一次我眼睛都要瞎了，windows电脑，屏幕小，分辨率低，实在是受不了，更别说她现在眼睛还不好，于是到家想了下写个程序能提高一些效率，于是便有了下文的产出。</p>
-<p>首先邮件是outlook导出的.msg后缀的文件，本人电脑Mac Pro无奈打不开这种格式，还花钱买了MailReader软件，后来发现没有必要，分析了下需求准备用python写一个简单的处理脚本，本人平时也不接触python，写的比较垃圾，大家不要在意细节。</p>
-<p>主要记录一下使用的关键package，其它的都是一些细节的需求，没有什么难度，无非是一些字符串的处理，循环，文件处理，最大的问题就是没有办法读取到邮件的主题，千辛万苦最后找到了一个包 <a href="https://github.com/mattgwwalker/msg-extractor" target="_blank" rel="noopener">extract_msg</a> 需要的依赖也比较多，一一安装好就可以，主要用到了它的</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msg = extract_msg.Message(<span class="string">"path/to/msg/file.msg"</span>, attachmentClass = CustomAttachmentClass)</span><br><span class="line"><span class="comment"># get mail subject</span></span><br><span class="line">subject = msg.subject</span><br></pre></td></tr></table></figure>
-<p>其中是用了python的一个web框架 Django 初次使用，没有深入研究，另外前端页面没有写，本来打算找个前端UI框架的，最后放弃了，没有耽误功夫在前端上，主要实现了功能，后期有时间再补上。</p>
-<p>代码上传到了 <a href="https://github.com/zhouyb-cn/mail-system-tool" target="_blank" rel="noopener">Github</a> </p>
-<p>接下来需要有时间待完成的：</p>
-<ol>
-<li>自动识别邮件主题中的卷号</li>
-<li>做一个漂亮的前端界面</li>
-<li>后续优化</li>
-</ol>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-    <div class="a2a_kit a2a_default_style">
-    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
-    <span class="a2a_divider"></span>
-    <a class="a2a_button_facebook"></a>
-    <a class="a2a_button_twitter"></a>
-    <a class="a2a_button_google_plus"></a>
-    <a class="a2a_button_pinterest"></a>
-    <a class="a2a_button_tumblr"></a>
-</div>
-<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
-<style>
-    .a2a_menu {
-        border-radius: 4px;
-    }
-    .a2a_menu a {
-        margin: 2px 0;
-        font-size: 14px;
-        line-height: 16px;
-        border-radius: 4px;
-        color: inherit !important;
-        font-family: 'Microsoft Yahei';
-    }
-    #a2apage_dropdown {
-        margin: 10px 0;
-    }
-    .a2a_mini_services {
-        padding: 10px;
-    }
-    a.a2a_i,
-    i.a2a_i {
-        width: 122px;
-        line-height: 16px;
-    }
-    a.a2a_i .a2a_svg,
-    a.a2a_more .a2a_svg {
-        width: 16px;
-        height: 16px;
-        line-height: 16px;
-        vertical-align: top;
-        background-size: 16px;
-    }
-    a.a2a_i {
-        border: none !important;
-    }
-    a.a2a_menu_show_more_less {
-        margin: 0;
-        padding: 10px 0;
-        line-height: 16px;
-    }
-    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
-    .a2a_mini_services{*+height:1%;}
-</style>
-
-</div>
-
-            
-    
-        <a href="https://zhouyanbo.com/2018/11/20/programmer-automation/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2018/11/20/programmer-automation/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-geek-funny-thing" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/10/10/geek-funny-thing/">生命不息，折腾不止</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/10/10/geek-funny-thing/">
-            <time datetime="2018-10-10T08:37:56.000Z" itemprop="datePublished">2018-10-10</time>
-        </a>
-    </div>
-
-
-                        
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/geek/">geek</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>最近老大提起了一个说很好玩的聊天客户端<a href="https://weechat.org/" target="_blank" rel="noopener">weechat</a>，说是很Geek，让我研究下给大家做一下分享，下面记录一下过程。</p>
-<p>网上搜索了如何能够在weechat中收发微信消息，最初有点一头雾水，无从下手，只是知道weecaht是一个IRC客户端，官方首页的说明</p>
-<blockquote>
-<p>WeeChat, the extensible chat client.</p>
-</blockquote>
-<blockquote>
-<p>Fast — Light — Free software</p>
-</blockquote>
-<p>轻量级的开源的软件，听说很多大佬在用（大佬都是在用一些看起来很高大上的东西）</p>
-<p>按照<a href="https://weechat.org/files/doc/stable/weechat_user.en.html" target="_blank" rel="noopener">官方文档</a>一步一步来就可以，文档写的很清晰，只是需要花点时间理解weechat是做什么的就可以了，实际上比较简单，weecaht只是一个IRC客户端，IRC客户端也有很多，可以选择其它的客户端，weechat可扩展性比较大，装好weechat之后，又在github上找了一个控制网页微信来收发微信的库，在这里<a href="https://github.com/MaskRay/wechatircd" target="_blank" rel="noopener">https://github.com/MaskRay/wechatircd</a>，按照Readme操作就可以，最后创建一个wechat server</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/connect wechat</span><br></pre></td></tr></table></figure>
-<p>即可加载到网页微信端的所有消息，并且可以是现在terminal中收发消息，看起来很高大上，并且可以随时查看以前的消息，都有日志记录，不方便的是对图片、音频、文件收发不太方便，显示到Terminal都是链接形式，</p>
-<p>效果如下：</p>
-<p><img src="/Users/yanbo/Desktop/屏幕快照 2018-12-29 下午4.15.58.png" alt="weechat"></p>
-<hr>
-<p>2018.12.28 补充：</p>
-<p>升级了电脑系统到10.14.2，发现无法显示中文字符，输入中文也无法显示了，都变成了？ 查了资料应该是编码问题，最后升级了iTerm2到最新版本发现解决了。</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-    <div class="a2a_kit a2a_default_style">
-    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
-    <span class="a2a_divider"></span>
-    <a class="a2a_button_facebook"></a>
-    <a class="a2a_button_twitter"></a>
-    <a class="a2a_button_google_plus"></a>
-    <a class="a2a_button_pinterest"></a>
-    <a class="a2a_button_tumblr"></a>
-</div>
-<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
-<style>
-    .a2a_menu {
-        border-radius: 4px;
-    }
-    .a2a_menu a {
-        margin: 2px 0;
-        font-size: 14px;
-        line-height: 16px;
-        border-radius: 4px;
-        color: inherit !important;
-        font-family: 'Microsoft Yahei';
-    }
-    #a2apage_dropdown {
-        margin: 10px 0;
-    }
-    .a2a_mini_services {
-        padding: 10px;
-    }
-    a.a2a_i,
-    i.a2a_i {
-        width: 122px;
-        line-height: 16px;
-    }
-    a.a2a_i .a2a_svg,
-    a.a2a_more .a2a_svg {
-        width: 16px;
-        height: 16px;
-        line-height: 16px;
-        vertical-align: top;
-        background-size: 16px;
-    }
-    a.a2a_i {
-        border: none !important;
-    }
-    a.a2a_menu_show_more_less {
-        margin: 0;
-        padding: 10px 0;
-        line-height: 16px;
-    }
-    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
-    .a2a_mini_services{*+height:1%;}
-</style>
-
-</div>
-
-            
-    
-        <a href="https://zhouyanbo.com/2018/10/10/geek-funny-thing/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2018/10/10/geek-funny-thing/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-some-original-ideas" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/09/10/some-original-ideas/">创意</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/09/10/some-original-ideas/">
-            <time datetime="2018-09-10T08:40:07.000Z" itemprop="datePublished">2018-09-10</time>
-        </a>
-    </div>
-
-
-                        
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/other/">other</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>想一些有创意的ideas</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-    <div class="a2a_kit a2a_default_style">
-    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
-    <span class="a2a_divider"></span>
-    <a class="a2a_button_facebook"></a>
-    <a class="a2a_button_twitter"></a>
-    <a class="a2a_button_google_plus"></a>
-    <a class="a2a_button_pinterest"></a>
-    <a class="a2a_button_tumblr"></a>
-</div>
-<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
-<style>
-    .a2a_menu {
-        border-radius: 4px;
-    }
-    .a2a_menu a {
-        margin: 2px 0;
-        font-size: 14px;
-        line-height: 16px;
-        border-radius: 4px;
-        color: inherit !important;
-        font-family: 'Microsoft Yahei';
-    }
-    #a2apage_dropdown {
-        margin: 10px 0;
-    }
-    .a2a_mini_services {
-        padding: 10px;
-    }
-    a.a2a_i,
-    i.a2a_i {
-        width: 122px;
-        line-height: 16px;
-    }
-    a.a2a_i .a2a_svg,
-    a.a2a_more .a2a_svg {
-        width: 16px;
-        height: 16px;
-        line-height: 16px;
-        vertical-align: top;
-        background-size: 16px;
-    }
-    a.a2a_i {
-        border: none !important;
-    }
-    a.a2a_menu_show_more_less {
-        margin: 0;
-        padding: 10px 0;
-        line-height: 16px;
-    }
-    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
-    .a2a_mini_services{*+height:1%;}
-</style>
-
-</div>
-
-            
-    
-        <a href="https://zhouyanbo.com/2018/09/10/some-original-ideas/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2018/09/10/some-original-ideas/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-libreoffice" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/07/18/libreoffice/">使用libreoffice转换文档成pdf</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/07/18/libreoffice/">
-            <time datetime="2018-07-18T09:03:07.000Z" itemprop="datePublished">2018-07-18</time>
-        </a>
-    </div>
-
-
-                        
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/linux/">linux</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>将doc、docx、xls、xlsx、ppt、pptx格式的转换成pdf文档</p>
-<h3 id="实施"><a href="#实施" class="headerlink" title="实施"></a>实施</h3><p>系统是centos 7，这里使用libreoffice，在转换过程中发现，只要是文件中包含中文字符，转换之后文件中成了乱码，不可读</p>
-<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>由于centos 7系统中缺少对中文的支持，需要安装中文字库，参考这里<a href="https://blog.csdn.net/wlwlwlwl015/article/details/51482065" target="_blank" rel="noopener">centos安装中文字库</a>，<br>安装完成后重启libreoffice即可</p>
-<p>附：<a href="https://github.com/lugnsk/pyodconverter" target="_blank" rel="noopener">转换脚本</a></p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-    <div class="a2a_kit a2a_default_style">
-    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
-    <span class="a2a_divider"></span>
-    <a class="a2a_button_facebook"></a>
-    <a class="a2a_button_twitter"></a>
-    <a class="a2a_button_google_plus"></a>
-    <a class="a2a_button_pinterest"></a>
-    <a class="a2a_button_tumblr"></a>
-</div>
-<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
-<style>
-    .a2a_menu {
-        border-radius: 4px;
-    }
-    .a2a_menu a {
-        margin: 2px 0;
-        font-size: 14px;
-        line-height: 16px;
-        border-radius: 4px;
-        color: inherit !important;
-        font-family: 'Microsoft Yahei';
-    }
-    #a2apage_dropdown {
-        margin: 10px 0;
-    }
-    .a2a_mini_services {
-        padding: 10px;
-    }
-    a.a2a_i,
-    i.a2a_i {
-        width: 122px;
-        line-height: 16px;
-    }
-    a.a2a_i .a2a_svg,
-    a.a2a_more .a2a_svg {
-        width: 16px;
-        height: 16px;
-        line-height: 16px;
-        vertical-align: top;
-        background-size: 16px;
-    }
-    a.a2a_i {
-        border: none !important;
-    }
-    a.a2a_menu_show_more_less {
-        margin: 0;
-        padding: 10px 0;
-        line-height: 16px;
-    }
-    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
-    .a2a_mini_services{*+height:1%;}
-</style>
-
-</div>
-
-            
-    
-        <a href="https://zhouyanbo.com/2018/07/18/libreoffice/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2018/07/18/libreoffice/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
     <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
 </section>
             
@@ -1397,7 +1376,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1406,7 +1385,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dropbox/">dropbox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok-linux/">ngrok linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a><span class="tag-list-count">3</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dropbox/">dropbox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/">geek</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/">go</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/">math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok-linux/">ngrok linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/">other</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/">php</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a><span class="tag-list-count">4</span></li></ul>
         </div>
     </div>
 
@@ -1415,7 +1394,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/algorithm/" style="font-size: 16.67px;">algorithm</a> <a href="/tags/dropbox/" style="font-size: 10px;">dropbox</a> <a href="/tags/geek/" style="font-size: 13.33px;">geek</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ngrok-linux/" style="font-size: 10px;">ngrok linux</a> <a href="/tags/other/" style="font-size: 13.33px;">other</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/生活/" style="font-size: 16.67px;">生活</a>
+            <a href="/tags/algorithm/" style="font-size: 16.67px;">algorithm</a> <a href="/tags/dropbox/" style="font-size: 10px;">dropbox</a> <a href="/tags/geek/" style="font-size: 13.33px;">geek</a> <a href="/tags/go/" style="font-size: 13.33px;">go</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ngrok-linux/" style="font-size: 10px;">ngrok linux</a> <a href="/tags/other/" style="font-size: 13.33px;">other</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/生活/" style="font-size: 16.67px;">生活</a>
         </div>
     </div>
 
