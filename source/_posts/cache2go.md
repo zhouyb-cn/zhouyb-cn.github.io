@@ -7,7 +7,7 @@ tags: go
 引用官方的说明
 
 >   Concurrency-safe golang caching library with expiration capabilities.
->
+> 
 >   是一个并行安全的golang缓存库，带有过期功能
 
 go的开源缓存库，对go新手来说比较简单，看了一遍源码，对其中的源码做下解释记录，方便日后重温
@@ -168,7 +168,7 @@ func (table *CacheTable) addInternal(item *CacheItem) {
     }
 
     // If we haven't set up any expiration check timer or found a more imminent item.
-	  // 如果当前cachetable的cleanupInterval为0或者新加入的item的lifeSpan小于cleanupInterval则触发过期检查函数
+      // 如果当前cachetable的cleanupInterval为0或者新加入的item的lifeSpan小于cleanupInterval则触发过期检查函数
     if item.lifeSpan > 0 && (expDur == 0 || item.lifeSpan < expDur) {
       table.expirationCheck()
     }
@@ -183,36 +183,36 @@ func (table *CacheTable) addInternal(item *CacheItem) {
 func (table *CacheTable) expirationCheck() {
     table.Lock()
     if table.cleanupTimer != nil {
-      	table.cleanupTimer.Stop()
+          table.cleanupTimer.Stop()
     }
     if table.cleanupInterval > 0 {
         table.log("Expiration check triggered after", table.cleanupInterval, "for table", table.name)
     } else {
-      	table.log("Expiration check installed for table", table.name)
+          table.log("Expiration check installed for table", table.name)
     }
 
     // To be more accurate with timers, we would need to update 'now' on every
     // loop iteration. Not sure it's really efficient though.
     now := time.Now()
     smallestDuration := 0 * time.Second
-  	// 遍历table中的所有items，找到最先过期的那一个item
+      // 遍历table中的所有items，找到最先过期的那一个item
     for key, item := range table.items {
         // Cache values so we don't keep blocking the mutex.
         item.RLock()
         lifeSpan := item.lifeSpan
         accessedOn := item.accessedOn
         item.RUnlock()
-				
-      	// lifeSpan 永不过期
+
+          // lifeSpan 永不过期
         if lifeSpan == 0 {
-          	continue
+              continue
         }
         if now.Sub(accessedOn) >= lifeSpan { // 已经过期删除
             // Item has excessed its lifespan.
             table.deleteInternal(key)
         } else {
             // Find the item chronologically closest to its end-of-lifespan.
-          	// smallestDuration == 0 第一个缓存数据添加进来的时候，把第一个缓存数据的lifeSpan时间做为下次检查时间间隔
+              // smallestDuration == 0 第一个缓存数据添加进来的时候，把第一个缓存数据的lifeSpan时间做为下次检查时间间隔
             if smallestDuration == 0 || lifeSpan-now.Sub(accessedOn) < smallestDuration {
               smallestDuration = lifeSpan - now.Sub(accessedOn)
             }
@@ -222,9 +222,9 @@ func (table *CacheTable) expirationCheck() {
     // Setup the interval for the next cleanup run.
     table.cleanupInterval = smallestDuration
     if smallestDuration > 0 {
-      	// 启动一个goruntine定时器，在smallestDuration之后重新掉用expirationCheck方法检查
+          // 启动一个goruntine定时器，在smallestDuration之后重新掉用expirationCheck方法检查
         table.cleanupTimer = time.AfterFunc(smallestDuration, func() {
-          	go table.expirationCheck()
+              go table.expirationCheck()
         })
     }
     table.Unlock()
@@ -298,5 +298,3 @@ for _, v := range p {
    c++
 }
 ```
-
-

@@ -22,62 +22,67 @@ Zend Engine v2.6.0, Copyright (c) 1998-2016 Zend Technologies
 
 1. 首先先在本地下载源码包，通过rsync命令上传到服务器某个目录
 2. 按照官方文档的安装步骤[php install](http://php.net/manual/zh/install.unix.nginx.php)解压
-```
-tar zxf php-x.x.x
-```
+   
+   ```
+   tar zxf php-x.x.x
+   ```
 3. 配置并构建，参考了[这里](http://blog.51cto.com/jinchuang/1897385)
-```
-cd ../php-x.x.x
-./configure \
---prefix=/usr/local/php7 \
---with-fpm-user=nginx \
---with-fpm-group=nginx \
---with-bz2 \
---with-curl \
---with-gd \
---with-openssl \
---with-mhash \
---with-jpeg-dir \
---with-png-dir \
---with-freetype-dir \
---with-iconv-dir=/usr/local/libiconv \
---with-gettext \
---with-libxml-dir \
---with-zlib \
---with-xmlrpc \
---with-pcre-regex \
---with-pear \
---with-pdo-mysql=mysqlnd \
---with-mysqli=mysqlnd \
---with-libdir=lib64 \
---enable-dom \
---enable-xml \
---enable-fpm \
---enable-bcmath \
---enable-ftp \
---enable-sockets \
---disable-ipv6 \
---enable-mbregex \
---enable-mbstring \
---enable-calendar \
---enable-static \
---enable-fpm \
---enable-bcmath \
---enable-libxml \
---enable-inline-optimization \
---enable-mbregex \
---enable-opcache \
---enable-pcntl \
---enable-shmop \
---enable-soap \
---enable-sockets \
---enable-sysvsem \
---enable-zip \
+   
+   ```
+   cd ../php-x.x.x
+   ./configure \
+   --prefix=/usr/local/php7 \
+   --with-fpm-user=nginx \
+   --with-fpm-group=nginx \
+   --with-bz2 \
+   --with-curl \
+   --with-gd \
+   --with-openssl \
+   --with-mhash \
+   --with-jpeg-dir \
+   --with-png-dir \
+   --with-freetype-dir \
+   --with-iconv-dir=/usr/local/libiconv \
+   --with-gettext \
+   --with-libxml-dir \
+   --with-zlib \
+   --with-xmlrpc \
+   --with-pcre-regex \
+   --with-pear \
+   --with-pdo-mysql=mysqlnd \
+   --with-mysqli=mysqlnd \
+   --with-libdir=lib64 \
+   --enable-dom \
+   --enable-xml \
+   --enable-fpm \
+   --enable-bcmath \
+   --enable-ftp \
+   --enable-sockets \
+   --disable-ipv6 \
+   --enable-mbregex \
+   --enable-mbstring \
+   --enable-calendar \
+   --enable-static \
+   --enable-fpm \
+   --enable-bcmath \
+   --enable-libxml \
+   --enable-inline-optimization \
+   --enable-mbregex \
+   --enable-opcache \
+   --enable-pcntl \
+   --enable-shmop \
+   --enable-soap \
+   --enable-sockets \
+   --enable-sysvsem \
+   --enable-zip \
+   ```
 
 make & make install
+
 ```
 4. 创建配置文件
 ```
+
 cp php.ini-development /usr/local/php7/php.ini
 cp /usr/local/php7/etc/php-fpm.conf.default /usr/local/php7/etc/php-fpm.conf
 cp /usr/local/php7/etc/php-fpm.d/www.conf.default /usr/local/php7/etc/php-fpm.d/www.conf
@@ -92,9 +97,11 @@ chmod 755 php-fpm
 cp php-7.2.1/sapi/fpm/php-fpm /usr/local/bin/
 //启动停止
 php-fpm | pkill php-fpm
+
 ```
 5. 查看
 ```
+
 ~$ php -v
 PHP 7.2.1 (fpm-fcgi) (built: Jan 30 2018 17:06:46)
 Copyright (c) 1997-2017 The PHP Group

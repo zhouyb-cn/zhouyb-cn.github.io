@@ -134,4 +134,3 @@ func (this *Trie) searchStartsWith(word string, height int) bool {
  * param_3 := obj.StartsWith(prefix);
  */
 ```
-
