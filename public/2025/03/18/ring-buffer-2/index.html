@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    <title>ring buffer（二） | 美好的一天</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="在并发编程中，Data Race（数据竞争） 是一个常见的问题。当多个 goroutine 同时访问共享资源（如变量、数据结构等），并且至少有一个 goroutine 对资源进行写操作时，就可能发生 Data Race。Data Race 会导致程序行为不可预测，甚至引发崩溃。 在上一篇文章中，我们实现了一个简单的环形缓冲区。然而，这个实现并没有考虑并发访问的情况，因此在多 goroutine 环">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ring buffer（二）">
+<meta property="og:url" content="https://zhouyanbo.com/2025/03/18/ring-buffer-2/index.html">
+<meta property="og:site_name" content="美好的一天">
+<meta property="og:description" content="在并发编程中，Data Race（数据竞争） 是一个常见的问题。当多个 goroutine 同时访问共享资源（如变量、数据结构等），并且至少有一个 goroutine 对资源进行写操作时，就可能发生 Data Race。Data Race 会导致程序行为不可预测，甚至引发崩溃。 在上一篇文章中，我们实现了一个简单的环形缓冲区。然而，这个实现并没有考虑并发访问的情况，因此在多 goroutine 环">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-03-18T09:42:38.000Z">
+<meta property="article:modified_time" content="2025-03-18T09:58:42.834Z">
+<meta property="article:author" content="zhouyb90">
+<meta property="article:tag" content="golang">
+<meta name="twitter:card" content="summary">
+    
+
+    
+
+    
+
+    
+<link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/vendor/open-sans/styles.css">
+
+    
+<link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+
+    
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">美好的一天</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Yanbo</h2>
+            <h3 id="title">Web Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/zhouyb-cn/">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                37
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/zhouyb-cn/zhouyb-cn.github.io" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-ring-buffer-2" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            ring buffer（二）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2025/03/18/ring-buffer-2/">
+            <time datetime="2025-03-18T09:42:38.000Z" itemprop="datePublished">2025-03-18</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/golang/" rel="tag">golang</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>在并发编程中，<strong>Data Race（数据竞争）</strong> 是一个常见的问题。当多个 goroutine 同时访问共享资源（如变量、数据结构等），并且至少有一个 goroutine 对资源进行写操作时，就可能发生 Data Race。Data Race 会导致程序行为不可预测，甚至引发崩溃。</p>
+<p>在上一篇文章中，我们实现了一个简单的环形缓冲区。然而，这个实现并没有考虑并发访问的情况，因此在多 goroutine 环境下可能会出现 Data Race。本文将介绍如何通过 Golang 的同步机制（如 <code>sync.Mutex</code> 或 <code>sync.RWMutex</code>）来避免环形缓冲区中的 Data Race。</p>
+<hr>
+<h3 id="为什么需要避免-Data-Race？"><a href="#为什么需要避免-Data-Race？" class="headerlink" title="为什么需要避免 Data Race？"></a>为什么需要避免 Data Race？</h3><p>在环形缓冲区的实现中，<code>head</code>、<code>tail</code> 和 <code>isFull</code> 是共享资源。如果多个 goroutine 同时读写这些资源，可能会导致以下问题：</p>
+<ol>
+<li><strong>数据不一致</strong>：例如，一个 goroutine 正在写入数据，而另一个 goroutine 同时读取数据，可能会导致读取到错误的值。</li>
+<li><strong>缓冲区状态错误</strong>：例如，<code>isFull</code> 的状态可能被错误地更新，导致缓冲区无法正确判断是否已满或为空。</li>
+</ol>
+<p>为了避免这些问题，我们需要使用同步机制来保护共享资源。</p>
+<span id="more"></span>
+<hr>
+<h3 id="使用-sync-Mutex-实现线程安全的环形缓冲区"><a href="#使用-sync-Mutex-实现线程安全的环形缓冲区" class="headerlink" title="使用 sync.Mutex 实现线程安全的环形缓冲区"></a>使用 <code>sync.Mutex</code> 实现线程安全的环形缓冲区</h3><p><code>sync.Mutex</code> 是 Golang 提供的一种互斥锁，用于保护共享资源。当一个 goroutine 持有锁时，其他 goroutine 必须等待锁释放后才能访问共享资源。</p>
+<p>下面我们使用 <code>sync.Mutex</code> 来改进之前的环形缓冲区实现，使其支持并发访问。</p>
+<h3 id="改进后的代码"><a href="#改进后的代码" class="headerlink" title="改进后的代码"></a>改进后的代码</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;errors&quot;</span></span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;sync&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// RingBuffer 定义环形缓冲区结构</span></span><br><span class="line"><span class="keyword">type</span> RingBuffer <span class="keyword">struct</span> &#123;</span><br><span class="line">	data        []<span class="type">int</span></span><br><span class="line">	size        <span class="type">int</span></span><br><span class="line">	head, tail  <span class="type">int</span></span><br><span class="line">	isFull      <span class="type">bool</span></span><br><span class="line">	mu          sync.Mutex <span class="comment">// 互斥锁</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// NewRingBuffer 创建一个新的环形缓冲区</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewRingBuffer</span><span class="params">(size <span class="type">int</span>)</span></span> *RingBuffer &#123;</span><br><span class="line">	<span class="keyword">return</span> &amp;RingBuffer&#123;</span><br><span class="line">		data: <span class="built_in">make</span>([]<span class="type">int</span>, size),</span><br><span class="line">		size: size,</span><br><span class="line">		head: <span class="number">0</span>,</span><br><span class="line">		tail: <span class="number">0</span>,</span><br><span class="line">		isFull: <span class="literal">false</span>,</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Write 向环形缓冲区写入数据</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(rb *RingBuffer)</span></span> Write(value <span class="type">int</span>) <span class="type">error</span> &#123;</span><br><span class="line">	rb.mu.Lock()         <span class="comment">// 加锁</span></span><br><span class="line">	<span class="keyword">defer</span> rb.mu.Unlock() <span class="comment">// 解锁</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> rb.isFull &#123;</span><br><span class="line">		<span class="keyword">return</span> errors.New(<span class="string">&quot;buffer is full&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	rb.data[rb.head] = value</span><br><span class="line">	rb.head = (rb.head + <span class="number">1</span>) % rb.size</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> rb.head == rb.tail &#123;</span><br><span class="line">		rb.isFull = <span class="literal">true</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Read 从环形缓冲区读取数据</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(rb *RingBuffer)</span></span> Read() (<span class="type">int</span>, <span class="type">error</span>) &#123;</span><br><span class="line">	rb.mu.Lock()         <span class="comment">// 加锁</span></span><br><span class="line">	<span class="keyword">defer</span> rb.mu.Unlock() <span class="comment">// 解锁</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> rb.IsEmpty() &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>, errors.New(<span class="string">&quot;buffer is empty&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	value := rb.data[rb.tail]</span><br><span class="line">	rb.tail = (rb.tail + <span class="number">1</span>) % rb.size</span><br><span class="line">	rb.isFull = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> value, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// IsEmpty 判断环形缓冲区是否为空</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(rb *RingBuffer)</span></span> IsEmpty() <span class="type">bool</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> !rb.isFull &amp;&amp; rb.head == rb.tail</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// IsFull 判断环形缓冲区是否已满</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(rb *RingBuffer)</span></span> IsFull() <span class="type">bool</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> rb.isFull</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	rb := NewRingBuffer(<span class="number">5</span>)</span><br><span class="line">	<span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 启动多个 goroutine 写入数据</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">1</span>; i &lt;= <span class="number">10</span>; i++ &#123;</span><br><span class="line">		wg.Add(<span class="number">1</span>)</span><br><span class="line">		<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(value <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">			<span class="keyword">defer</span> wg.Done()</span><br><span class="line">			err := rb.Write(value)</span><br><span class="line">			<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">				fmt.Println(<span class="string">&quot;Write error:&quot;</span>, err)</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				fmt.Println(<span class="string">&quot;Write success:&quot;</span>, value)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;(i)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 启动多个 goroutine 读取数据</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">1</span>; i &lt;= <span class="number">10</span>; i++ &#123;</span><br><span class="line">		wg.Add(<span class="number">1</span>)</span><br><span class="line">		<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">			<span class="keyword">defer</span> wg.Done()</span><br><span class="line">			value, err := rb.Read()</span><br><span class="line">			<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">				fmt.Println(<span class="string">&quot;Read error:&quot;</span>, err)</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				fmt.Println(<span class="string">&quot;Read value:&quot;</span>, value)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;()</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	wg.Wait()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="代码解析"><a href="#代码解析" class="headerlink" title="代码解析"></a>代码解析</h3><ol>
+<li><strong><code>sync.Mutex</code> 的使用</strong>：<ul>
+<li>我们在 <code>RingBuffer</code> 结构体中添加了一个 <code>sync.Mutex</code> 字段 <code>mu</code>。</li>
+<li>在 <code>Write</code> 和 <code>Read</code> 方法中，使用 <code>mu.Lock()</code> 和 <code>mu.Unlock()</code> 来保护共享资源的访问。</li>
+</ul>
+</li>
+<li><strong>并发写入和读取</strong>：<ul>
+<li>在 <code>main</code> 函数中，我们启动了多个 goroutine 来并发地写入和读取数据。</li>
+<li>使用 <code>sync.WaitGroup</code> 来等待所有 goroutine 完成。</li>
+</ul>
+</li>
+<li><strong>线程安全</strong>：<ul>
+<li>通过加锁，我们确保了同一时间只有一个 goroutine 可以访问 <code>head</code>、<code>tail</code> 和 <code>isFull</code>，从而避免了 Data Race。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p>运行上述代码，输出可能如下（由于并发执行，顺序可能不同）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Write success: 1</span><br><span class="line">Write success: 2</span><br><span class="line">Write success: 3</span><br><span class="line">Write success: 4</span><br><span class="line">Write success: 5</span><br><span class="line">Write error: buffer is full</span><br><span class="line">Write error: buffer is full</span><br><span class="line">Write error: buffer is full</span><br><span class="line">Write error: buffer is full</span><br><span class="line">Write error: buffer is full</span><br><span class="line">Read value: 1</span><br><span class="line">Read value: 2</span><br><span class="line">Read value: 3</span><br><span class="line">Read value: 4</span><br><span class="line">Read value: 5</span><br><span class="line">Read error: buffer is empty</span><br><span class="line">Read error: buffer is empty</span><br><span class="line">Read error: buffer is empty</span><br><span class="line">Read error: buffer is empty</span><br><span class="line">Read error: buffer is empty</span><br></pre></td></tr></table></figure>
+<h3 id="进一步优化：使用-sync-RWMutex"><a href="#进一步优化：使用-sync-RWMutex" class="headerlink" title="进一步优化：使用 sync.RWMutex"></a>进一步优化：使用 <code>sync.RWMutex</code></h3><p>如果环形缓冲区的读操作远多于写操作，可以使用 <code>sync.RWMutex</code> 来进一步提高性能。<code>sync.RWMutex</code> 允许多个 goroutine 同时读取数据，但写操作仍然是独占的。</p>
+<h3 id="使用-sync-RWMutex-的改进"><a href="#使用-sync-RWMutex-的改进" class="headerlink" title="使用 sync.RWMutex 的改进"></a>使用 <code>sync.RWMutex</code> 的改进</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> RingBuffer <span class="keyword">struct</span> &#123;</span><br><span class="line">	data        []<span class="type">int</span></span><br><span class="line">	size        <span class="type">int</span></span><br><span class="line">	head, tail  <span class="type">int</span></span><br><span class="line">	isFull      <span class="type">bool</span></span><br><span class="line">	mu          sync.RWMutex <span class="comment">// 读写锁</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Read 方法使用读锁</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(rb *RingBuffer)</span></span> Read() (<span class="type">int</span>, <span class="type">error</span>) &#123;</span><br><span class="line">	rb.mu.RLock()         <span class="comment">// 加读锁</span></span><br><span class="line">	<span class="keyword">defer</span> rb.mu.RUnlock() <span class="comment">// 解读锁</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> rb.IsEmpty() &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>, errors.New(<span class="string">&quot;buffer is empty&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	value := rb.data[rb.tail]</span><br><span class="line">	rb.tail = (rb.tail + <span class="number">1</span>) % rb.size</span><br><span class="line">	rb.isFull = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> value, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// IsEmpty 和 IsFull 方法也使用读锁</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(rb *RingBuffer)</span></span> IsEmpty() <span class="type">bool</span> &#123;</span><br><span class="line">	rb.mu.RLock()</span><br><span class="line">	<span class="keyword">defer</span> rb.mu.RUnlock()</span><br><span class="line">	<span class="keyword">return</span> !rb.isFull &amp;&amp; rb.head == rb.tail</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(rb *RingBuffer)</span></span> IsFull() <span class="type">bool</span> &#123;</span><br><span class="line">	rb.mu.RLock()</span><br><span class="line">	<span class="keyword">defer</span> rb.mu.RUnlock()</span><br><span class="line">	<span class="keyword">return</span> rb.isFull</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>通过使用 <code>sync.Mutex</code> 或 <code>sync.RWMutex</code>，我们可以有效地避免环形缓冲区中的 Data Race 问题。在并发编程中，正确地使用同步机制是保证程序正确性和稳定性的关键。</p>
+<p>如果你有更多问题或建议，欢迎在评论区留言！</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://zhouyanbo.com/2025/03/18/ring-buffer-2/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://zhouyanbo.com/2025/03/18/ring-buffer-2/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2024/10/18/ring-buffer/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">ring buffer（一）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/" rel="tag">django</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dropbox/" rel="tag">dropbox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geek/" rel="tag">geek</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/go/" rel="tag">go</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/" rel="tag">golang</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/" rel="tag">math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/" rel="tag">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ngrok-linux/" rel="tag">ngrok linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/other/" rel="tag">other</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB/" rel="tag">生活</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1/" rel="tag">设计</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/algorithm/" style="font-size: 18px;">algorithm</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/dropbox/" style="font-size: 10px;">dropbox</a> <a href="/tags/geek/" style="font-size: 12px;">geek</a> <a href="/tags/go/" style="font-size: 12px;">go</a> <a href="/tags/golang/" style="font-size: 14px;">golang</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linux/" style="font-size: 12px;">linux</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/mysql/" style="font-size: 12px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/ngrok-linux/" style="font-size: 10px;">ngrok linux</a> <a href="/tags/other/" style="font-size: 12px;">other</a> <a href="/tags/php/" style="font-size: 20px;">php</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/%E7%94%9F%E6%B4%BB/" style="font-size: 16px;">生活</a> <a href="/tags/%E8%AE%BE%E8%AE%A1/" style="font-size: 10px;">设计</a>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2025 zhouyb90<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a target="_blank" rel="noopener" href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'https://zhouyanbo.com/2025/03/18/ring-buffer-2/';
+        
+        this.page.identifier = 'ring-buffer-2';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'zhouyb90' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+    
+        
+<script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
