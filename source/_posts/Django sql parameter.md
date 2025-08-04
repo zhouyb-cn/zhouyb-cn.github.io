@@ -1,4 +1,9 @@
-关于Django执行原生SQL查询参数问题
+---
+title: 关于Django执行原生SQL查询参数问题
+date: 2022-02-09 15:26:12
+tags: django
+---
+
 
 #### 开端
 
@@ -21,6 +26,8 @@ SELECT * FROM myapp_person WHERE id in (1,2,3)
 >>> print(qs.query)
 SELECT * FROM myapp_person WHERE id in (1,2,3)
 ```
+
+<!-- more -->
 
 可以看到两种方式打印的sql都是相同的，实际上执行结果并非如此，方式1会返回3条记录，方式2只会返回一条记录
 
