@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhouyanbo.com/"/>
-  <updated>2025-03-18T09:58:42.834Z</updated>
+  <updated>2026-03-16T09:05:22.368Z</updated>
   <id>https://zhouyanbo.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>LeetCode Hot100 在线人数看板</title>
+    <link href="https://zhouyanbo.com/2026/03/16/leetcode-hot100-dashboard/"/>
+    <id>https://zhouyanbo.com/2026/03/16/leetcode-hot100-dashboard/</id>
+    <published>2026-03-16T07:00:00.000Z</published>
+    <updated>2026-03-16T09:05:22.368Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近每天都会做几道LeetCode Hot100题，突发奇想，使用AI做一个采集数据并展示出来的小功能，看一下哪些题目刷的人比较多（毫无疑问，two-sum一直稳居榜首），最终的页面能够实时看到在线人数前十的题目，并且能够看到每一道题最近7天的在线人数变化趋势。整个项目涉及数据采集、API 服务、存储和前端展示四个部分，分别部署在 Railway、Cloudflare Workers、Cloudflare KV/D1 和 Vercel 上。</p><p>由于使用的是cloudflare的免费额度，KV写入读取有限制，所以采集数据采取每2分钟上报一次，这样每天就只有720次写入，不超过免费额度。D1的写入读取也有相应的优化来满足要求。</p><span id="more"></span><h3 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────┐    WebSocket     ┌──────────────┐    Push API    ┌─────────────────────┐</span><br><span class="line">│   LeetCode  │ ◄──────────────► │   Railway    │ ─────────────► │ Cloudflare Workers  │</span><br><span class="line">│   (数据源)   │                  │  (采集脚本)   │                │    (API 服务)        │</span><br><span class="line">└─────────────┘                  └──────────────┘                └──────────┬──────────┘</span><br><span class="line">                                                                           │</span><br><span class="line">                                                                    ┌──────┴──────┐</span><br><span class="line">                                                                    │             │</span><br><span class="line">                                                               ┌────▼───┐   ┌────▼───┐</span><br><span class="line">                                                               │   KV   │   │   D1   │</span><br><span class="line">                                                               │ (汇总)  │   │ (明细)  │</span><br><span class="line">                                                               └────────┘   └────────┘</span><br><span class="line">                                                                    │             │</span><br><span class="line">                                                                    └──────┬──────┘</span><br><span class="line">                                                                           │</span><br><span class="line">                                                                  ┌────────▼────────┐</span><br><span class="line">                                                                  │     Vercel      │</span><br><span class="line">                                                                  │  (前端看板页面)   │</span><br><span class="line">                                                                  └─────────────────┘</span><br></pre></td></tr></table></figure><p>整个数据流向：采集脚本通过 WebSocket 连接 LeetCode 获hot100在线人数数据，调用 Cloudflare Workers 的 Push 接口写入存储，前端页面从 Workers 读取数据并展示。</p><h3 id="数据采集-—-Railway"><a href="#数据采集-—-Railway" class="headerlink" title="数据采集 — Railway"></a>数据采集 — Railway</h3><p>采集脚本部署在 Railway 上，通过 LeetCode 的 WebSocket 接口实时获取在线人数数据。选择 WebSocket 而不是传统的 HTTP 轮询，主要是因为可以实时拿到在线人数数据，减少不必要的请求。</p><p>Railway 作为采集服务的运行平台，优势在于：</p><ul><li>支持持久运行的后台进程，适合维持 WebSocket 长连接</li><li>部署简单，直接关联 Git 仓库即可自动部署</li><li>有免费额度，对于这种轻量采集任务完全够用</li></ul><p>采集脚本拿到数据后，通过 HTTP 请求调用 Cloudflare Workers 提供的 Push 接口上传数据。</p><h3 id="API-服务与存储-—-Cloudflare-Workers-KV-D1"><a href="#API-服务与存储-—-Cloudflare-Workers-KV-D1" class="headerlink" title="API 服务与存储 — Cloudflare Workers + KV + D1"></a>API 服务与存储 — Cloudflare Workers + KV + D1</h3><p>Cloudflare Workers 负责提供 API 服务，主要包含两个功能：</p><ol><li><strong>Push 接口</strong>：接收采集脚本上传的数据，写入 KV 和 D1</li><li><strong>Query 接口</strong>：供前端页面查询在线人数数据</li></ol><p>存储层采用 KV 和 D1 配合使用，各有分工：</p><p><strong>KV（汇总数据）</strong>：存储聚合后的统计信息，比如最新的100道题的在线人数。KV 的读取速度极快，非常适合这种高频读取、低频写入的汇总数据。</p><p><strong>D1（明细数据）</strong>：存储每道题目每个时刻的在线人数。D1 是 Cloudflare 的 SQLite 数据库，支持 SQL 查询，适合按条件筛选和排序题目列表。</p><p>这种分层存储的设计思路是：前端加载看板时，先从 KV 读取最新数据来渲染盘行榜，需要查看具体题目的在线人数历史数据时候再查询D1数据库。保证页面加载速度。</p><h3 id="前端看板-—-Vercel"><a href="#前端看板-—-Vercel" class="headerlink" title="前端看板 — Vercel"></a>前端看板 — Vercel</h3><p>前端使用纯 HTML/CSS/JavaScript 实现，没有引入框架，保持轻量。部署在 Vercel 上，访问地址：<a href="https://hot100-dashboard.vercel.app/">https://hot100-dashboard.vercel.app/</a></p><p>页面主要展示：</p><ul><li>在线人数前十的题</li><li>hot100的所有题目</li><li>每道题历史7天在线人数折线图</li></ul><p>选择 Vercel 部署纯静态页面的原因很简单：零配置、自动 HTTPS、全球 CDN、部署速度快。</p><h3 id="为什么选择这套架构"><a href="#为什么选择这套架构" class="headerlink" title="为什么选择这套架构"></a>为什么选择这套架构</h3><p>这套架构的核心思路是<strong>把不同职责分散到最适合的平台上</strong>：</p><table><thead><tr><th>组件</th><th>平台</th><th>原因</th></tr></thead><tbody><tr><td>数据采集</td><td>Railway</td><td>需要持久运行的后台进程</td></tr><tr><td>API + 存储</td><td>Cloudflare</td><td>Workers 冷启动快，KV/D1 与 Workers 无缝集成</td></tr><tr><td>前端展示</td><td>Vercel</td><td>静态站点部署体验好</td></tr></tbody></table><p>每个服务都有免费额度，整套方案的运行成本为零。同时各组件之间通过 HTTP 接口通信，耦合度低，任何一部分都可以单独替换。</p><h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>这个项目虽然功能不复杂，但涉及到数据采集、API 设计、存储选型、前端展示等多个环节，是一个比较完整的全栈小项目。Cloudflare Workers + KV + D1 的组合确实很适合这种轻量级 API 服务场景，开发体验不错。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近每天都会做几道LeetCode Hot100题，突发奇想，使用AI做一个采集数据并展示出来的小功能，看一下哪些题目刷的人比较多（毫无疑问，two-sum一直稳居榜首），最终的页面能够实时看到在线人数前十的题目，并且能够看到每一道题最近7天的在线人数变化趋势。整个项目涉及数据采集、API 服务、存储和前端展示四个部分，分别部署在 Railway、Cloudflare Workers、Cloudflare KV/D1 和 Vercel 上。&lt;/p&gt;
+&lt;p&gt;由于使用的是cloudflare的免费额度，KV写入读取有限制，所以采集数据采取每2分钟上报一次，这样每天就只有720次写入，不超过免费额度。D1的写入读取也有相应的优化来满足要求。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="AI" scheme="https://zhouyanbo.com/tags/AI/"/>
+    
+  </entry>
   
   <entry>
     <title>ring buffer（二）</title>
@@ -478,30 +499,6 @@
     
     
       <category term="other" scheme="https://zhouyanbo.com/tags/other/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用libreoffice转换文档成pdf</title>
-    <link href="https://zhouyanbo.com/2018/07/18/libreoffice/"/>
-    <id>https://zhouyanbo.com/2018/07/18/libreoffice/</id>
-    <published>2018-07-18T09:03:07.000Z</published>
-    <updated>2023-08-30T06:47:28.588Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>将doc、docx、xls、xlsx、ppt、pptx格式的转换成pdf文档</p><h3 id="实施"><a href="#实施" class="headerlink" title="实施"></a>实施</h3><p>系统是centos 7，这里使用libreoffice，在转换过程中发现，只要是文件中包含中文字符，转换之后文件中成了乱码，不可读</p><h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>由于centos 7系统中缺少对中文的支持，需要安装中文字库，参考这里<a href="https://blog.csdn.net/wlwlwlwl015/article/details/51482065">centos安装中文字库</a>，<br>安装完成后重启libreoffice即可</p><p>附：<a href="https://github.com/lugnsk/pyodconverter">转换脚本</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;需求&quot;&gt;&lt;a href=&quot;#需求&quot; class=&quot;headerlink&quot; title=&quot;需求&quot;&gt;&lt;/a&gt;需求&lt;/h3&gt;&lt;p&gt;将doc、docx、xls、xlsx、ppt、pptx格式的转换成pdf文档&lt;/p&gt;
-&lt;h3 id=&quot;实施&quot;&gt;&lt;a href=&quot;#实施&quot; c
-      
-    
-    </summary>
-    
-    
-      <category term="linux" scheme="https://zhouyanbo.com/tags/linux/"/>
     
   </entry>
   
